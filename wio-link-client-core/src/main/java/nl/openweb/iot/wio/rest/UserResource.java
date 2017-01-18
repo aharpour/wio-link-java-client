@@ -13,25 +13,32 @@ import lombok.Data;
 public interface UserResource {
 
     @RequestMapping(method = RequestMethod.POST, value = "/login")
-    Login login(@RequestParam("email") String email, @RequestParam("password") String password) throws WioException;
+    LoginResponse login(@RequestParam("email") String email, @RequestParam("password") String password) throws WioException;
 
     @RequestMapping(method = RequestMethod.POST, value = "/create")
-    Create create(@RequestParam("email") String email, @RequestParam("password") String password) throws WioException;
+    CreateResponse create(@RequestParam("email") String email, @RequestParam("password") String password) throws WioException;
 
     @RequestMapping(method = RequestMethod.POST, value = "/changepassword")
-    Create changePassword(@RequestParam("access_token") String accessToken, @RequestParam("password") String newPassword) throws WioException;
+    CreateResponse changePassword(@RequestParam("access_token") String accessToken, @RequestParam("password") String newPassword) throws WioException;
+
+    @RequestMapping(method = RequestMethod.POST, value = "/retrievepassword")
+    ResetPasswordResponse resetPassword(@RequestParam("email") String email) throws WioException;
 
 
     @Data
-    public static class Login {
+    public static class LoginResponse {
         private String token;
         @JsonProperty("user_id")
         private String userId;
     }
 
     @Data
-    public static class Create {
+    public static class CreateResponse {
         private String token;
+    }
+    @Data
+    public static class ResetPasswordResponse {
+        private String result;
     }
 
 

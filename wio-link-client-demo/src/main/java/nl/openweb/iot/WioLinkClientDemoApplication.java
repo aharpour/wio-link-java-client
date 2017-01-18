@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.stereotype.Component;
 
-import nl.openweb.iot.wio.rest.UserResource;
+import nl.openweb.iot.wio.rest.SeeedSsoResource;
 
 @SpringBootApplication
 @EnableFeignClients
@@ -21,19 +21,17 @@ public class WioLinkClientDemoApplication {
 @Component
 class TestRunner implements CommandLineRunner {
 
+    private SeeedSsoResource userResource;
+
     @Autowired
-    private UserResource userResource;
+    public TestRunner(SeeedSsoResource userResource) {
+        this.userResource = userResource;
+    }
 
     @Override
     public void run(String... args) throws Exception {
-        UserResource.Login login = userResource.login("test1234asdf23@gmail.com", "testqwasdf12345");
-        System.out.println(login.getToken());
-        System.out.println(login.getUserId());
-        UserResource.Create newPassword = userResource.changePassword(login.getToken(), "testqwasdf123456");
-        UserResource.Login login1 = userResource.login("test1234asdf23@gmail.com", "testqwasdf123456");
-        System.out.println(login.getToken());
-        System.out.println(login.getUserId());
-        userResource.login("test1234asdf23@gmail.com", "testqwasdf12345");
+        SeeedSsoResource.LoginResponse response = userResource.login(args[0], args[1]);
+        System.out.println(response);
     }
 }
 
