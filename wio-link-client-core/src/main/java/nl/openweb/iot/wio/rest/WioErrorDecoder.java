@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import feign.Response;
 import feign.codec.ErrorDecoder;
 import lombok.Data;
+import nl.openweb.iot.wio.WioException;
 
 
 public class WioErrorDecoder extends ErrorDecoder.Default implements ErrorDecoder {

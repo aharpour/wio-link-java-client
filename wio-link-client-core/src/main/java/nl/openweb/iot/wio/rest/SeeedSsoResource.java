@@ -3,15 +3,16 @@ package nl.openweb.iot.wio.rest;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import nl.openweb.iot.wio.WioException;
 
 @Service
 public class SeeedSsoResource {
@@ -33,7 +34,7 @@ public class SeeedSsoResource {
 
         String token = getToken(TOKEN_REGEX, response);
         String ssoToken = getToken(SSO_TOKEN_REGEX, response);
-        if (StringUtils.isEmpty(token)) {
+        if (StringUtils.isBlank(token)) {
             throw new WioException("Token was not found.");
         }
         return new LoginResponse(token, ssoToken);

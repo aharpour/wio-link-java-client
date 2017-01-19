@@ -1,4 +1,4 @@
-package nl.openweb.iot.wio.rest;
+package nl.openweb.iot.wio;
 
 public class WioException extends Exception {
 
