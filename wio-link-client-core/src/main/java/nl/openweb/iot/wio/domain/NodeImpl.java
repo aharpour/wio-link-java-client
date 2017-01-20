@@ -22,7 +22,7 @@ public class NodeImpl implements Node {
     private final List<Grove> groves;
     private final NodeResource nodeResource;
 
-    public NodeImpl(NodeBean nodeBean, GroveFactory factory, NodeResource nodeResource) {
+    public NodeImpl(NodeBean nodeBean, GroveFactory factory, NodeResource nodeResource) throws WioException {
         this.nodeResource = nodeResource;
         name = nodeBean.getName();
         nodeKey = nodeBean.getNodeKey();
@@ -64,13 +64,26 @@ public class NodeImpl implements Node {
         return result;
     }
 
+    @Override
+    public boolean isPassive() {
+        boolean passive = true;
+        List<Grove> groves = getGroves();
+        for (Grove grove : groves) {
+            if (!grove.isPassive()) {
+                passive = false;
+                break;
+            }
+        }
+        return passive;
+    }
+
     /**
      * This method is very inefficient. Try to avoid using it.
      *
      * @return true if online otherwise false
      */
     @Override
-    public boolean getOnline() {
+    public boolean isOnline() {
         boolean result = false;
         try {
             nodeResource.getNodeInfo(nodeKey);

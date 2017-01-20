@@ -22,10 +22,10 @@ public class InMemoryNodeRepository implements NodeRepository<String> {
     private NodesResource nodesResource;
 
     public NodeBean save(NodeBean entity) {
-        if (StringUtils.isNotBlank(entity.getNodeSn()) && entity.getGroves() != null) {
+        if (StringUtils.isNotBlank(entity.getNodeSn())) {
             data.put(entity.getNodeSn(), entity);
         } else {
-            throw new IllegalArgumentException("nodeSn is required also groves must to be initialized.");
+            throw new IllegalArgumentException("nodeSn is required.");
         }
         return entity;
     }

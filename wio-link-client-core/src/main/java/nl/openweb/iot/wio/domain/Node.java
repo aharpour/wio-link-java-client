@@ -21,7 +21,9 @@ public interface Node {
 
     String getBoard();
 
-    boolean getOnline();
+    boolean isOnline();
+
+    boolean isPassive();
 
     List<Grove> getGroves();
 }
