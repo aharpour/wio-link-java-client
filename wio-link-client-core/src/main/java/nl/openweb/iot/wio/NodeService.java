@@ -1,9 +1,7 @@
 package nl.openweb.iot.wio;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -112,22 +110,37 @@ public class NodeService {
     }
 
     private List<GroveBean> getGroveBeans(NodeBean node) throws WioException {
-        List<GroveBean> groves = new ArrayList<>();
+        List<GroveBean> candidates = new ArrayList<>();
         NodeResource.NodeInfo nodeInfo = nodeResource.getNodeInfo(node.getNodeKey());
         for (String call : nodeInfo.getCalls()) {
             Matcher matcher = CALL_PATTERN.matcher(call);
             if (matcher.matches()) {
-                groves.add(new GroveBean(matcher.group(2), matcher.group(3)));
+                candidates.add(new GroveBean(matcher.group(2), matcher.group(3), true));
             } else {
                 matcher = EVENT_PATTERN.matcher(call);
                 if (matcher.matches()) {
-                    groves.add(new GroveBean(matcher.group(1), matcher.group(2)));
+                    candidates.add(new GroveBean(matcher.group(1), matcher.group(2), false));
                 } else {
                     LOG.error("Unrecognized call pattern: " + call);
                 }
             }
         }
-        return groves;
+        return mergeDuplicates(candidates);
+    }
+
+    private List<GroveBean> mergeDuplicates(List<GroveBean> candidates) {
+        Map<String, GroveBean> map =new LinkedHashMap<>();
+        for (GroveBean candidate : candidates) {
+            if (map.containsKey(candidate.getName())) {
+                map.get(candidate.getName()).update(candidate);
+            } else {
+                map.put(candidate.getName(), candidate);
+            }
+        }
+
+        List<GroveBean> list = new ArrayList<>();
+        list.addAll(map.values());
+        return list;
     }
 
     @Autowired

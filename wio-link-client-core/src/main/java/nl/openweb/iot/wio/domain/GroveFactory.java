@@ -19,6 +19,9 @@ import nl.openweb.iot.wio.db.GroveBean;
 import nl.openweb.iot.wio.domain.grove.GenericGrove;
 import nl.openweb.iot.wio.rest.NodeResource;
 
+
+import static org.apache.commons.lang.StringUtils.isNotBlank;
+
 @Service
 public class GroveFactory {
 
@@ -34,7 +37,7 @@ public class GroveFactory {
     @PostConstruct
     public void init() throws ClassNotFoundException {
         ClassPathScanningCandidateComponentProvider provider = new ClassPathScanningCandidateComponentProvider(true);
-        provider.addIncludeFilter(new AssignableTypeFilter(GenericGrove.class));
+        provider.addIncludeFilter(new AssignableTypeFilter(Grove.class));
 
         Set<BeanDefinition> components = provider.findCandidateComponents("nl/openweb/iot/wio/domain/grove");
         for (BeanDefinition component : components) {
@@ -42,7 +45,7 @@ public class GroveFactory {
             Annotation annotation = cls.getAnnotation(Type.class);
             if (annotation instanceof Type) {
                 String type = ((Type) annotation).value();
-                typeToClassMap.put(type, cls);
+                typeToClassMap.put(isNotBlank(type) ? type : cls.getSimpleName(), cls);
             }
         }
     }
