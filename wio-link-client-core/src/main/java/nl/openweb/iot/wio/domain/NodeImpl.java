@@ -1,19 +1,19 @@
 package nl.openweb.iot.wio.domain;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.function.BiConsumer;
 
 import lombok.Getter;
+import nl.openweb.iot.wio.WebSocketService;
 import nl.openweb.iot.wio.WioException;
 import nl.openweb.iot.wio.db.GroveBean;
 import nl.openweb.iot.wio.db.NodeBean;
 import nl.openweb.iot.wio.rest.NodeResource;
 
 @Getter
-public class NodeImpl implements Node {
+public final class NodeImpl implements Node {
 
+    public static final int FIVE_HOURS_IN_SEC = 18000;
     private final String name;
     private final String nodeKey;
     private final String nodeSn;
@@ -21,8 +21,10 @@ public class NodeImpl implements Node {
     private final String board;
     private final List<Grove> groves;
     private final NodeResource nodeResource;
+    private final WebSocketService webSocketService;
+    private BiConsumer<Map<String, String>, Node> eventHandler;
 
-    public NodeImpl(NodeBean nodeBean, GroveFactory factory, NodeResource nodeResource) throws WioException {
+    public NodeImpl(NodeBean nodeBean, GroveFactory factory, NodeResource nodeResource, WebSocketService webSocketService) throws WioException {
         this.nodeResource = nodeResource;
         name = nodeBean.getName();
         nodeKey = nodeBean.getNodeKey();
@@ -34,6 +36,7 @@ public class NodeImpl implements Node {
             list.add(factory.createGrove(groveBean, this));
         }
         groves = Collections.unmodifiableList(list);
+        this.webSocketService = webSocketService;
     }
 
     @Override
@@ -75,6 +78,25 @@ public class NodeImpl implements Node {
             }
         }
         return passive;
+    }
+
+    @Override
+    public void sleep(int sec) throws WioException {
+        if (sec > 0) {
+            nodeResource.sleep(nodeKey, Integer.toString(Math.min(sec, FIVE_HOURS_IN_SEC)));
+        }
+    }
+
+    @Override
+    public void event(Map<String, String> map) {
+        if (eventHandler != null) {
+            eventHandler.accept(map, this);
+        }
+    }
+
+    public void setEventHandler(BiConsumer<Map<String, String>, Node> eventHandler) {
+        this.eventHandler = eventHandler;
+        this.webSocketService.connect(this);
     }
 
     /**

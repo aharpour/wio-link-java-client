@@ -1,7 +1,10 @@
 package nl.openweb.iot.wio;
 
 import javax.annotation.PostConstruct;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -37,6 +40,7 @@ public class NodeService {
     private NodesResource nodesResource;
     private UserResource userResource;
     private SeeedSsoResource ssoResource;
+    private WebSocketService webSocketService;
     private GroveFactory groveFactory;
     private Map<String, Node> registry = new ConcurrentHashMap<>();
 
@@ -70,7 +74,7 @@ public class NodeService {
         Node result = null;
         initializeAndUpdateNodeBean(nodeBean);
         if (nodeBean != null) {
-            result = new NodeImpl(nodeBean, groveFactory, nodeResource);
+            result = new NodeImpl(nodeBean, groveFactory, nodeResource, webSocketService);
         }
         return result;
     }
@@ -129,7 +133,7 @@ public class NodeService {
     }
 
     private List<GroveBean> mergeDuplicates(List<GroveBean> candidates) {
-        Map<String, GroveBean> map =new LinkedHashMap<>();
+        Map<String, GroveBean> map = new LinkedHashMap<>();
         for (GroveBean candidate : candidates) {
             if (map.containsKey(candidate.getName())) {
                 map.get(candidate.getName()).update(candidate);
@@ -176,5 +180,10 @@ public class NodeService {
     @Autowired
     public void setUserResource(UserResource userResource) {
         this.userResource = userResource;
+    }
+
+    @Autowired
+    public void setWebSocketService(WebSocketService webSocketService) {
+        this.webSocketService = webSocketService;
     }
 }

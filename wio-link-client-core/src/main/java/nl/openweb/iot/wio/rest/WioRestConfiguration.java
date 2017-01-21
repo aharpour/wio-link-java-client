@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class WioConfiguration extends FeignClientsConfiguration {
+public class WioRestConfiguration extends FeignClientsConfiguration {
 
     @Bean(name = {"user-resource", "nodes-resource", "node-resource"})
     public WioErrorDecoder wioErrorDecoder() {

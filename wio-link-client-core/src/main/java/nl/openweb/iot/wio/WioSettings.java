@@ -16,6 +16,7 @@ public class WioSettings {
     private String username;
     private String password;
     private String userToken;
+    private int taskSchedulerPoolSize = 1;
     private boolean trySeedSso = true;
 
 }

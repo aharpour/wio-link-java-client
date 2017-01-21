@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import lombok.Data;
 import nl.openweb.iot.wio.WioException;
 
-@FeignClient(name = "user-resource", url = "${wio.base-url}/v1/user", configuration = WioConfiguration.class)
+@FeignClient(name = "user-resource", url = "${wio.base-url}/v1/user", configuration = WioRestConfiguration.class)
 public interface UserResource {
 
     @RequestMapping(method = RequestMethod.POST, value = "/login")

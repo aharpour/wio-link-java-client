@@ -4,6 +4,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Component;
 
 import nl.openweb.iot.wio.NodeService;
@@ -15,6 +16,7 @@ import nl.openweb.iot.wio.domain.grove.GroveTempHumPro;
 
 @SpringBootApplication
 @EnableFeignClients
+@EnableScheduling
 public class WioLinkClientDemoApplication {
 
     public static void main(String[] args) {
@@ -64,6 +66,14 @@ class Runner implements CommandLineRunner {
             }
         });
         System.out.println(ebi01.getGroves());
+        ebi01.setEventHandler((e, n) -> {
+            System.out.println(e);
+        });
+        Node openweb01 = nodeService.findNodeByName("OpenWeb01");
+        openweb01.setEventHandler((e, n) -> {
+            System.out.println(e);
+        });
+
     }
 }
 

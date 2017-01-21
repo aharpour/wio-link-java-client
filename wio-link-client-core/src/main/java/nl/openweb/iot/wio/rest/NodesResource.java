@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import lombok.Data;
 import nl.openweb.iot.wio.WioException;
 
-@FeignClient(name = "nodes-resource", url = "${wio.base-url}/v1/nodes", configuration = WioConfiguration.class)
+@FeignClient(name = "nodes-resource", url = "${wio.base-url}/v1/nodes", configuration = WioRestConfiguration.class)
 public interface NodesResource {
 
     @RequestMapping(method = RequestMethod.POST, value = "/create")

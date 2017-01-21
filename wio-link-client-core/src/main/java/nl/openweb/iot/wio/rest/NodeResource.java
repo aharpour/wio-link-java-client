@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import lombok.Data;
 import nl.openweb.iot.wio.WioException;
 
-@FeignClient(name = "node-resource", url = "${wio.base-url}/v1/node", configuration = WioConfiguration.class)
+@FeignClient(name = "node-resource", url = "${wio.base-url}/v1/node", configuration = WioRestConfiguration.class)
 public interface NodeResource {
 
     @RequestMapping(method = RequestMethod.GET, value = "/.well-known")
