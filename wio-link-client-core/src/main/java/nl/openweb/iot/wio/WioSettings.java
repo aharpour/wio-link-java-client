@@ -16,7 +16,9 @@ public class WioSettings {
     private String username;
     private String password;
     private String userToken;
-    private int taskSchedulerPoolSize = 1;
+    private int taskSchedulerPoolSize = 3;
+    private int warmUpPeriodInSeconds = 20;
+    private int retryAfterErrorInSec = 5 * 60;
     private boolean trySeedSso = true;
 
 }

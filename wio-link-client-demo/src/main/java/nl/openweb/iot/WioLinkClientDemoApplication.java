@@ -1,5 +1,9 @@
 package nl.openweb.iot;
 
+import java.util.Date;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,12 +11,11 @@ import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Component;
 
-import nl.openweb.iot.wio.NodeService;
-import nl.openweb.iot.wio.WioException;
-import nl.openweb.iot.wio.domain.Node;
-import nl.openweb.iot.wio.domain.grove.GroveMagneticSwitch;
-import nl.openweb.iot.wio.domain.grove.GroveMoisture;
 import nl.openweb.iot.wio.domain.grove.GroveTempHumPro;
+import nl.openweb.iot.wio.scheduling.SchedulingService;
+
+
+import static nl.openweb.iot.wio.scheduling.SchedulingUtils.secondsLater;
 
 @SpringBootApplication
 @EnableFeignClients
@@ -27,53 +30,24 @@ public class WioLinkClientDemoApplication {
 @Component
 class Runner implements CommandLineRunner {
 
-    private NodeService nodeService;
+    private SchedulingService schedulingService;
 
-    public Runner(NodeService nodeService) {
-        this.nodeService = nodeService;
+    @Autowired
+    public Runner(SchedulingService schedulingService) {
+        this.schedulingService = schedulingService;
     }
 
     @Override
     public void run(String... args) throws Exception {
-        Node ebi01 = nodeService.findNodeByName("Ebi01");
-        System.out.println("GroveMoisture");
-        ebi01.getGroveByType(GroveMoisture.class).ifPresent(m -> {
-            try {
-                System.out.println("Moisture: " + m.readMoisture());
-                System.out.println("isPassive: " + m.isPassive());
-            } catch (WioException e) {
-                e.printStackTrace();
+        schedulingService.build("Ebi01", (node, context) -> {
+            System.out.println("Running: " + new Date());
+            boolean online = node.isOnline();
+            if (online) {
+                Optional<GroveTempHumPro> temp = node.getGroveByType(GroveTempHumPro.class);
+                System.out.println(temp.get().readHumidity());
             }
-        });
-        System.out.println("GroveTempHumPro");
-        ebi01.getGroveByType(GroveTempHumPro.class).ifPresent(m -> {
-            try {
-                System.out.println("Humidity: " + m.readHumidity());
-                System.out.println("Temperature: " + m.readTemperature());
-                System.out.println("TemperatureInFahrenheit: " + m.readTemperatureInFahrenheit());
-                System.out.println("isPassive: " + m.isPassive());
-            } catch (WioException e) {
-                e.printStackTrace();
-            }
-        });
-        System.out.println("GroveMagneticSwitch");
-        ebi01.getGroveByType(GroveMagneticSwitch.class).ifPresent(m -> {
-            try {
-                System.out.println("Approach: " + m.readApproach());
-                System.out.println("isPassive: " + m.isPassive());
-            } catch (WioException e) {
-                e.printStackTrace();
-            }
-        });
-        System.out.println(ebi01.getGroves());
-        ebi01.setEventHandler((e, n) -> {
-            System.out.println(e);
-        });
-        Node openweb01 = nodeService.findNodeByName("OpenWeb01");
-        openweb01.setEventHandler((e, n) -> {
-            System.out.println(e);
-        });
-
+            return secondsLater(30);
+        }).build();
     }
 }
 

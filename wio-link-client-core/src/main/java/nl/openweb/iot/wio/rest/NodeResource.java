@@ -50,8 +50,8 @@ public interface NodeResource {
     @RequestMapping(method = RequestMethod.POST, value = "/{groveInstanceName}/{propertyName}/{arg1}/{arg2}/{arg3}/{arg4}")
     WriteResponse writeProperty(@RequestParam("access_token") String nodeToken, @PathVariable("groveInstanceName") String groveInstanceName, @PathVariable("propertyName") String propertyName, @PathVariable("arg1") String arg1, @PathVariable("arg2") String arg2, @PathVariable("arg3") String arg3, @PathVariable("arg4") String arg4) throws WioException;
 
-    @RequestMapping(method = RequestMethod.POST, value = "/v1/node/pm/sleep/{sleepTime}")
-    SleepResponse sleep(@RequestParam("access_token") String nodeToken, @PathVariable("sleepTime") String sleepTimeSec) throws WioException;
+    @RequestMapping(method = RequestMethod.POST, value = "/pm/sleep/{sleepTime}")
+    SleepResponse sleep(@RequestParam("access_token") String nodeToken, @PathVariable("sleepTime") int sleepTimeSec) throws WioException;
 
     @Data
     public static class NodeInfo {

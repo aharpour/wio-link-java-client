@@ -11,7 +11,7 @@ import nl.openweb.iot.wio.db.NodeBean;
 import nl.openweb.iot.wio.rest.NodeResource;
 
 @Getter
-public final class NodeImpl implements Node {
+public class NodeImpl implements Node {
 
     public static final int FIVE_HOURS_IN_SEC = 18000;
     private final String name;
@@ -83,7 +83,7 @@ public final class NodeImpl implements Node {
     @Override
     public void sleep(int sec) throws WioException {
         if (sec > 0) {
-            nodeResource.sleep(nodeKey, Integer.toString(Math.min(sec, FIVE_HOURS_IN_SEC)));
+            nodeResource.sleep(nodeKey, Math.min(sec, FIVE_HOURS_IN_SEC));
         }
     }
 
