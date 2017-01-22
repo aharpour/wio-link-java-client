@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import feign.Response;
 import feign.codec.ErrorDecoder;
 import lombok.Data;
-import nl.openweb.iot.wio.WioException;
 
 
 public class WioErrorDecoder extends ErrorDecoder.Default implements ErrorDecoder {
@@ -22,12 +21,12 @@ public class WioErrorDecoder extends ErrorDecoder.Default implements ErrorDecode
 
     public Exception decode(String methodKey, Response response) {
         Exception result;
-        if (response.status() == 400) {
+        if (response.status() == 400 || response.status() == 404) {
             ErrorResponse errorResponse = getErrorResponse(response);
             if (errorResponse != null) {
-                result = new WioException(errorResponse.getError());
+                result = new WioRestException(errorResponse.getError(), response.status());
             } else {
-                result = new WioException("Error message is not available");
+                result = new WioRestException("Error message is not available", response.status());
             }
         } else {
             result = super.decode(methodKey, response);
