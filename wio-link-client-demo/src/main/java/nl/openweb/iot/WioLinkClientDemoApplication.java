@@ -7,19 +7,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.netflix.feign.EnableFeignClients;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Component;
 
+import nl.openweb.iot.wio.domain.grove.GroveMagneticSwitch;
+import nl.openweb.iot.wio.domain.grove.GroveMoisture;
 import nl.openweb.iot.wio.domain.grove.GroveTempHumPro;
 import nl.openweb.iot.wio.scheduling.SchedulingService;
 
 
-import static nl.openweb.iot.wio.scheduling.SchedulingUtils.secondsLater;
+import static nl.openweb.iot.wio.scheduling.SchedulingUtils.minutesLater;
 
 @SpringBootApplication
-@EnableFeignClients
-@EnableScheduling
 public class WioLinkClientDemoApplication {
 
     public static void main(String[] args) {
@@ -43,10 +41,15 @@ class Runner implements CommandLineRunner {
             System.out.println("Running: " + new Date());
             Optional<GroveTempHumPro> temp = node.getGroveByType(GroveTempHumPro.class);
             System.out.println(temp.get().readHumidity());
-            return secondsLater(30);
+            System.out.println(temp.get().readTemperature());
+            GroveMoisture moisture = node.getGroveByType(GroveMoisture.class).get();
+            System.out.println(moisture.readMoisture());
+            GroveMagneticSwitch magneticSwitch = node.getGroveByType(GroveMagneticSwitch.class).get();
+            System.out.println(magneticSwitch.readApproach());
+            return minutesLater(30);
         }).setEventHandler((e, n, c) -> {
             System.out.println(e);
-        }).build();
+        }).setForceSleep(false).build();
     }
 }
 
