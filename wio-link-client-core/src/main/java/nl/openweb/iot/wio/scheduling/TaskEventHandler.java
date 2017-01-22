@@ -5,7 +5,7 @@ import java.util.Map;
 import nl.openweb.iot.wio.WioException;
 import nl.openweb.iot.wio.domain.Node;
 
-interface TaskEventHandler {
+public interface TaskEventHandler {
 
     void handle(Map<String, String> map, Node node, TaskContext context) throws WioException;
 }

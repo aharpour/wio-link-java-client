@@ -11,7 +11,7 @@ public interface ScheduledTask {
     TaskExecutionResult execute(Node node, TaskContext context) throws WioException;
 
     @Getter
-    class TaskExecutionResult {
+    public class TaskExecutionResult {
         private Calendar nextExecution;
         private boolean keepAwake = false;
         private boolean forceSleep = false;

@@ -41,12 +41,11 @@ class Runner implements CommandLineRunner {
     public void run(String... args) throws Exception {
         schedulingService.build("Ebi01", (node, context) -> {
             System.out.println("Running: " + new Date());
-            boolean online = node.isOnline();
-            if (online) {
-                Optional<GroveTempHumPro> temp = node.getGroveByType(GroveTempHumPro.class);
-                System.out.println(temp.get().readHumidity());
-            }
+            Optional<GroveTempHumPro> temp = node.getGroveByType(GroveTempHumPro.class);
+            System.out.println(temp.get().readHumidity());
             return secondsLater(30);
+        }).setEventHandler((e, n, c) -> {
+            System.out.println(e);
         }).build();
     }
 }

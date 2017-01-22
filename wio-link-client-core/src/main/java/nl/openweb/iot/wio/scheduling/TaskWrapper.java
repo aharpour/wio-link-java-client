@@ -32,7 +32,7 @@ class TaskWrapper implements Runnable {
     @Setter
     private EventHandlerWrapper eventHandler;
     @Setter(AccessLevel.PACKAGE)
-    private boolean terminate = false;
+    private volatile boolean terminate = false;
 
     TaskWrapper(Node node, SchedulingService schedulingService, TaskContext context, ScheduledTask task, WioSettings settings) {
         this.taskId = UUID.randomUUID().toString();
@@ -58,29 +58,38 @@ class TaskWrapper implements Runnable {
         try {
             ScheduledTask.TaskExecutionResult result = task.execute(node, taskContext);
             result.validate();
-            canPutToSleep(result);
-            Calendar sleepUntil = (Calendar) result.getNextExecution().clone();
-            sleepUntil.add(Calendar.SECOND, -1 * settings.getWarmUpPeriodInSeconds());
-            Calendar now = Calendar.getInstance();
-            if (sleepUntil.after(now)) {
-                long until = (sleepUntil.getTimeInMillis() - now.getTimeInMillis()) / 1000;
-                node.sleep(new Long(until).intValue());
-            }
-            now = Calendar.getInstance();
-            if (result.getNextExecution().after(now)) {
-                schedulingService.schedule(this, result.getNextExecution().getTime());
-            } else {
-                now.add(Calendar.SECOND, 2);
-                if (!terminate) {
-                    schedulingService.schedule(this, now.getTime());
-                }
-            }
+            putToSleepIfNeeded(result);
+            scheduleNextRun(result);
         } catch (WioException e) {
             LOG.error(e.getMessage(), e);
             Calendar now = Calendar.getInstance();
             now.add(Calendar.SECOND, settings.getRetryAfterErrorInSec());
             if (!terminate) {
                 schedulingService.schedule(this, now.getTime());
+            }
+        }
+    }
+
+    private void scheduleNextRun(ScheduledTask.TaskExecutionResult result) {
+        if (!terminate) {
+            Calendar now = Calendar.getInstance();
+            if (result.getNextExecution().after(now)) {
+                schedulingService.schedule(this, result.getNextExecution().getTime());
+            } else {
+                now.add(Calendar.SECOND, 2);
+                schedulingService.schedule(this, now.getTime());
+            }
+        }
+    }
+
+    private void putToSleepIfNeeded(ScheduledTask.TaskExecutionResult result) throws WioException {
+        if (canPutToSleep(result)) {
+            Calendar sleepUntil = (Calendar) result.getNextExecution().clone();
+            sleepUntil.add(Calendar.SECOND, -1 * settings.getWarmUpPeriodInSeconds());
+            Calendar now = Calendar.getInstance();
+            if (sleepUntil.after(now)) {
+                long until = (sleepUntil.getTimeInMillis() - now.getTimeInMillis()) / 1000;
+                node.sleep(new Long(until).intValue());
             }
         }
     }
