@@ -21,7 +21,7 @@ public class WioErrorDecoder extends ErrorDecoder.Default implements ErrorDecode
 
     public Exception decode(String methodKey, Response response) {
         Exception result;
-        if (response.status() == 400 || response.status() == 404) {
+        if (response.status() == 400 || response.status() == 404 || response.status() == 408) {
             ErrorResponse errorResponse = getErrorResponse(response);
             if (errorResponse != null) {
                 result = new WioRestException(errorResponse.getError(), response.status());

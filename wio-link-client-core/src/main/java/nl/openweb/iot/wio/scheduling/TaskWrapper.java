@@ -60,7 +60,7 @@ class TaskWrapper implements Runnable {
             result.validate();
             putToSleepIfNeeded(result);
             scheduleNextRun(result);
-        } catch (WioException e) {
+        } catch (Exception e) {
             LOG.error(e.getMessage(), e);
             Calendar now = Calendar.getInstance();
             now.add(Calendar.SECOND, settings.getRetryAfterErrorInSec());

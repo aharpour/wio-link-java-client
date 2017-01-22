@@ -47,9 +47,7 @@ class Runner implements CommandLineRunner {
             GroveMagneticSwitch magneticSwitch = node.getGroveByType(GroveMagneticSwitch.class).get();
             System.out.println(magneticSwitch.readApproach());
             return minutesLater(30);
-        }).setEventHandler((e, n, c) -> {
-            System.out.println(e);
-        }).setForceSleep(false).build();
+        }).setEventHandler((e, n, c) -> System.out.println(e)).setForceSleep(false).build();
     }
 }
 
