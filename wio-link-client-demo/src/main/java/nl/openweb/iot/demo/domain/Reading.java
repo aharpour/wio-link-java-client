@@ -2,6 +2,8 @@ package nl.openweb.iot.demo.domain;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.DateFormat;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -20,7 +22,8 @@ public class Reading {
     private String id;
     private Double humidity;
     private Double temperature;
-    @Field(type = FieldType.Date, format = DateFormat.basic_date_time)
+    @Field(type = FieldType.Date, format = DateFormat.date_time)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd'T'HH:mm:ss.SSSZZ")
     private Date date;
 
     public Reading(Double humidity, Double temperature, Date date) {
