@@ -12,7 +12,7 @@ services:
       wio.password: "password"
     restart: always
   elasticsearch:
-    image: elasticsearch:5.1.2
+    image: elasticsearch:2.4.4
     volumes:
       - elasticsearch_data:/usr/share/elasticsearch/data
     environment:
@@ -22,7 +22,7 @@ services:
 #      - "9300:9300"
     restart: always
   kibana:
-    image: kibana:5.1.2
+    image: kibana:4.6.4
     ports:
       - "5601:5601"
     environment:
