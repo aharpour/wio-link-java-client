@@ -1,0 +1,33 @@
+version: '2'
+
+services:
+  app:
+    image: registry.open-web.nl:5043/wio-link-client-demo:0.1.0-SNAPSHOT
+    ports:
+    - "8080:8080"
+    environment:
+      spring.data.elasticsearch.cluster-name: "elasticsearch"
+      spring.data.elasticsearch.cluster-nodes: "elasticsearch:9300"
+      wio.username: "username"
+      wio.password: "password"
+    restart: always
+  elasticsearch:
+    image: elasticsearch:5.1.2
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    environment:
+      ES_JAVA_OPTS: "-Xms512m -Xmx1g"
+    ports:
+      - "9200:9200"
+#      - "9300:9300"
+    restart: always
+  kibana:
+    image: kibana:5.1.2
+    ports:
+      - "5601:5601"
+    environment:
+      ELASTICSEARCH_URL: "http://elasticsearch:9200"
+    restart: always
+volumes:
+  elasticsearch_data:
+    driver: local
