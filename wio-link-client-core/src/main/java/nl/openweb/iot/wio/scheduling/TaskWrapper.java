@@ -13,6 +13,7 @@ import lombok.Setter;
 import nl.openweb.iot.wio.WioException;
 import nl.openweb.iot.wio.WioSettings;
 import nl.openweb.iot.wio.domain.Node;
+import nl.openweb.iot.wio.rest.WioRestException;
 
 class TaskWrapper implements Runnable {
 
@@ -60,13 +61,23 @@ class TaskWrapper implements Runnable {
             result.validate();
             putToSleepIfNeeded(result);
             scheduleNextRun(result);
-        } catch (Exception e) {
-            LOG.error(e.getMessage(), e);
-            Calendar now = Calendar.getInstance();
-            now.add(Calendar.SECOND, settings.getRetryAfterErrorInSec());
-            if (!terminate) {
-                schedulingService.schedule(this, now.getTime());
+        } catch (WioRestException e) {
+            if (e.getResponseStatus() == 408) {
+                logErrorAndRetry(e, settings.getRetryAfterTimeoutInSec());
+            } else {
+                logErrorAndRetry(e, settings.getRetryAfterErrorInSec());
             }
+        } catch (Exception e) {
+            logErrorAndRetry(e, settings.getRetryAfterErrorInSec());
+        }
+    }
+
+    private void logErrorAndRetry(Exception e, int retryAfterErrorInSec) {
+        Calendar now = Calendar.getInstance();
+        now.add(Calendar.SECOND, retryAfterErrorInSec);
+        LOG.error(e.getMessage(), e);
+        if (!terminate) {
+            schedulingService.schedule(this, now.getTime());
         }
     }
 

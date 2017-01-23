@@ -19,6 +19,7 @@ public class WioSettings {
     private int taskSchedulerPoolSize = 3;
     private int warmUpPeriodInSeconds = 20;
     private int retryAfterErrorInSec = 5 * 60;
+    private int retryAfterTimeoutInSec = 3;
     private boolean trySeedSso = true;
 
 }
