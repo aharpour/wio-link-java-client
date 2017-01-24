@@ -14,6 +14,6 @@ public class GroveLuminance extends Grove {
     }
 
     public Double readLuminance() throws WioException {
-        return toDouble(readSimpleProperty("luminance", "lux"));
+        return toDouble(readProperty("luminance", "lux"));
     }
 }

@@ -15,7 +15,7 @@ public class GroveMoisture extends Grove {
     }
 
     public Integer readMoisture() throws WioException {
-        return toInteger(readSimpleProperty("moisture"));
+        return toInteger(readProperty("moisture"));
     }
 
 }

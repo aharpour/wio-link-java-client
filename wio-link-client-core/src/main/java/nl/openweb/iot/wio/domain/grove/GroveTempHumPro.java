@@ -15,14 +15,14 @@ public class GroveTempHumPro extends Grove {
     }
 
     public Double readHumidity() throws WioException {
-        return toDouble(readSimpleProperty("humidity"));
+        return toDouble(readProperty("humidity"));
     }
 
     public Double readTemperature() throws WioException {
-        return toDouble(readSimpleProperty("temperature", "celsius_degree"));
+        return toDouble(readProperty("temperature", "celsius_degree"));
     }
 
     public Double readTemperatureInFahrenheit() throws WioException {
-        return toDouble(readSimpleProperty("temperature_f", "fahrenheit_degree"));
+        return toDouble(readProperty("temperature_f", "fahrenheit_degree"));
     }
 }

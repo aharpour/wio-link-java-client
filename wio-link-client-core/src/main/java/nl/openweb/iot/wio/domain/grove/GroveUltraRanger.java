@@ -14,10 +14,10 @@ public class GroveUltraRanger extends Grove {
     }
 
     public Double readRangeInCm() throws WioException {
-        return toDouble(readSimpleProperty("range_in_cm", "range_cm"));
+        return toDouble(readProperty("range_in_cm", "range_cm"));
     }
 
     public Double readRangeInInch() throws WioException {
-        return toDouble(readSimpleProperty("range_in_inch", "range_inch"));
+        return toDouble(readProperty("range_in_inch", "range_inch"));
     }
 }

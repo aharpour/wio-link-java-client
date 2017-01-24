@@ -29,11 +29,22 @@ public abstract class Grove {
         this.nodeResource = nodeResource;
     }
 
-    protected String readSimpleProperty(String propertyName) throws WioException {
-        return this.readSimpleProperty(propertyName, propertyName);
+    protected boolean writeProperty(String propertyName, String value) throws WioException {
+        NodeResource.WriteResponse response = nodeResource.writeProperty(parent.getNodeKey(), name, propertyName, value);
+        return "ok".equals(response.getResult());
     }
 
-    protected String readSimpleProperty(String propertyName, String jsonName) throws WioException {
+
+    protected boolean writeProperty(String propertyName, String value1, String value2) throws WioException {
+        NodeResource.WriteResponse response = nodeResource.writeProperty(parent.getNodeKey(), name, propertyName, value1, value2);
+        return "ok".equals(response.getResult());
+    }
+
+    protected String readProperty(String propertyName) throws WioException {
+        return this.readProperty(propertyName, propertyName);
+    }
+
+    protected String readProperty(String propertyName, String jsonName) throws WioException {
         return this.nodeResource.readProperty(parent.getNodeKey(), name, propertyName).get(jsonName);
     }
 

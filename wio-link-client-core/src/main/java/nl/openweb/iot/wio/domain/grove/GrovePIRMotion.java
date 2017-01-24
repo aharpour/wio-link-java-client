@@ -14,6 +14,6 @@ public class GrovePIRMotion extends Grove {
     }
 
     public Integer readApproach() throws WioException {
-        return toInteger(readSimpleProperty("approach"));
+        return toInteger(readProperty("approach"));
     }
 }

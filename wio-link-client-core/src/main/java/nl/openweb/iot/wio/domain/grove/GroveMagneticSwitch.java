@@ -16,6 +16,6 @@ public class GroveMagneticSwitch extends Grove {
     }
 
     public Integer readApproach() throws WioException {
-        return toInteger(readSimpleProperty("approach", "mag_approach"));
+        return toInteger(readProperty("approach", "mag_approach"));
     }
 }
