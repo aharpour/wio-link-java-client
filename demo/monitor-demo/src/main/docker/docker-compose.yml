@@ -2,7 +2,7 @@ version: '2'
 
 services:
   app:
-    image: registry.open-web.nl:5043/wio-link-client-core-demo:0.1.0-SNAPSHOT
+    image: registry.open-web.nl:5043/wio-link-client-core-monitor-demo:0.1.0-SNAPSHOT
     ports:
     - "8080:8080"
     environment:
@@ -10,6 +10,7 @@ services:
       spring.data.elasticsearch.cluster-nodes: "elasticsearch:9300"
       wio.username: "username"
       wio.password: "password"
+      wio.monitor.node-names: ""
     restart: always
   elasticsearch:
     image: elasticsearch:2.4.4

@@ -20,6 +20,6 @@ public class GroveDust extends Grove {
 
     @Override
     public int getWarmUpTime() {
-        return 90;
+        return 180;
     }
 }
