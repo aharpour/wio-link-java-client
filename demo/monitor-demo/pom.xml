@@ -4,8 +4,8 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>nl.openweb.iot</groupId>
-	<artifactId>wio-link-client-core-monitor-demo</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>wio-link-client-monitor-demo</artifactId>
+	<version>0.1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>monitor-demo</name>
@@ -48,6 +48,30 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>0.4.11</version>
+				<configuration>
+					<imageName>registry.open-web.nl:5043/${project.artifactId}</imageName>
+					<dockerDirectory>src/main/docker</dockerDirectory>
+					<resources>
+						<resource>
+							<directory>${project.build.directory}</directory>
+							<include>${project.build.finalName}.jar</include>
+						</resource>
+					</resources>
+					<imageTags>
+						<imageTag>${project.version}</imageTag>
+						<!--<imageTag>latest</imageTag>-->
+					</imageTags>
+					<forceTags>true</forceTags>
+					<serverId>openweb-docker-registry</serverId>
+					<registryUrl>registry.open-web.nl:5043/v2/</registryUrl>
+					<pullOnBuild>true</pullOnBuild>
+				</configuration>
+			</plugin>
+
 		</plugins>
 	</build>
 
