@@ -17,4 +17,9 @@ public class GroveDust extends Grove {
     public Double readDust() throws WioException {
         return toDouble(readProperty("dust"));
     }
+
+    @Override
+    public int getWarmUpTime() {
+        return 90;
+    }
 }

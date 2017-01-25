@@ -59,10 +59,10 @@ class TaskWrapper implements Runnable {
         try {
             ScheduledTask.TaskExecutionResult result = task.execute(node, taskContext);
             result.validate();
-            putToSleepIfNeeded(result);
+            putToSleepIfNeeded(result, node);
             scheduleNextRun(result);
         } catch (WioRestException e) {
-            if (e.getResponseStatus() == 408) {
+            if (e.getResponseStatus() == 408 || e.getResponseStatus() == 404) {
                 logErrorAndRetry(e, settings.getRetryAfterTimeoutInSec());
             } else {
                 logErrorAndRetry(e, settings.getRetryAfterErrorInSec());
@@ -93,14 +93,15 @@ class TaskWrapper implements Runnable {
         }
     }
 
-    private void putToSleepIfNeeded(ScheduledTask.TaskExecutionResult result) throws WioException {
+    private void putToSleepIfNeeded(ScheduledTask.TaskExecutionResult result, Node node) throws WioException {
         if (canPutToSleep(result)) {
             Calendar sleepUntil = (Calendar) result.getNextExecution().clone();
-            sleepUntil.add(Calendar.SECOND, -1 * settings.getWarmUpPeriodInSeconds());
+            int warmUpPeriodInSeconds = Math.max(settings.getWarmUpPeriodInSeconds(), node.getWarmUpTime());
+            sleepUntil.add(Calendar.SECOND, -1 * warmUpPeriodInSeconds);
             Calendar now = Calendar.getInstance();
             if (sleepUntil.after(now)) {
                 long until = (sleepUntil.getTimeInMillis() - now.getTimeInMillis()) / 1000;
-                node.sleep(new Long(until).intValue());
+                this.node.sleep(new Long(until).intValue());
             }
         }
     }

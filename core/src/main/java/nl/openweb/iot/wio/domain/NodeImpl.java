@@ -81,6 +81,15 @@ public class NodeImpl implements Node {
     }
 
     @Override
+    public int getWarmUpTime() {
+        int time = 0;
+        for (Grove g : getGroves()) {
+            time = Math.max(time, g.getWarmUpTime());
+        }
+        return time;
+    }
+
+    @Override
     public void sleep(int sec) throws WioException {
         if (sec > 0) {
             nodeResource.sleep(nodeKey, Math.min(sec, FIVE_HOURS_IN_SEC));

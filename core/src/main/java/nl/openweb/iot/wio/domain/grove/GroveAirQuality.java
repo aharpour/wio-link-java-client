@@ -17,4 +17,9 @@ public class GroveAirQuality extends Grove {
     public Integer readQuality() throws WioException {
         return toInteger(readProperty("quality"));
     }
+
+    @Override
+    public int getWarmUpTime() {
+        return 30;
+    }
 }

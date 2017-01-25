@@ -29,6 +29,10 @@ public abstract class Grove {
         this.nodeResource = nodeResource;
     }
 
+    public int getWarmUpTime() {
+        return 0;
+    }
+
     protected boolean writeProperty(String propertyName, String value) throws WioException {
         NodeResource.WriteResponse response = nodeResource.writeProperty(parent.getNodeKey(), name, propertyName, value);
         return "ok".equals(response.getResult());

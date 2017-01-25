@@ -36,4 +36,6 @@ public interface Node {
     void sleep(int sec) throws WioException;
 
     List<Grove> getGroves();
+
+    int getWarmUpTime();
 }
