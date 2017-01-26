@@ -14,7 +14,7 @@ import lombok.Setter;
 @Component
 @ConfigurationProperties("wio.monitor")
 public class MonitorSettings {
-    private int periodInMin = 5;
+    private int periodInMin = 10;
     private boolean keepAwake = false;
     private boolean forceSleep = false;
     private List<String> nodeNames = new ArrayList<String>();
