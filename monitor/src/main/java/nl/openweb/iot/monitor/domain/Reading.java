@@ -20,9 +20,11 @@ public class Reading {
 
     @Id
     private String id;
-    @Field(index = FieldIndex.not_analyzed)
+
+    @Field(type = FieldType.String, index = FieldIndex.not_analyzed, store = true)
     private String nodeName;
-    @Field(index = FieldIndex.not_analyzed)
+
+    @Field(type = FieldType.String, index = FieldIndex.not_analyzed, store = true)
     private String[] labels;
     @Field(type = FieldType.Date, format = DateFormat.date_time)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZZ")
