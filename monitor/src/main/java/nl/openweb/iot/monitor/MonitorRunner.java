@@ -5,12 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.ApplicationContext;
-import org.springframework.stereotype.Component;
 
 import nl.openweb.iot.monitor.repository.ReadingRepository;
 import nl.openweb.iot.wio.scheduling.SchedulingService;
-
-@Component
 
 public class MonitorRunner implements CommandLineRunner {
 

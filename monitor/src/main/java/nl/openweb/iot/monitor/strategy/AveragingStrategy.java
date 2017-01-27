@@ -11,7 +11,6 @@ public class AveragingStrategy implements ReadingStrategy {
 
     private MonitorSettings settings;
 
-
     @Override
     public double readDouble(Supplier<Double> supplier) throws WioException {
         DescriptiveStatistics statistics = new DescriptiveStatistics();

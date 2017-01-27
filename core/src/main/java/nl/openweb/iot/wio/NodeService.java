@@ -53,7 +53,11 @@ public class NodeService {
             for (NodesResource.ListResponse.Node node : list.getNodes()) {
                 NodeBean nodeBean = new NodeBean(node);
                 if (node.isOnline()) {
-                    initializeNodeBean(nodeBean);
+                    try {
+                        initializeNodeBean(nodeBean);
+                    } catch (WioException e) {
+                        LOG.warn("Failed to initialize node " + nodeBean.getName(), e);
+                    }
                 }
                 nodeRepository.save(nodeBean);
             }
