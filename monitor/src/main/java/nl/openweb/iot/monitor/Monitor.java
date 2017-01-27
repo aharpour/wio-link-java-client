@@ -30,6 +30,7 @@ public class Monitor implements ScheduledTask {
 
     @Override
     public TaskExecutionResult execute(Node node, TaskContext context) throws WioException {
+        TaskExecutionResult nextRun = SchedulingUtils.minutesLater(period);
         ReadingRepository repository = context.getBean(ReadingRepository.class);
         Reading reading = new Reading(node.getName());
         for (Grove grove : node.getGroves()) {
@@ -39,7 +40,7 @@ public class Monitor implements ScheduledTask {
         if (alertMonitor != null) {
             alertMonitor.accept(reading, context);
         }
-        return SchedulingUtils.minutesLater(period);
+        return nextRun;
     }
 
 

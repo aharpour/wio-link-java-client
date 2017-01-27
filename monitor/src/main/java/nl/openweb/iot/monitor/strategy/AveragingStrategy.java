@@ -14,7 +14,7 @@ public class AveragingStrategy implements ReadingStrategy {
     @Override
     public double readDouble(Supplier<Double> supplier) throws WioException {
         DescriptiveStatistics statistics = new DescriptiveStatistics();
-        for (int i = 0; i < settings.getNumberOfReadingToAverage(); i++) {
+        for (int i = 0; i < settings.getReadingsPerRound(); i++) {
             statistics.addValue(supplier.get());
         }
         return statistics.getMean();
@@ -23,7 +23,7 @@ public class AveragingStrategy implements ReadingStrategy {
     @Override
     public int readInteger(Supplier<Integer> supplier) throws WioException {
         DescriptiveStatistics statistics = new DescriptiveStatistics();
-        for (int i = 0; i < settings.getNumberOfReadingToAverage(); i++) {
+        for (int i = 0; i < settings.getReadingsPerRound(); i++) {
             statistics.addValue(supplier.get());
         }
         return new Long(Math.round(statistics.getMean())).intValue();
