@@ -18,4 +18,5 @@ public class MonitorSettings {
     private boolean keepAwake = false;
     private boolean forceSleep = false;
     private List<String> nodeNames = new ArrayList<String>();
+    private int numberOfReadingToAverage = 3;
 }

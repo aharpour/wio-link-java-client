@@ -40,6 +40,11 @@
         <artifactId>spring-data-commons</artifactId>
         <version>1.12.6.RELEASE</version>
       </dependency>
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-math3</artifactId>
+        <version>3.6.1</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 

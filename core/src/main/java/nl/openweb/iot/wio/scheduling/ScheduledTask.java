@@ -6,6 +6,7 @@ import lombok.Getter;
 import nl.openweb.iot.wio.WioException;
 import nl.openweb.iot.wio.domain.Node;
 
+@FunctionalInterface
 public interface ScheduledTask {
 
     TaskExecutionResult execute(Node node, TaskContext context) throws WioException;
