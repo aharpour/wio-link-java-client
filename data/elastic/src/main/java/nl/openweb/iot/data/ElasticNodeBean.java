@@ -45,6 +45,7 @@ public class ElasticNodeBean {
                 list.add(new ElasticGroveBean(grove));
             }
         }
+        this.groves = list;
     }
 
     public NodeBean toNodeBean() {

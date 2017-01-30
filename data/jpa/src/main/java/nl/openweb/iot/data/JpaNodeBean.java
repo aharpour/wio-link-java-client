@@ -40,8 +40,8 @@ public class JpaNodeBean {
             for (GroveBean grove : groves) {
                 list.add(new JpaGroveBean(grove));
             }
-
         }
+        this.groves = list;
     }
 
     public NodeBean toNodeBean() {
