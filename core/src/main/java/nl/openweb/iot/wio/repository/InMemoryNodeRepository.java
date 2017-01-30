@@ -7,14 +7,10 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.apache.commons.lang.StringUtils;
-import org.springframework.stereotype.Service;
 
 import nl.openweb.iot.wio.db.NodeBean;
 import nl.openweb.iot.wio.rest.NodesResource;
 
-
-@Service
-// @ConditionalOnMissingBean(NodeRepository.class)
 public class InMemoryNodeRepository implements NodeRepository<String> {
 
     private Map<String, NodeBean> data = new ConcurrentHashMap<>();

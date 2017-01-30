@@ -50,7 +50,8 @@
 
   <modules>
     <module>core</module>
-    <module>demo</module>
+    <module>data</module>
     <module>monitor</module>
+    <module>demo</module>
   </modules>
 </project>
