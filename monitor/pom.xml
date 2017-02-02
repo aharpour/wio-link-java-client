@@ -19,6 +19,12 @@
     </dependency>
 
     <dependency>
+      <groupId>nl.openweb.iot</groupId>
+      <artifactId>wio-link-client-data-elastic</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+    <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <optional>true</optional>
@@ -28,11 +34,6 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-configuration-processor</artifactId>
       <optional>true</optional>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
     </dependency>
 
     <dependency>
