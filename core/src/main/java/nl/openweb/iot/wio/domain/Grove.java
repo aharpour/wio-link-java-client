@@ -52,7 +52,7 @@ public abstract class Grove {
         return this.nodeResource.readProperty(parent.getNodeKey(), name, propertyName).get(jsonName);
     }
 
-    protected Double toDouble(String value) {
+    protected static Double toDouble(String value) {
         Double result = null;
         if (StringUtils.isNotBlank(value) && NumberUtils.isNumber(value)) {
             result = Double.parseDouble(value);
@@ -60,7 +60,7 @@ public abstract class Grove {
         return result;
     }
 
-    protected Integer toInteger(String value) {
+    protected static Integer toInteger(String value) {
         Integer result = null;
         if (StringUtils.isNotBlank(value) && NumberUtils.isNumber(value)) {
             result = Integer.parseInt(value);

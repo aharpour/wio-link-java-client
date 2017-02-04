@@ -29,7 +29,7 @@ import nl.openweb.iot.wio.rest.UserResource;
 @Service
 public class NodeService {
 
-    private static final Pattern CALL_PATTERN = Pattern.compile("^([a-zA-Z]*) /v1/node/(([a-zA-Z]*)(D|A|U|I2C)[0-9])/[^\\s]* -> .*$");
+    private static final Pattern CALL_PATTERN = Pattern.compile("^([a-zA-Z]*) /v1/node/(([a-zA-Z0-9]*)(D|A|UART|I2C)[0-9])/[^\\s]* -> .*$");
     private static final Pattern EVENT_PATTERN = Pattern.compile("^Event (([a-zA-Z]*)(D|A|U|I2C)[0-9]) [^\\s]*$");
 
     private static final Logger LOG = LoggerFactory.getLogger(NodeService.class);
