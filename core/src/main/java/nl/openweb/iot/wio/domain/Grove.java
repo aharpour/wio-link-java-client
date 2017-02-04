@@ -33,15 +33,24 @@ public abstract class Grove {
         return 0;
     }
 
-    protected boolean writeProperty(String propertyName, String value) throws WioException {
-        NodeResource.WriteResponse response = nodeResource.writeProperty(parent.getNodeKey(), name, propertyName, value);
-        return "ok".equals(response.getResult());
+    protected boolean writeProperty(String propertyName) throws WioException {
+        return writeResponseToBoolean(nodeResource.writeProperty(parent.getNodeKey(), name, propertyName));
     }
 
+    protected boolean writeProperty(String propertyName, String value) throws WioException {
+        return writeResponseToBoolean(nodeResource.writeProperty(parent.getNodeKey(), name, propertyName, value));
+    }
 
     protected boolean writeProperty(String propertyName, String value1, String value2) throws WioException {
-        NodeResource.WriteResponse response = nodeResource.writeProperty(parent.getNodeKey(), name, propertyName, value1, value2);
-        return "ok".equals(response.getResult());
+        return writeResponseToBoolean(nodeResource.writeProperty(parent.getNodeKey(), name, propertyName, value1, value2));
+    }
+
+    protected boolean writeProperty(String propertyName, String value1, String value2, String value3) throws WioException {
+        return writeResponseToBoolean(nodeResource.writeProperty(parent.getNodeKey(), name, propertyName, value1, value2, value3));
+    }
+
+    protected boolean writeProperty(String propertyName, String value1, String value2, String value3, String value4) throws WioException {
+        return writeResponseToBoolean(nodeResource.writeProperty(parent.getNodeKey(), name, propertyName, value1, value2, value3, value4));
     }
 
     protected String readProperty(String propertyName) throws WioException {
@@ -66,5 +75,9 @@ public abstract class Grove {
             result = Integer.parseInt(value);
         }
         return result;
+    }
+
+    private boolean writeResponseToBoolean(NodeResource.WriteResponse response) {
+        return "ok".equals(response.getResult());
     }
 }

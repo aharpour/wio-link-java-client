@@ -5,10 +5,10 @@ import nl.openweb.iot.wio.domain.Node;
 import nl.openweb.iot.wio.domain.Type;
 import nl.openweb.iot.wio.rest.NodeResource;
 
-@Type("GroveTempHumPro")
-public class GroveTempHumPro extends GroveTempHum {
+@Type
+public class GroveOLED12864 extends GroveOLED {
 
-    public GroveTempHumPro(GroveBean groveBean, Node parent, NodeResource nodeResource) {
+    public GroveOLED12864(GroveBean groveBean, Node parent, NodeResource nodeResource) {
         super(groveBean, parent, nodeResource);
     }
 }
