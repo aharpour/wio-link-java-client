@@ -18,6 +18,26 @@ public class GenericGrove extends Grove {
     }
 
     @Override
+    public boolean writeProperty(String propertyName) throws WioException {
+        return super.writeProperty(propertyName);
+    }
+
+    @Override
+    public boolean writeProperty(String propertyName, String value1, String value2) throws WioException {
+        return super.writeProperty(propertyName, value1, value2);
+    }
+
+    @Override
+    public boolean writeProperty(String propertyName, String value1, String value2, String value3) throws WioException {
+        return super.writeProperty(propertyName, value1, value2, value3);
+    }
+
+    @Override
+    public boolean writeProperty(String propertyName, String value1, String value2, String value3, String value4) throws WioException {
+        return super.writeProperty(propertyName, value1, value2, value3, value4);
+    }
+
+    @Override
     public String readProperty(String propertyName) throws WioException {
         return super.readProperty(propertyName);
     }
@@ -26,4 +46,5 @@ public class GenericGrove extends Grove {
     public String readProperty(String propertyName, String jsonName) throws WioException {
         return super.readProperty(propertyName, jsonName);
     }
+
 }

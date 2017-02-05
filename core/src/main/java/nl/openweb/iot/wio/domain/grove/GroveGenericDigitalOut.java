@@ -7,18 +7,26 @@ import nl.openweb.iot.wio.domain.Node;
 import nl.openweb.iot.wio.domain.Type;
 import nl.openweb.iot.wio.rest.NodeResource;
 
-@Type
-public class GroveRelay extends Grove {
+@Type("GenericDOut")
+public class GroveGenericDigitalOut extends Grove {
 
-    public GroveRelay(GroveBean groveBean, Node parent, NodeResource nodeResource) {
+    public GroveGenericDigitalOut(GroveBean groveBean, Node parent, NodeResource nodeResource) {
         super(groveBean, parent, nodeResource);
     }
 
-    public boolean readOnOff() throws WioException {
+    public boolean readOnOffStatus() throws WioException {
         return "1".equals(readProperty("onoff_status", "onoff"));
     }
 
     public boolean switchOnOff(boolean onOff) throws WioException {
         return writeProperty("onoff", onOff ? "1" : "0");
+    }
+
+    public boolean highPulse(int milliseconds) throws WioException {
+        return writeProperty("high_pulse", Integer.toString(milliseconds));
+    }
+
+    public boolean lowPulse(int milliseconds) throws WioException {
+        return writeProperty("low_pulse", Integer.toString(milliseconds));
     }
 }
