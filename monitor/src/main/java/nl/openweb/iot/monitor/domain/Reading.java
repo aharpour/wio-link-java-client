@@ -33,9 +33,11 @@ public class Reading {
     private Double luminance;
     private Boolean magneticSwitch;
     private Integer moisture;
+    private Integer loudness;
     private Boolean relay;
     private Integer servoAngle;
     private Double ultraRanger;
+    private Double co2;
 
 
 

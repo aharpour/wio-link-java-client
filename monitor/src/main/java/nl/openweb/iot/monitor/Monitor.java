@@ -17,21 +17,20 @@ import nl.openweb.iot.wio.scheduling.TaskContext;
 public class Monitor implements ScheduledTask {
 
     private final int period;
-    private final ReadingRepository readingRepository;
+    private final ReadingRepository repository;
     private final ReadingStrategy strategy;
     @Setter
     private BiConsumer<Reading, TaskContext> alertMonitor;
 
-    public Monitor(int period, ReadingRepository readingRepository, ReadingStrategy strategy) {
+    public Monitor(int period, ReadingRepository repository, ReadingStrategy strategy) {
         this.period = period;
-        this.readingRepository = readingRepository;
+        this.repository = repository;
         this.strategy = strategy;
     }
 
     @Override
     public TaskExecutionResult execute(Node node, TaskContext context) throws WioException {
         TaskExecutionResult nextRun = SchedulingUtils.minutesLater(period);
-        ReadingRepository repository = context.getBean(ReadingRepository.class);
         Reading reading = new Reading(node.getName());
         for (Grove grove : node.getGroves()) {
             addData(grove, reading);
@@ -43,10 +42,9 @@ public class Monitor implements ScheduledTask {
         return nextRun;
     }
 
-
     public void addData(Grove grove, Reading reading) throws WioException {
-        if (GroveTempHumPro.class.isAssignableFrom(grove.getClass())) {
-            addData((GroveTempHumPro) grove, reading);
+        if (GroveTempHum.class.isAssignableFrom(grove.getClass())) {
+            addData((GroveTempHum) grove, reading);
         } else if (GroveLuminance.class.isAssignableFrom(grove.getClass())) {
             addData((GroveLuminance) grove, reading);
         } else if (GroveDust.class.isAssignableFrom(grove.getClass())) {
@@ -63,12 +61,20 @@ public class Monitor implements ScheduledTask {
             addData((GroveUltraRanger) grove, reading);
         } else if (GroveServo.class.isAssignableFrom(grove.getClass())) {
             addData((GroveServo) grove, reading);
+        } else if (GroveLoudness.class.isAssignableFrom(grove.getClass())) {
+            addData((GroveLoudness) grove, reading);
+        } else if (GroveCo2.class.isAssignableFrom(grove.getClass())) {
+            addData((GroveCo2) grove, reading);
         }
     }
 
-    public void addData(GroveTempHumPro grove, Reading reading) throws WioException {
+    public void addData(GroveTempHum grove, Reading reading) throws WioException {
         reading.setTemperature(strategy.readDouble(grove::readTemperature));
         reading.setHumidity(strategy.readDouble(grove::readHumidity));
+    }
+
+    public void addData(GroveLoudness grove, Reading reading) throws WioException {
+        reading.setLoudness(strategy.readInteger(grove::readLoudness));
     }
 
     public void addData(GroveLuminance grove, Reading reading) throws WioException {
@@ -84,11 +90,15 @@ public class Monitor implements ScheduledTask {
     }
 
     public void addData(GroveRelay grove, Reading reading) throws WioException {
-        reading.setRelay(1 == grove.readOnOff());
+        reading.setRelay(grove.readOnOff());
     }
 
     public void addData(GroveMoisture grove, Reading reading) throws WioException {
         reading.setMoisture(strategy.readInteger(grove::readMoisture));
+    }
+
+    public void addData(GroveCo2 grove, Reading reading) throws WioException {
+        reading.setCo2(strategy.readDouble(grove::readConcentration));
     }
 
     public void addData(GroveMagneticSwitch grove, Reading reading) throws WioException {

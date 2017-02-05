@@ -19,4 +19,5 @@ public class MonitorSettings {
     private boolean forceSleep = false;
     private List<String> nodeNames = new ArrayList<String>();
     private int readingsPerRound = 3;
+    private boolean automatic = true;
 }
