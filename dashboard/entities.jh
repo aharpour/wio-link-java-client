@@ -1,0 +1,35 @@
+entity Node {
+  nodeSn String required,
+  name String required,
+  nodeKey String required,
+  dataXServer String,
+  board String
+}
+
+entity Task {
+  id String required,
+  name String required,
+  period Double required,
+  forceSleep Boolean,
+  keepAwake Boolean
+}
+
+entity TaskHandler {
+	name String required,
+	className String required
+}
+
+entity EventHandler {
+	name String required,
+	className String required
+}
+
+// ### Enumerations ###
+
+// ### Relationships ###
+
+relationship OneToOne {
+  Task{node} to Node,
+  Task{taskHandler} to TaskHandler,
+  Task{eventHandler} to EventHandler
+}
