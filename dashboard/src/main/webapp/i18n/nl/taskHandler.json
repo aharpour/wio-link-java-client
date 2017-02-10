@@ -1,0 +1,23 @@
+{
+    "dashboardApp": {
+        "taskHandler" : {
+            "home": {
+                "title": "Task Handlers",
+                "createLabel": "Maak een nieuwe Task Handler",
+                "createOrEditLabel": "Maak of wijzig een Task Handler",
+                "search": "Search for Task Handler"
+            },
+            "created": "A new Task Handler is created with identifier {{ param }}",
+            "updated": "A Task Handler is updated with identifier {{ param }}",
+            "deleted": "A Task Handler is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Bent u zeker dat u Task Handler {{ id }} wilt verwijderen?"
+            },
+            "detail": {
+                "title": "Task Handler"
+            },
+            "name": "Name",
+            "className": "Class Name"
+        }
+    }
+}

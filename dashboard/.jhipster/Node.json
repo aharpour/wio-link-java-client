@@ -1,0 +1,40 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "nodeSn",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "nodeKey",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "dataXServer",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "board",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20170210202145",
+    "entityTableName": "node",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no"
+}

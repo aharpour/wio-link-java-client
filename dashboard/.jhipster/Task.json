@@ -1,0 +1,58 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "node",
+            "otherEntityName": "node",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "task"
+        },
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "taskHandler",
+            "otherEntityName": "taskHandler",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "task"
+        },
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "eventHandler",
+            "otherEntityName": "eventHandler",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "task"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "period",
+            "fieldType": "Double",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "forceSleep",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "keepAwake",
+            "fieldType": "Boolean"
+        }
+    ],
+    "changelogDate": "20170210202145",
+    "entityTableName": "task",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no"
+}
