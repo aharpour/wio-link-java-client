@@ -3,7 +3,14 @@ entity Node {
   name String required,
   nodeKey String required,
   dataXServer String,
-  board String
+  board String,
+  initialized Boolean required
+}
+
+entity Grove {
+  name String required,
+  type String required,
+  passive Boolean required
 }
 
 entity Task {
@@ -29,7 +36,11 @@ entity EventHandler {
 // ### Relationships ###
 
 relationship OneToOne {
-  Task{node} to Node,
+  Task{node(nodeSn)} to Node,
   Task{taskHandler} to TaskHandler,
   Task{eventHandler} to EventHandler
+}
+
+relationship ManyToOne {
+	Grove{node(nodeSn)} to Node{groves}
 }
