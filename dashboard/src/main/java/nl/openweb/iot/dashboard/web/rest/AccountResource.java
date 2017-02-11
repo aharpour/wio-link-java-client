@@ -1,16 +1,10 @@
 package nl.openweb.iot.dashboard.web.rest;
 
-import com.codahale.metrics.annotation.Timed;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.util.Optional;
 
-import nl.openweb.iot.dashboard.domain.User;
-import nl.openweb.iot.dashboard.repository.UserRepository;
-import nl.openweb.iot.dashboard.security.SecurityUtils;
-import nl.openweb.iot.dashboard.service.MailService;
-import nl.openweb.iot.dashboard.service.UserService;
-import nl.openweb.iot.dashboard.service.dto.UserDTO;
-import nl.openweb.iot.dashboard.web.rest.vm.KeyAndPasswordVM;
-import nl.openweb.iot.dashboard.web.rest.vm.ManagedUserVM;
-import nl.openweb.iot.dashboard.web.rest.util.HeaderUtil;
+import com.codahale.metrics.annotation.Timed;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -21,9 +15,15 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import java.util.*;
+import nl.openweb.iot.dashboard.domain.User;
+import nl.openweb.iot.dashboard.repository.UserRepository;
+import nl.openweb.iot.dashboard.security.SecurityUtils;
+import nl.openweb.iot.dashboard.service.MailService;
+import nl.openweb.iot.dashboard.service.UserService;
+import nl.openweb.iot.dashboard.service.dto.UserDTO;
+import nl.openweb.iot.dashboard.web.rest.util.HeaderUtil;
+import nl.openweb.iot.dashboard.web.rest.vm.KeyAndPasswordVM;
+import nl.openweb.iot.dashboard.web.rest.vm.ManagedUserVM;
 
 /**
  * REST controller for managing the current user's account.

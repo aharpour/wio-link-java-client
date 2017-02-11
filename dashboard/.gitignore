@@ -7,7 +7,7 @@
 /src/test/javascript/PhantomJS*/
 
 ######################
-# Node
+# JpaNodeBean
 ######################
 node/
 node_tmp/
@@ -113,6 +113,7 @@ Desktop.ini
 /build/
 /bin/
 /deploy/
+/data/
 
 ######################
 # Logs

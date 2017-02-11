@@ -1,0 +1,54 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "groves",
+            "otherEntityName": "grove",
+            "otherEntityRelationshipName": "node"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "nodeSn",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "nodeKey",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "dataXServer",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "board",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "initialized",
+            "fieldType": "Boolean",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20170211104001",
+    "entityTableName": "node",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no"
+}

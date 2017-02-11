@@ -1,9 +1,6 @@
 package nl.openweb.iot.dashboard.config;
 
-import nl.openweb.iot.dashboard.security.AuthoritiesConstants;
-
-import io.github.jhipster.security.Http401UnauthorizedEntryPoint;
-import io.github.jhipster.security.AjaxLogoutSuccessHandler;
+import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -11,7 +8,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -29,7 +25,9 @@ import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.filter.CorsFilter;
 
-import javax.sql.DataSource;
+import io.github.jhipster.security.AjaxLogoutSuccessHandler;
+import io.github.jhipster.security.Http401UnauthorizedEntryPoint;
+import nl.openweb.iot.dashboard.security.AuthoritiesConstants;
 
 @Configuration
 public class OAuth2ServerConfiguration {

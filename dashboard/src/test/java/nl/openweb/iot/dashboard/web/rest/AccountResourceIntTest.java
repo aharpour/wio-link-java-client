@@ -1,15 +1,10 @@
 package nl.openweb.iot.dashboard.web.rest;
 
-import nl.openweb.iot.dashboard.DashboardApp;
-import nl.openweb.iot.dashboard.domain.Authority;
-import nl.openweb.iot.dashboard.domain.User;
-import nl.openweb.iot.dashboard.repository.AuthorityRepository;
-import nl.openweb.iot.dashboard.repository.UserRepository;
-import nl.openweb.iot.dashboard.security.AuthoritiesConstants;
-import nl.openweb.iot.dashboard.service.MailService;
-import nl.openweb.iot.dashboard.service.UserService;
-import nl.openweb.iot.dashboard.service.dto.UserDTO;
-import nl.openweb.iot.dashboard.web.rest.vm.ManagedUserVM;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,7 +18,17 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import nl.openweb.iot.dashboard.DashboardApp;
+import nl.openweb.iot.dashboard.domain.Authority;
+import nl.openweb.iot.dashboard.domain.User;
+import nl.openweb.iot.dashboard.repository.AuthorityRepository;
+import nl.openweb.iot.dashboard.repository.UserRepository;
+import nl.openweb.iot.dashboard.security.AuthoritiesConstants;
+import nl.openweb.iot.dashboard.service.MailService;
+import nl.openweb.iot.dashboard.service.UserService;
+import nl.openweb.iot.dashboard.service.dto.UserDTO;
+import nl.openweb.iot.dashboard.web.rest.vm.ManagedUserVM;
+
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.anyObject;

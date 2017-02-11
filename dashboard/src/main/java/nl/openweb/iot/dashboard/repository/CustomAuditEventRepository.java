@@ -1,7 +1,10 @@
 package nl.openweb.iot.dashboard.repository;
 
-import nl.openweb.iot.dashboard.config.audit.AuditEventConverter;
-import nl.openweb.iot.dashboard.domain.PersistentAuditEvent;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.List;
 
 import org.springframework.boot.actuate.audit.AuditEvent;
 import org.springframework.boot.actuate.audit.AuditEventRepository;
@@ -9,11 +12,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Date;
-import java.util.List;
+import nl.openweb.iot.dashboard.config.audit.AuditEventConverter;
+import nl.openweb.iot.dashboard.domain.PersistentAuditEvent;
 
 /**
  * An implementation of Spring Boot's AuditEventRepository.

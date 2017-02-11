@@ -1,10 +1,8 @@
 package nl.openweb.iot.dashboard.web.rest;
 
-import nl.openweb.iot.dashboard.DashboardApp;
-import nl.openweb.iot.dashboard.config.audit.AuditEventConverter;
-import nl.openweb.iot.dashboard.domain.PersistentAuditEvent;
-import nl.openweb.iot.dashboard.repository.PersistenceAuditEventRepository;
-import nl.openweb.iot.dashboard.service.AuditEventService;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,8 +18,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import nl.openweb.iot.dashboard.DashboardApp;
+import nl.openweb.iot.dashboard.config.audit.AuditEventConverter;
+import nl.openweb.iot.dashboard.domain.PersistentAuditEvent;
+import nl.openweb.iot.dashboard.repository.PersistenceAuditEventRepository;
+import nl.openweb.iot.dashboard.service.AuditEventService;
+
 
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;

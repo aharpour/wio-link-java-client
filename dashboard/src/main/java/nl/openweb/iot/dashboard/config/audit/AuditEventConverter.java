@@ -1,14 +1,14 @@
 package nl.openweb.iot.dashboard.config.audit;
 
-import nl.openweb.iot.dashboard.domain.PersistentAuditEvent;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.util.*;
 
 import org.springframework.boot.actuate.audit.AuditEvent;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Component;
 
-import java.time.Instant;
-import java.time.ZoneId;
-import java.util.*;
+import nl.openweb.iot.dashboard.domain.PersistentAuditEvent;
 
 @Component
 public class AuditEventConverter {

@@ -28,6 +28,36 @@
                     </span>
                 </a>
                 <ul class="dropdown-menu" ngbDropdownMenu>
+                    <li uiSrefActive="active">
+                        <a class="dropdown-item" routerLink="event-handler" (click)="collapseNavbar()">
+                            <i class="fa fa-fw fa-asterisk" aria-hidden="true"></i>
+                            <span jhiTranslate="global.menu.entities.eventHandler">Event Handler</span>
+                        </a>
+                    </li>
+                    <li uiSrefActive="active">
+                        <a class="dropdown-item" routerLink="grove" (click)="collapseNavbar()">
+                            <i class="fa fa-fw fa-asterisk" aria-hidden="true"></i>
+                            <span jhiTranslate="global.menu.entities.grove">Grove</span>
+                        </a>
+                    </li>
+                    <li uiSrefActive="active">
+                        <a class="dropdown-item" routerLink="node" (click)="collapseNavbar()">
+                            <i class="fa fa-fw fa-asterisk" aria-hidden="true"></i>
+                            <span jhiTranslate="global.menu.entities.node">Node</span>
+                        </a>
+                    </li>
+                    <li uiSrefActive="active">
+                        <a class="dropdown-item" routerLink="task" (click)="collapseNavbar()">
+                            <i class="fa fa-fw fa-asterisk" aria-hidden="true"></i>
+                            <span jhiTranslate="global.menu.entities.task">Task</span>
+                        </a>
+                    </li>
+                    <li uiSrefActive="active">
+                        <a class="dropdown-item" routerLink="task-handler" (click)="collapseNavbar()">
+                            <i class="fa fa-fw fa-asterisk" aria-hidden="true"></i>
+                            <span jhiTranslate="global.menu.entities.taskHandler">Task Handler</span>
+                        </a>
+                    </li>
                     <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
                 </ul>
             </li>

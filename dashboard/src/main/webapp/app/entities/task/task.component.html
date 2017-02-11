@@ -1,0 +1,81 @@
+<div>
+    <h2><span jhiTranslate="dashboardApp.task.home.title">Tasks</span>
+        <button class="btn btn-primary float-xs-right create-task" [routerLink]="['/', { outlets: { popup: ['task-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="dashboardApp.task.home.createLabel">
+            Create new Task
+            </span>
+        </button></h2>
+    <jhi-alert></jhi-alert>
+
+    <div class="container-fluid">
+        <div class="row">
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="tasks">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="dashboardApp.task.name">Name</span></th>
+            <th><span jhiTranslate="dashboardApp.task.period">Period</span></th>
+            <th><span jhiTranslate="dashboardApp.task.forceSleep">Force Sleep</span></th>
+            <th><span jhiTranslate="dashboardApp.task.keepAwake">Keep Awake</span></th>
+            <th><span jhiTranslate="dashboardApp.task.node">Node</span></th>
+            <th><span jhiTranslate="dashboardApp.task.taskHandler">Task Handler</span></th>
+            <th><span jhiTranslate="dashboardApp.task.eventHandler">Event Handler</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let task of tasks ;trackBy: trackId">
+                <td><a [routerLink]="['../task', task.id ]">{{task.id}}</a></td>
+                <td>{{task.name}}</td>
+                <td>{{task.period}}</td>
+                <td>{{task.forceSleep}}</td>
+                <td>{{task.keepAwake}}</td>
+                <td>
+                    <div *ngIf="task.node">
+                        <a [routerLink]="['../node', task.node?.id ]" >{{task.node?.nodeSn}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="task.taskHandler">
+                        <a [routerLink]="['../task-handler', task.taskHandler?.id ]" >{{task.taskHandler?.id}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="task.eventHandler">
+                        <a [routerLink]="['../event-handler', task.eventHandler?.id ]" >{{task.eventHandler?.id}}</a>
+                    </div>
+                </td>
+                <td class="text-xs-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../task', task.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'task/'+ task.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'task/'+ task.id + '/delete'} }]"
+                                replaceUrl="true"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

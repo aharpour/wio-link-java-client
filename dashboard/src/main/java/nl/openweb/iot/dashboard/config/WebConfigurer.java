@@ -1,8 +1,9 @@
 package nl.openweb.iot.dashboard.config;
 
-import io.github.jhipster.config.JHipsterConstants;
-import io.github.jhipster.config.JHipsterProperties;
-import io.github.jhipster.web.filter.CachingHttpHeadersFilter;
+import javax.servlet.*;
+import java.io.File;
+import java.nio.file.Paths;
+import java.util.EnumSet;
 
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.servlet.InstrumentedFilter;
@@ -11,7 +12,9 @@ import com.codahale.metrics.servlets.MetricsServlet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.embedded.*;
+import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
+import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
+import org.springframework.boot.context.embedded.MimeMappings;
 import org.springframework.boot.web.servlet.ServletContextInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,10 +23,9 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-import java.io.File;
-import java.nio.file.Paths;
-import java.util.*;
-import javax.servlet.*;
+import io.github.jhipster.config.JHipsterConstants;
+import io.github.jhipster.config.JHipsterProperties;
+import io.github.jhipster.web.filter.CachingHttpHeadersFilter;
 
 /**
  * Configuration of web application with Servlet 3.0 APIs.

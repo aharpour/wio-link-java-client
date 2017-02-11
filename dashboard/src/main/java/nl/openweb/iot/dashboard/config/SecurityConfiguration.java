@@ -1,7 +1,7 @@
 package nl.openweb.iot.dashboard.config;
 
 
-import io.github.jhipster.security.*;
+import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.context.annotation.Bean;
@@ -20,7 +20,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
 
-import javax.annotation.PostConstruct;
+import io.github.jhipster.security.AjaxLogoutSuccessHandler;
+import io.github.jhipster.security.Http401UnauthorizedEntryPoint;
 
 @Configuration
 @EnableWebSecurity

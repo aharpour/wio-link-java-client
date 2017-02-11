@@ -1,10 +1,10 @@
 package nl.openweb.iot.dashboard.web.rest.vm;
 
-import nl.openweb.iot.dashboard.service.dto.UserDTO;
 import javax.validation.constraints.Size;
-
 import java.time.ZonedDateTime;
 import java.util.Set;
+
+import nl.openweb.iot.dashboard.service.dto.UserDTO;
 
 /**
  * View Model extending the UserDTO, which is meant to be used in the user management UI.

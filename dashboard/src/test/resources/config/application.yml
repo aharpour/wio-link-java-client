@@ -82,6 +82,12 @@ jhipster:
         jmx.enabled: true
 
 # ===================================================================
+# Wio specific properties
+# ===================================================================
+wio:
+  base-url: https://us.wio.seeed.io
+
+# ===================================================================
 # Application specific properties
 # Add your own application properties here, see the ApplicationProperties class
 # to have type-safe configuration, like in the JHipsterProperties above
@@ -89,5 +95,8 @@ jhipster:
 # More documentation is available at:
 # https://jhipster.github.io/common-application-properties/
 # ===================================================================
+feign:
+  hystrix:
+    enabled: false
 
 application:

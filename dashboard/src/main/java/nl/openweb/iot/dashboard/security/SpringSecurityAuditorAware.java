@@ -1,9 +1,9 @@
 package nl.openweb.iot.dashboard.security;
 
-import nl.openweb.iot.dashboard.config.Constants;
-
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.stereotype.Component;
+
+import nl.openweb.iot.dashboard.config.Constants;
 
 /**
  * Implementation of AuditorAware based on Spring Security.

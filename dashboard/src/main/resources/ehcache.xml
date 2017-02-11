@@ -20,5 +20,17 @@
 
     <cache alias="nl.openweb.iot.dashboard.domain.User.persistentTokens" uses-template="simple"/>
 
+    <cache alias="nl.openweb.iot.dashboard.domain.EventHandler" uses-template="simple"/>
+
+    <cache alias="nl.openweb.iot.dashboard.domain.JpaGroveBean" uses-template="simple"/>
+
+    <cache alias="nl.openweb.iot.dashboard.domain.JpaNodeBean" uses-template="simple"/>
+
+    <cache alias="nl.openweb.iot.dashboard.domain.JpaNodeBean.groves" uses-template="simple"/>
+
+    <cache alias="nl.openweb.iot.dashboard.domain.Task" uses-template="simple"/>
+
+    <cache alias="nl.openweb.iot.dashboard.domain.TaskHandler" uses-template="simple"/>
+
     <!-- jhipster-needle-ehcache-add-entry -->
 </config>

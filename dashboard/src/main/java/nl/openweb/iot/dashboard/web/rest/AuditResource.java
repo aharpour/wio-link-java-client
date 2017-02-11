@@ -1,10 +1,9 @@
 package nl.openweb.iot.dashboard.web.rest;
 
-import nl.openweb.iot.dashboard.service.AuditEventService;
-import nl.openweb.iot.dashboard.web.rest.util.PaginationUtil;
+import java.net.URISyntaxException;
+import java.time.LocalDate;
+import java.util.List;
 
-import io.github.jhipster.web.util.ResponseUtil;
-import io.swagger.annotations.ApiParam;
 import org.springframework.boot.actuate.audit.AuditEvent;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,9 +12,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URISyntaxException;
-import java.time.LocalDate;
-import java.util.List;
+import io.github.jhipster.web.util.ResponseUtil;
+import io.swagger.annotations.ApiParam;
+import nl.openweb.iot.dashboard.service.AuditEventService;
+import nl.openweb.iot.dashboard.web.rest.util.PaginationUtil;
 
 /**
  * REST controller for getting the audit events.

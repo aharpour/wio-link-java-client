@@ -1,18 +1,11 @@
 package nl.openweb.iot.dashboard.web.rest;
 
-import nl.openweb.iot.dashboard.config.Constants;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Optional;
+
 import com.codahale.metrics.annotation.Timed;
-import nl.openweb.iot.dashboard.domain.User;
-import nl.openweb.iot.dashboard.repository.UserRepository;
-import nl.openweb.iot.dashboard.security.AuthoritiesConstants;
-import nl.openweb.iot.dashboard.service.MailService;
-import nl.openweb.iot.dashboard.service.UserService;
-import nl.openweb.iot.dashboard.service.dto.UserDTO;
-import nl.openweb.iot.dashboard.web.rest.vm.ManagedUserVM;
-import nl.openweb.iot.dashboard.web.rest.util.HeaderUtil;
-import nl.openweb.iot.dashboard.web.rest.util.PaginationUtil;
-import io.github.jhipster.web.util.ResponseUtil;
-import io.swagger.annotations.ApiParam;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,9 +17,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.*;
+import io.github.jhipster.web.util.ResponseUtil;
+import io.swagger.annotations.ApiParam;
+import nl.openweb.iot.dashboard.config.Constants;
+import nl.openweb.iot.dashboard.domain.User;
+import nl.openweb.iot.dashboard.repository.UserRepository;
+import nl.openweb.iot.dashboard.security.AuthoritiesConstants;
+import nl.openweb.iot.dashboard.service.MailService;
+import nl.openweb.iot.dashboard.service.UserService;
+import nl.openweb.iot.dashboard.service.dto.UserDTO;
+import nl.openweb.iot.dashboard.web.rest.util.HeaderUtil;
+import nl.openweb.iot.dashboard.web.rest.util.PaginationUtil;
+import nl.openweb.iot.dashboard.web.rest.vm.ManagedUserVM;
 
 /**
  * REST controller for managing users.

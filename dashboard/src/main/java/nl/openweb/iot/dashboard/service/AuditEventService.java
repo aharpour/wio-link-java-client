@@ -1,15 +1,16 @@
 package nl.openweb.iot.dashboard.service;
 
-import nl.openweb.iot.dashboard.config.audit.AuditEventConverter;
-import nl.openweb.iot.dashboard.repository.PersistenceAuditEventRepository;
 import java.time.LocalDateTime;
+import java.util.Optional;
+
 import org.springframework.boot.actuate.audit.AuditEvent;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
+import nl.openweb.iot.dashboard.config.audit.AuditEventConverter;
+import nl.openweb.iot.dashboard.repository.PersistenceAuditEventRepository;
 
 /**
  * Service for managing audit events.

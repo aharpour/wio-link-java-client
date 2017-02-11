@@ -1,0 +1,25 @@
+{
+    "dashboardApp": {
+        "grove" : {
+            "home": {
+                "title": "Groves",
+                "createLabel": "Maak een nieuwe Grove",
+                "createOrEditLabel": "Maak of wijzig een Grove",
+                "search": "Search for Grove"
+            },
+            "created": "A new Grove is created with identifier {{ param }}",
+            "updated": "A Grove is updated with identifier {{ param }}",
+            "deleted": "A Grove is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Bent u zeker dat u Grove {{ id }} wilt verwijderen?"
+            },
+            "detail": {
+                "title": "Grove"
+            },
+            "name": "Name",
+            "type": "Type",
+            "passive": "Passive",
+            "node": "Node"
+        }
+    }
+}

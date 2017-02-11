@@ -1,13 +1,13 @@
 package nl.openweb.iot.dashboard.config;
 
+import javax.cache.CacheManager;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.context.annotation.*;
-
-import javax.cache.CacheManager;
+import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @EnableCaching

@@ -1,13 +1,15 @@
 package nl.openweb.iot.dashboard.service.mapper;
 
-import nl.openweb.iot.dashboard.domain.Authority;
-import nl.openweb.iot.dashboard.domain.User;
-import nl.openweb.iot.dashboard.service.dto.UserDTO;
-import org.mapstruct.*;
-
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+
+import nl.openweb.iot.dashboard.domain.Authority;
+import nl.openweb.iot.dashboard.domain.User;
+import nl.openweb.iot.dashboard.service.dto.UserDTO;
 
 /**
  * Mapper for the entity User and its DTO UserDTO.

@@ -1,21 +1,23 @@
 package nl.openweb.iot.dashboard.service;
 
-import nl.openweb.iot.dashboard.DashboardApp;
-import nl.openweb.iot.dashboard.domain.User;
-import nl.openweb.iot.dashboard.repository.UserRepository;
 import java.time.ZonedDateTime;
-import nl.openweb.iot.dashboard.service.util.RandomUtil;
+import java.util.List;
+import java.util.Optional;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-import java.util.List;
+import nl.openweb.iot.dashboard.DashboardApp;
+import nl.openweb.iot.dashboard.domain.User;
+import nl.openweb.iot.dashboard.repository.UserRepository;
+import nl.openweb.iot.dashboard.service.util.RandomUtil;
 
-import static org.assertj.core.api.Assertions.*;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Test class for the UserResource REST controller.

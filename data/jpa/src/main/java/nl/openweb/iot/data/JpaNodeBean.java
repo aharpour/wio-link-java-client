@@ -4,6 +4,8 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import nl.openweb.iot.wio.db.GroveBean;
@@ -21,6 +23,7 @@ public class JpaNodeBean {
     private String dataXServer;
     private String board;
 
+    @JsonIgnore
     @OneToMany(mappedBy="node", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<JpaGroveBean> groves;
     private Boolean initialized = false;

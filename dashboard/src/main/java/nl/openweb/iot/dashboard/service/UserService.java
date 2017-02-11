@@ -1,13 +1,10 @@
 package nl.openweb.iot.dashboard.service;
 
-import nl.openweb.iot.dashboard.domain.Authority;
-import nl.openweb.iot.dashboard.domain.User;
-import nl.openweb.iot.dashboard.repository.AuthorityRepository;
-import nl.openweb.iot.dashboard.repository.UserRepository;
-import nl.openweb.iot.dashboard.security.AuthoritiesConstants;
-import nl.openweb.iot.dashboard.security.SecurityUtils;
-import nl.openweb.iot.dashboard.service.util.RandomUtil;
-import nl.openweb.iot.dashboard.service.dto.UserDTO;
+import java.time.ZonedDateTime;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,8 +16,14 @@ import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.ZonedDateTime;
-import java.util.*;
+import nl.openweb.iot.dashboard.domain.Authority;
+import nl.openweb.iot.dashboard.domain.User;
+import nl.openweb.iot.dashboard.repository.AuthorityRepository;
+import nl.openweb.iot.dashboard.repository.UserRepository;
+import nl.openweb.iot.dashboard.security.AuthoritiesConstants;
+import nl.openweb.iot.dashboard.security.SecurityUtils;
+import nl.openweb.iot.dashboard.service.dto.UserDTO;
+import nl.openweb.iot.dashboard.service.util.RandomUtil;
 
 /**
  * Service class for managing users.
@@ -194,7 +197,7 @@ public class UserService {
         });
     }
 
-    @Transactional(readOnly = true)    
+    @Transactional(readOnly = true)
     public Page<UserDTO> getAllManagedUsers(Pageable pageable) {
         return userRepository.findAll(pageable).map(UserDTO::new);
     }

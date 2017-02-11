@@ -1,8 +1,8 @@
 package nl.openweb.iot.dashboard.repository;
 
-import nl.openweb.iot.dashboard.domain.Authority;
-
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import nl.openweb.iot.dashboard.domain.Authority;
 
 /**
  * Spring Data JPA repository for the Authority entity.

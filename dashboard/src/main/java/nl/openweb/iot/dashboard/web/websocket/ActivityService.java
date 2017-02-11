@@ -1,7 +1,12 @@
 package nl.openweb.iot.dashboard.web.websocket;
 
-import nl.openweb.iot.dashboard.security.SecurityUtils;
-import nl.openweb.iot.dashboard.web.websocket.dto.ActivityDTO;
+import java.security.Principal;
+import java.time.Instant;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationListener;
@@ -13,13 +18,9 @@ import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.security.Principal;
-import java.util.Calendar;
+import nl.openweb.iot.dashboard.security.SecurityUtils;
+import nl.openweb.iot.dashboard.web.websocket.dto.ActivityDTO;
+
 
 import static nl.openweb.iot.dashboard.config.WebsocketConfiguration.IP_ADDRESS;
 

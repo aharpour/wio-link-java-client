@@ -1,0 +1,28 @@
+{
+    "dashboardApp": {
+        "node" : {
+            "home": {
+                "title": "Nodes",
+                "createLabel": "Maak een nieuwe Node",
+                "createOrEditLabel": "Maak of wijzig een Node",
+                "search": "Search for Node"
+            },
+            "created": "A new Node is created with identifier {{ param }}",
+            "updated": "A Node is updated with identifier {{ param }}",
+            "deleted": "A Node is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Bent u zeker dat u Node {{ id }} wilt verwijderen?"
+            },
+            "detail": {
+                "title": "Node"
+            },
+            "nodeSn": "Node Sn",
+            "name": "Name",
+            "nodeKey": "Node Key",
+            "dataXServer": "Data X Server",
+            "board": "Board",
+            "initialized": "Initialized",
+            "groves": "Groves"
+        }
+    }
+}

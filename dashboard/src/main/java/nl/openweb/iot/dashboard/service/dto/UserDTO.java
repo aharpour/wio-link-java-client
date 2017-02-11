@@ -1,16 +1,16 @@
 package nl.openweb.iot.dashboard.service.dto;
 
-import nl.openweb.iot.dashboard.config.Constants;
-
-import nl.openweb.iot.dashboard.domain.Authority;
-import nl.openweb.iot.dashboard.domain.User;
-
-import org.hibernate.validator.constraints.Email;
-
-import javax.validation.constraints.*;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.time.ZonedDateTime;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import org.hibernate.validator.constraints.Email;
+
+import nl.openweb.iot.dashboard.config.Constants;
+import nl.openweb.iot.dashboard.domain.Authority;
+import nl.openweb.iot.dashboard.domain.User;
 
 /**
  * A DTO representing a user, with his authorities.

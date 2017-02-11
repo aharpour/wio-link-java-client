@@ -1,10 +1,6 @@
 package nl.openweb.iot.dashboard.web.rest;
 
-import nl.openweb.iot.dashboard.DashboardApp;
-import nl.openweb.iot.dashboard.domain.User;
-import nl.openweb.iot.dashboard.repository.UserRepository;
-import nl.openweb.iot.dashboard.service.UserService;
-import nl.openweb.iot.dashboard.service.MailService;
+import javax.persistence.EntityManager;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
@@ -17,7 +13,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import javax.persistence.EntityManager;
+import nl.openweb.iot.dashboard.DashboardApp;
+import nl.openweb.iot.dashboard.domain.User;
+import nl.openweb.iot.dashboard.repository.UserRepository;
+import nl.openweb.iot.dashboard.service.MailService;
+import nl.openweb.iot.dashboard.service.UserService;
+
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
