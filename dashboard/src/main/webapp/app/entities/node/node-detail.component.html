@@ -1,0 +1,45 @@
+
+<div *ngIf="node">
+    <h2><span jhiTranslate="dashboardApp.node.detail.title">Node</span> {{node.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row">
+        <dt><span jhiTranslate="dashboardApp.node.nodeSn">Node Sn</span></dt>
+        <dd>
+            <span>{{node.nodeSn}}</span>
+        </dd>
+        <dt><span jhiTranslate="dashboardApp.node.name">Name</span></dt>
+        <dd>
+            <span>{{node.name}}</span>
+        </dd>
+        <dt><span jhiTranslate="dashboardApp.node.nodeKey">Node Key</span></dt>
+        <dd>
+            <span>{{node.nodeKey}}</span>
+        </dd>
+        <dt><span jhiTranslate="dashboardApp.node.dataXServer">Data X Server</span></dt>
+        <dd>
+            <span>{{node.dataXServer}}</span>
+        </dd>
+        <dt><span jhiTranslate="dashboardApp.node.board">Board</span></dt>
+        <dd>
+            <span>{{node.board}}</span>
+        </dd>
+        <dt><span jhiTranslate="dashboardApp.node.initialized">Initialized</span></dt>
+        <dd>
+            <span>{{node.initialized}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'node/'+ node.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

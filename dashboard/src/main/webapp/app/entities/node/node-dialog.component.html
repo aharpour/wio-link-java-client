@@ -1,0 +1,87 @@
+
+
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+        <h4 class="modal-title" id="myNodeLabel" jhiTranslate="dashboardApp.node.home.createOrEditLabel">Create or edit a Node</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!node.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="node.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="dashboardApp.node.nodeSn" for="field_nodeSn">Node Sn</label>
+            <input type="text" class="form-control" name="nodeSn" id="field_nodeSn"
+                [(ngModel)]="node.nodeSn"
+            required />
+            <div [hidden]="!(editForm.controls.nodeSn?.dirty && editForm.controls.nodeSn?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.nodeSn?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="dashboardApp.node.name" for="field_name">Name</label>
+            <input type="text" class="form-control" name="name" id="field_name"
+                [(ngModel)]="node.name"
+            required />
+            <div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.name?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="dashboardApp.node.nodeKey" for="field_nodeKey">Node Key</label>
+            <input type="text" class="form-control" name="nodeKey" id="field_nodeKey"
+                [(ngModel)]="node.nodeKey"
+            required />
+            <div [hidden]="!(editForm.controls.nodeKey?.dirty && editForm.controls.nodeKey?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.nodeKey?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="dashboardApp.node.dataXServer" for="field_dataXServer">Data X Server</label>
+            <input type="text" class="form-control" name="dataXServer" id="field_dataXServer"
+                [(ngModel)]="node.dataXServer"
+             />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="dashboardApp.node.board" for="field_board">Board</label>
+            <input type="text" class="form-control" name="board" id="field_board"
+                [(ngModel)]="node.board"
+             />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="dashboardApp.node.initialized" for="field_initialized">Initialized</label>
+            <input type="checkbox" class="form-control" name="initialized" id="field_initialized"
+                [(ngModel)]="node.initialized"
+             />
+            <div [hidden]="!(editForm.controls.initialized?.dirty && editForm.controls.initialized?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.initialized?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

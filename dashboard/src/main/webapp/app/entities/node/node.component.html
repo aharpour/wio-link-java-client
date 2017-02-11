@@ -1,0 +1,67 @@
+<div>
+    <h2><span jhiTranslate="dashboardApp.node.home.title">Nodes</span>
+        <button class="btn btn-primary float-xs-right create-node" [routerLink]="['/', { outlets: { popup: ['node-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="dashboardApp.node.home.createLabel">
+            Create new Node
+            </span>
+        </button></h2>
+    <jhi-alert></jhi-alert>
+
+    <div class="container-fluid">
+        <div class="row">
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="nodes">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="dashboardApp.node.nodeSn">Node Sn</span></th>
+            <th><span jhiTranslate="dashboardApp.node.name">Name</span></th>
+            <th><span jhiTranslate="dashboardApp.node.nodeKey">Node Key</span></th>
+            <th><span jhiTranslate="dashboardApp.node.dataXServer">Data X Server</span></th>
+            <th><span jhiTranslate="dashboardApp.node.board">Board</span></th>
+            <th><span jhiTranslate="dashboardApp.node.initialized">Initialized</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let node of nodes ;trackBy: trackId">
+                <td><a [routerLink]="['../node', node.id ]">{{node.id}}</a></td>
+                <td>{{node.nodeSn}}</td>
+                <td>{{node.name}}</td>
+                <td>{{node.nodeKey}}</td>
+                <td>{{node.dataXServer}}</td>
+                <td>{{node.board}}</td>
+                <td>{{node.initialized}}</td>
+                <td class="text-xs-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../node', node.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'node/'+ node.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'node/'+ node.id + '/delete'} }]"
+                                replaceUrl="true"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
