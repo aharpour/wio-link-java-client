@@ -1,8 +1,6 @@
 package nl.openweb.iot.data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +21,7 @@ public class JpaNodeBean {
     private String dataXServer;
     private String board;
 
-    @OneToMany(mappedBy="node")
+    @OneToMany(mappedBy="node", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<JpaGroveBean> groves;
     private Boolean initialized = false;
 
@@ -38,7 +36,9 @@ public class JpaNodeBean {
         List<GroveBean> groves = nodeBean.getGroves();
         if (groves != null) {
             for (GroveBean grove : groves) {
-                list.add(new JpaGroveBean(grove));
+                JpaGroveBean groveBean = new JpaGroveBean(grove);
+                groveBean.setNode(this);
+                list.add(groveBean);
             }
         }
         this.groves = list;
