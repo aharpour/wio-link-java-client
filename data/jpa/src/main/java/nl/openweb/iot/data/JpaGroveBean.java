@@ -7,11 +7,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import nl.openweb.iot.wio.db.GroveBean;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString(exclude = "node")
 @Entity(name = "grove")
 public class JpaGroveBean {
 
@@ -22,6 +24,7 @@ public class JpaGroveBean {
     @JsonIgnore
     @ManyToOne
     private JpaNodeBean node;
+
     private String name;
     private String type;
     private boolean passive = true;
