@@ -24,7 +24,7 @@ public class JpaNodeBean {
     private String board;
 
     @JsonIgnore
-    @OneToMany(mappedBy="node", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="node", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<JpaGroveBean> groves;
     private Boolean initialized = false;
 

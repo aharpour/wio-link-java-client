@@ -31,7 +31,7 @@ export class NodeService {
     }
 
     refresh(id: string): Observable<Node> {
-        return this.http.put(`${this.resourceUrl}/reinitialize/${id}`, null).map((res: Response) => {
+        return this.http.put(`${this.resourceUrl}/reinitialize/${id}`, {}).map((res: Response) => {
             return res.json();
         });
     }

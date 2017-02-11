@@ -98,7 +98,8 @@
             "edit": "Wijzigen",
             "open": "Open",
             "save": "Opslaan",
-            "view": "View"
+            "view": "View",
+            "reinit":  "Re-init"
         },
         "detail": {
             "field": "Veld",

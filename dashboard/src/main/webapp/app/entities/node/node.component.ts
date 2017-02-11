@@ -28,6 +28,14 @@ nodes: Node[];
         this.jhiLanguageService.setLocations(['node']);
     }
 
+    reinit(id: string) {
+        this.nodeService.refresh(id).subscribe((res: Response) => {
+                alert('Node has been re-initialized.');
+            },
+            (res: Response) => this.onError(res.json()));
+    }
+
+
     loadAll() {
         this.nodeService.query().subscribe(
             (res: Response) => {
