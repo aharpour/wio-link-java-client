@@ -62,19 +62,6 @@
                 [(ngModel)]="node.board"
              />
         </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="dashboardApp.node.initialized" for="field_initialized">Initialized</label>
-            <input type="checkbox" class="form-control" name="initialized" id="field_initialized"
-                [(ngModel)]="node.initialized"
-             />
-            <div [hidden]="!(editForm.controls.initialized?.dirty && editForm.controls.initialized?.invalid)">
-                <small class="form-text text-danger"
-                   [hidden]="!editForm.controls.initialized?.errors?.required" jhiTranslate="entity.validation.required">
-                   This field is required.
-                </small>
-            </div>
-        </div>
-
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">

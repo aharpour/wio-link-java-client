@@ -91,47 +91,6 @@ public class GroveResourceIntTest {
 
     @Test
     @Transactional
-    public void createGrove() throws Exception {
-        int databaseSizeBeforeCreate = groveRepository.findAll().size();
-
-        // Create the JpaGroveBean
-
-        restGroveMockMvc.perform(post("/api/groves")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(grove)))
-            .andExpect(status().isCreated());
-
-        // Validate the JpaGroveBean in the database
-        List<JpaGroveBean> groveList = groveRepository.findAll();
-        assertThat(groveList).hasSize(databaseSizeBeforeCreate + 1);
-        JpaGroveBean testGrove = groveList.get(groveList.size() - 1);
-        assertThat(testGrove.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testGrove.getType()).isEqualTo(DEFAULT_TYPE);
-        assertThat(testGrove.isPassive()).isEqualTo(DEFAULT_PASSIVE);
-    }
-
-    @Test
-    @Transactional
-    public void createGroveWithExistingId() throws Exception {
-        int databaseSizeBeforeCreate = groveRepository.findAll().size();
-
-        // Create the JpaGroveBean with an existing ID
-        JpaGroveBean existingGrove = new JpaGroveBean();
-        existingGrove.setId(1L);
-
-        // An entity with an existing ID cannot be created, so this API call must fail
-        restGroveMockMvc.perform(post("/api/groves")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(existingGrove)))
-            .andExpect(status().isBadRequest());
-
-        // Validate the Alice in the database
-        List<JpaGroveBean> groveList = groveRepository.findAll();
-        assertThat(groveList).hasSize(databaseSizeBeforeCreate);
-    }
-
-    @Test
-    @Transactional
     public void getAllGroves() throws Exception {
         // Initialize the database
         groveRepository.saveAndFlush(grove);
@@ -170,52 +129,7 @@ public class GroveResourceIntTest {
             .andExpect(status().isNotFound());
     }
 
-    @Test
-    @Transactional
-    public void updateGrove() throws Exception {
-        // Initialize the database
-        groveRepository.saveAndFlush(grove);
-        int databaseSizeBeforeUpdate = groveRepository.findAll().size();
-
-        // Update the grove
-        JpaGroveBean updatedGrove = groveRepository.findOne(grove.getId());
-        updatedGrove.setName(UPDATED_NAME);
-        updatedGrove.setType(UPDATED_TYPE);
-        updatedGrove.setPassive(UPDATED_PASSIVE);
-
-        restGroveMockMvc.perform(put("/api/groves")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(updatedGrove)))
-            .andExpect(status().isOk());
-
-        // Validate the JpaGroveBean in the database
-        List<JpaGroveBean> groveList = groveRepository.findAll();
-        assertThat(groveList).hasSize(databaseSizeBeforeUpdate);
-        JpaGroveBean testGrove = groveList.get(groveList.size() - 1);
-        assertThat(testGrove.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testGrove.getType()).isEqualTo(UPDATED_TYPE);
-        assertThat(testGrove.isPassive()).isEqualTo(UPDATED_PASSIVE);
-    }
-
-    @Test
-    @Transactional
-    public void updateNonExistingGrove() throws Exception {
-        int databaseSizeBeforeUpdate = groveRepository.findAll().size();
-
-        // Create the JpaGroveBean
-
-        // If the entity doesn't have an ID, it will be created instead of just being updated
-        restGroveMockMvc.perform(put("/api/groves")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(grove)))
-            .andExpect(status().isCreated());
-
-        // Validate the JpaGroveBean in the database
-        List<JpaGroveBean> groveList = groveRepository.findAll();
-        assertThat(groveList).hasSize(databaseSizeBeforeUpdate + 1);
-    }
-
-    @Test
+     @Test
     @Transactional
     public void deleteGrove() throws Exception {
         // Initialize the database

@@ -17,7 +17,6 @@
         <table class="table table-striped">
             <thead>
             <tr>
-            <th><span jhiTranslate="global.field.id">ID</span></th>
             <th><span jhiTranslate="dashboardApp.node.nodeSn">Node Sn</span></th>
             <th><span jhiTranslate="dashboardApp.node.name">Name</span></th>
             <th><span jhiTranslate="dashboardApp.node.nodeKey">Node Key</span></th>
@@ -29,7 +28,6 @@
             </thead>
             <tbody>
             <tr *ngFor="let node of nodes ;trackBy: trackId">
-                <td><a [routerLink]="['../node', node.id ]">{{node.id}}</a></td>
                 <td>{{node.nodeSn}}</td>
                 <td>{{node.name}}</td>
                 <td>{{node.nodeKey}}</td>

@@ -68,7 +68,7 @@ export class GroveDialogComponent implements OnInit {
     }
 
     trackNodeById(index: number, item: Node) {
-        return item.id;
+        return item.nodeSn;
     }
 }
 

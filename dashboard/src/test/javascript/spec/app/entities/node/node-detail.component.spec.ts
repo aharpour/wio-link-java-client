@@ -63,7 +63,7 @@ describe('Component Tests', () => {
         describe('OnInit', () => {
             it('Should call load all on init', () => {
             // GIVEN
-            spyOn(service, 'find').and.returnValue(Observable.of(new Node(10)));
+            spyOn(service, 'find').and.returnValue(Observable.of(new Node('10')));
 
             // WHEN
             comp.ngOnInit();

@@ -17,6 +17,8 @@ import io.github.jhipster.web.util.ResponseUtil;
 import nl.openweb.iot.dashboard.web.rest.util.HeaderUtil;
 import nl.openweb.iot.data.JpaNodeBean;
 import nl.openweb.iot.data.JpaNodeRepository;
+import nl.openweb.iot.wio.NodeService;
+import nl.openweb.iot.wio.WioException;
 
 /**
  * REST controller for managing JpaNodeBean.
@@ -31,8 +33,11 @@ public class NodeResource {
 
     private final JpaNodeRepository nodeRepository;
 
-    public NodeResource(JpaNodeRepository nodeRepository) {
+    private final NodeService nodeService;
+
+    public NodeResource(JpaNodeRepository nodeRepository, NodeService nodeService) {
         this.nodeRepository = nodeRepository;
+        this.nodeService = nodeService;
     }
 
     /**
@@ -46,13 +51,29 @@ public class NodeResource {
     @Timed
     public ResponseEntity<JpaNodeBean> createNode(@Valid @RequestBody JpaNodeBean node) throws URISyntaxException {
         log.debug("REST request to save JpaNodeBean : {}", node);
-        if (node.getNodeSn() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new node cannot already have an ID")).body(null);
-        }
         JpaNodeBean result = nodeRepository.save(node);
+        try {
+            this.nodeService.reinitializeNode(node.getNodeSn());
+        } catch (Exception e) {
+            log.debug("Reinitialization of the node failed.", e);
+        }
         return ResponseEntity.created(new URI("/api/nodes/" + result.getNodeSn()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getNodeSn().toString()))
             .body(result);
+    }
+    @PutMapping("/nodes/reinitialize/{id}")
+    @Timed
+    public ResponseEntity<JpaNodeBean> reinitializeNode(@PathVariable String id) {
+        ResponseEntity<JpaNodeBean> result;
+        try {
+            nodeService.reinitializeNode(id);
+            JpaNodeBean node = nodeRepository.findOne(id);
+            result = ((ResponseEntity.BodyBuilder) ResponseEntity.ok()).body(node);
+        } catch (WioException e) {
+            result = ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "initfailed", "Re-initialization of node failed.")).body(null);
+        }
+        return result;
+
     }
 
     /**

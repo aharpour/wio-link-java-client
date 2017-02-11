@@ -24,19 +24,24 @@ export class NodeService {
         });
     }
 
-    find(id: number): Observable<Node> {
+    find(id: string): Observable<Node> {
         return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
+            return res.json();
+        });
+    }
+
+    refresh(id: string): Observable<Node> {
+        return this.http.put(`${this.resourceUrl}/reinitialize/${id}`, null).map((res: Response) => {
             return res.json();
         });
     }
 
     query(req?: any): Observable<Response> {
         let options = this.createRequestOption(req);
-        return this.http.get(this.resourceUrl, options)
-        ;
+        return this.http.get(this.resourceUrl, options);
     }
 
-    delete(id: number): Observable<Response> {
+    delete(id: string): Observable<Response> {
         return this.http.delete(`${this.resourceUrl}/${id}`);
     }
 

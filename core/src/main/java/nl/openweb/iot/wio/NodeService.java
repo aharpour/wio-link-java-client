@@ -74,6 +74,12 @@ public class NodeService {
         return createNodeFromNodeBean(nodeBean);
     }
 
+    public void reinitializeNode(String nodeSn) throws WioException {
+        NodeBean node = this.nodeRepository.findOneNodeSn(nodeSn);
+        initializeNodeBean(node);
+        this.nodeRepository.<NodeBean>save(node);
+    }
+
     private Node createNodeFromNodeBean(NodeBean nodeBean) throws WioException {
         Node result = null;
         initializeAndUpdateNodeBean(nodeBean);

@@ -43,7 +43,7 @@ export class NodeDialogComponent implements OnInit {
 
     save () {
         this.isSaving = true;
-        if (this.node.id !== undefined) {
+        if (this.node.nodeSn !== undefined) {
             this.nodeService.update(this.node)
                 .subscribe((res: Node) => this.onSaveSuccess(res), (res: Response) => this.onSaveError(res.json()));
         } else {

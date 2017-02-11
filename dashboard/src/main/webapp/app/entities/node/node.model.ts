@@ -1,7 +1,6 @@
 import { Grove } from '../grove';
 export class Node {
     constructor(
-        public id?: number,
         public nodeSn?: string,
         public name?: string,
         public nodeKey?: string,

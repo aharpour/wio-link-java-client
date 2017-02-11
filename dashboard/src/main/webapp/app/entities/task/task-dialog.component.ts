@@ -43,10 +43,10 @@ export class TaskDialogComponent implements OnInit {
         this.isSaving = false;
         this.authorities = ['ROLE_USER', 'ROLE_ADMIN'];
         this.nodeService.query({filter: 'task-is-null'}).subscribe((res: Response) => {
-            if (!this.task.node || !this.task.node.id) {
+            if (!this.task.node || !this.task.node.nodeSn) {
                 this.nodes = res.json();
             } else {
-                this.nodeService.find(this.task.node.id).subscribe((subRes: Response) => {
+                this.nodeService.find(this.task.node.nodeSn).subscribe((subRes: Response) => {
                     this.nodes = [subRes].concat(res.json());
                 }, (subRes: Response) => this.onError(subRes.json()));
             }
@@ -101,7 +101,7 @@ export class TaskDialogComponent implements OnInit {
     }
 
     trackNodeById(index: number, item: Node) {
-        return item.id;
+        return item.nodeSn;
     }
 
     trackTaskHandlerById(index: number, item: TaskHandler) {

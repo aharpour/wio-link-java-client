@@ -49,7 +49,7 @@ nodes: Node[];
     }
 
     trackId (index: number, item: Node) {
-        return item.id;
+        return item.nodeSn;
     }
 
 

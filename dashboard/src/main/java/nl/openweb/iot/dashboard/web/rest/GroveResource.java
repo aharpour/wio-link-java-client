@@ -1,8 +1,5 @@
 package nl.openweb.iot.dashboard.web.rest;
 
-import javax.validation.Valid;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,48 +30,6 @@ public class GroveResource {
 
     public GroveResource(GroveRepository groveRepository) {
         this.groveRepository = groveRepository;
-    }
-
-    /**
-     * POST  /groves : Create a new grove.
-     *
-     * @param grove the grove to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new grove, or with status 400 (Bad Request) if the grove has already an ID
-     * @throws URISyntaxException if the Location URI syntax is incorrect
-     */
-    @PostMapping("/groves")
-    @Timed
-    public ResponseEntity<JpaGroveBean> createGrove(@Valid @RequestBody JpaGroveBean grove) throws URISyntaxException {
-        log.debug("REST request to save JpaGroveBean : {}", grove);
-        if (grove.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new grove cannot already have an ID")).body(null);
-        }
-        JpaGroveBean result = groveRepository.save(grove);
-        return ResponseEntity.created(new URI("/api/groves/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
-    }
-
-    /**
-     * PUT  /groves : Updates an existing grove.
-     *
-     * @param grove the grove to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated grove,
-     * or with status 400 (Bad Request) if the grove is not valid,
-     * or with status 500 (Internal Server Error) if the grove couldnt be updated
-     * @throws URISyntaxException if the Location URI syntax is incorrect
-     */
-    @PutMapping("/groves")
-    @Timed
-    public ResponseEntity<JpaGroveBean> updateGrove(@Valid @RequestBody JpaGroveBean grove) throws URISyntaxException {
-        log.debug("REST request to update JpaGroveBean : {}", grove);
-        if (grove.getId() == null) {
-            return createGrove(grove);
-        }
-        JpaGroveBean result = groveRepository.save(grove);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, grove.getId().toString()))
-            .body(result);
     }
 
     /**

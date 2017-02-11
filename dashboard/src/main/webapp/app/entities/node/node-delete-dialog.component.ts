@@ -29,7 +29,7 @@ export class NodeDeleteDialogComponent {
         this.activeModal.dismiss('cancel');
     }
 
-    confirmDelete (id: number) {
+    confirmDelete (id: string) {
         this.nodeService.delete(id).subscribe(response => {
             this.eventManager.broadcast({
                 name: 'nodeListModification',
