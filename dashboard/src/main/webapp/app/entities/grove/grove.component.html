@@ -27,7 +27,7 @@
                 <td>{{grove.passive}}</td>
                 <td>
                     <div *ngIf="grove.node">
-                        <a [routerLink]="['../node', grove.node?.id ]" >{{grove.node?.nodeSn}}</a>
+                        <a [routerLink]="['../node', grove.node?.nodeSn ]" >{{grove.node?.name}}</a>
                     </div>
                 </td>
                 <td class="text-xs-right">

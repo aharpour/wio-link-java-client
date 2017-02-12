@@ -59,21 +59,21 @@
             <label jhiTranslate="dashboardApp.task.node" for="field_node">Node</label>
             <select class="form-control" id="field_node" name="node" [(ngModel)]="task.node">
                 <option [ngValue]="null"></option>
-                <option [ngValue]="nodeOption.id === task.node?.id ? task.node : nodeOption" *ngFor="let nodeOption of nodes; trackBy: trackNodeById">{{nodeOption.nodeSn}}</option>
+                <option [ngValue]="nodeOption.id === task.node?.id ? task.node : nodeOption" *ngFor="let nodeOption of nodes; trackBy: trackNodeById">{{nodeOption.name}}</option>
             </select>
         </div>
         <div class="form-group">
             <label jhiTranslate="dashboardApp.task.taskHandler" for="field_taskHandler">Task Handler</label>
             <select class="form-control" id="field_taskHandler" name="taskHandler" [(ngModel)]="task.taskHandler">
                 <option [ngValue]="null"></option>
-                <option [ngValue]="taskHandlerOption.id === task.taskHandler?.id ? task.taskHandler : taskHandlerOption" *ngFor="let taskHandlerOption of taskhandlers; trackBy: trackTaskHandlerById">{{taskHandlerOption.id}}</option>
+                <option [ngValue]="taskHandlerOption.id === task.taskHandler?.id ? task.taskHandler : taskHandlerOption" *ngFor="let taskHandlerOption of taskhandlers; trackBy: trackTaskHandlerById">{{taskHandlerOption.name}}</option>
             </select>
         </div>
         <div class="form-group">
             <label jhiTranslate="dashboardApp.task.eventHandler" for="field_eventHandler">Event Handler</label>
             <select class="form-control" id="field_eventHandler" name="eventHandler" [(ngModel)]="task.eventHandler">
                 <option [ngValue]="null"></option>
-                <option [ngValue]="eventHandlerOption.id === task.eventHandler?.id ? task.eventHandler : eventHandlerOption" *ngFor="let eventHandlerOption of eventhandlers; trackBy: trackEventHandlerById">{{eventHandlerOption.id}}</option>
+                <option [ngValue]="eventHandlerOption.id === task.eventHandler?.id ? task.eventHandler : eventHandlerOption" *ngFor="let eventHandlerOption of eventhandlers; trackBy: trackEventHandlerById">{{eventHandlerOption.name}}</option>
             </select>
         </div>
     </div>

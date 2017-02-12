@@ -3,7 +3,7 @@ import { TaskHandler } from '../task-handler';
 import { EventHandler } from '../event-handler';
 export class Task {
     constructor(
-        public id?: number,
+        public id?: string,
         public name?: string,
         public period?: number,
         public forceSleep?: boolean,

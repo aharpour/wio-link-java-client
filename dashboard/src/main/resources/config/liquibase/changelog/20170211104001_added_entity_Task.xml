@@ -19,7 +19,7 @@
     -->
     <changeSet id="20170211104001-1" author="jhipster">
         <createTable tableName="task">
-            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+            <column name="id" type="varchar(255)">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="name" type="varchar(255)">

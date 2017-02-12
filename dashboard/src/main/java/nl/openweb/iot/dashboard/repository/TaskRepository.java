@@ -8,6 +8,6 @@ import nl.openweb.iot.dashboard.domain.Task;
  * Spring Data JPA repository for the Task entity.
  */
 @SuppressWarnings("unused")
-public interface TaskRepository extends JpaRepository<Task,Long> {
+public interface TaskRepository extends JpaRepository<Task,String> {
 
 }

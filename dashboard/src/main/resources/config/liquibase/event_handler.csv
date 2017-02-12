@@ -1,0 +1,2 @@
+name;class_name
+Alert;nl.openweb.iot.dashboard.service.AlertEventHandlerFactory

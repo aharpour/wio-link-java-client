@@ -8,15 +8,25 @@ import java.util.Optional;
 
 import com.codahale.metrics.annotation.Timed;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import io.github.jhipster.web.util.ResponseUtil;
 import nl.openweb.iot.dashboard.domain.Task;
+import nl.openweb.iot.dashboard.domain.TaskHandler;
 import nl.openweb.iot.dashboard.repository.TaskRepository;
+import nl.openweb.iot.dashboard.service.EventHandlerFactory;
+import nl.openweb.iot.dashboard.service.TaskHandlerFactory;
 import nl.openweb.iot.dashboard.web.rest.util.HeaderUtil;
+import nl.openweb.iot.wio.WioException;
+import nl.openweb.iot.wio.scheduling.ScheduledTask;
+import nl.openweb.iot.wio.scheduling.SchedulingService;
+import nl.openweb.iot.wio.scheduling.SchedulingUtils;
+import nl.openweb.iot.wio.scheduling.TaskEventHandler;
 
 /**
  * REST controller for managing Task.
@@ -30,9 +40,13 @@ public class TaskResource {
     private static final String ENTITY_NAME = "task";
 
     private final TaskRepository taskRepository;
+    private final SchedulingService schedulingService;
+    private final ApplicationContext context;
 
-    public TaskResource(TaskRepository taskRepository) {
+    public TaskResource(TaskRepository taskRepository, SchedulingService schedulingService, ApplicationContext context) {
         this.taskRepository = taskRepository;
+        this.schedulingService = schedulingService;
+        this.context = context;
     }
 
     /**
@@ -49,32 +63,63 @@ public class TaskResource {
         if (task.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new task cannot already have an ID")).body(null);
         }
-        Task result = taskRepository.save(task);
-        return ResponseEntity.created(new URI("/api/tasks/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+
+        if (task.getNode() == null || StringUtils.isBlank(task.getNode().getNodeSn())) {
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "nodeisrequired", "Node is required")).body(null);
+        }
+        try {
+            ScheduledTask taskHandler = getTaskHandler(task);
+            SchedulingService.TaskBuilder builder =
+                schedulingService.build(taskHandler, task.getNode().getNodeSn())
+                    .setKeepAwake(task.isKeepAwake())
+                    .setForceSleep(task.isForceSleep());
+            if (task.getEventHandler() != null) {
+                builder.setEventHandler(getEventHandler(task));
+            }
+            task.setId(builder.build());
+            Task result = taskRepository.save(task);
+            return ResponseEntity.created(new URI("/api/tasks/" + result.getId()))
+                .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId()))
+                .body(result);
+        } catch (WioException e) {
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "wioexception", e.getMessage())).body(null);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "exception", e.getMessage())).body(null);
+        }
+
     }
 
-    /**
-     * PUT  /tasks : Updates an existing task.
-     *
-     * @param task the task to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated task,
-     * or with status 400 (Bad Request) if the task is not valid,
-     * or with status 500 (Internal Server Error) if the task couldnt be updated
-     * @throws URISyntaxException if the Location URI syntax is incorrect
-     */
-    @PutMapping("/tasks")
-    @Timed
-    public ResponseEntity<Task> updateTask(@Valid @RequestBody Task task) throws URISyntaxException {
-        log.debug("REST request to update Task : {}", task);
-        if (task.getId() == null) {
-            return createTask(task);
+    private ScheduledTask getTaskHandler(Task task) throws ClassNotFoundException {
+        ScheduledTask result = (n, c) -> SchedulingUtils.hoursLater(5);
+        TaskHandler taskHandler = task.getTaskHandler();
+        if (taskHandler != null && StringUtils.isNotBlank(taskHandler.getClassName())) {
+            String factoryName = taskHandler.getClassName();
+            Class<?> factoryClass = Class.forName(factoryName);
+            if (TaskHandlerFactory.class.isAssignableFrom(factoryClass)) {
+                TaskHandlerFactory factory = (TaskHandlerFactory) context.getBean(factoryClass);
+                result = factory.build(task);
+            } else {
+                log.error("the give class " + factoryClass.getName() + " is not a instance of " + TaskHandlerFactory.class.getName());
+            }
         }
-        Task result = taskRepository.save(task);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, task.getId().toString()))
-            .body(result);
+        return result;
+    }
+
+    private TaskEventHandler getEventHandler(Task task) throws ClassNotFoundException {
+        TaskEventHandler result = (e, n, c) -> {
+        };
+        TaskHandler eventHandler = task.getTaskHandler();
+        if (eventHandler != null && StringUtils.isNotBlank(eventHandler.getClassName())) {
+            String factoryName = eventHandler.getClassName();
+            Class<?> factoryClass = Class.forName(factoryName);
+            if (EventHandlerFactory.class.isAssignableFrom(factoryClass)) {
+                EventHandlerFactory factory = (EventHandlerFactory) context.getBean(factoryClass);
+                result = factory.build(task);
+            } else {
+                log.error("the give class " + factoryClass.getName() + " doesn't extends " + EventHandlerFactory.class.getName());
+            }
+        }
+        return result;
     }
 
     /**
@@ -86,8 +131,7 @@ public class TaskResource {
     @Timed
     public List<Task> getAllTasks() {
         log.debug("REST request to get all Tasks");
-        List<Task> tasks = taskRepository.findAll();
-        return tasks;
+        return taskRepository.findAll();
     }
 
     /**
@@ -98,7 +142,7 @@ public class TaskResource {
      */
     @GetMapping("/tasks/{id}")
     @Timed
-    public ResponseEntity<Task> getTask(@PathVariable Long id) {
+    public ResponseEntity<Task> getTask(@PathVariable String id) {
         log.debug("REST request to get Task : {}", id);
         Task task = taskRepository.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(task));
@@ -112,10 +156,10 @@ public class TaskResource {
      */
     @DeleteMapping("/tasks/{id}")
     @Timed
-    public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteTask(@PathVariable String id) {
         log.debug("REST request to delete Task : {}", id);
         taskRepository.delete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id)).build();
     }
 
 }

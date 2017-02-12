@@ -21,8 +21,7 @@ public class Task implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     @NotNull
     @Column(name = "name", nullable = false)
@@ -33,10 +32,10 @@ public class Task implements Serializable {
     private Double period;
 
     @Column(name = "force_sleep")
-    private Boolean forceSleep;
+    private Boolean forceSleep = false;
 
     @Column(name = "keep_awake")
-    private Boolean keepAwake;
+    private Boolean keepAwake = false;
 
     @OneToOne
     @JoinColumn(unique = true)
@@ -50,11 +49,11 @@ public class Task implements Serializable {
     @JoinColumn(unique = true)
     private EventHandler eventHandler;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
