@@ -158,6 +158,7 @@ public class TaskResource {
     @Timed
     public ResponseEntity<Void> deleteTask(@PathVariable String id) {
         log.debug("REST request to delete Task : {}", id);
+        schedulingService.terminateTask(id);
         taskRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id)).build();
     }
