@@ -93,6 +93,8 @@ jhipster:
 # ===================================================================
 wio:
   base-url: https://us.wio.seeed.io
+  monitor:
+    automatic: false
 
 # ===================================================================
 # Application specific properties

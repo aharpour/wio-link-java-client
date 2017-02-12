@@ -15,11 +15,13 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
 
 import io.github.jhipster.config.JHipsterConstants;
 import nl.openweb.iot.dashboard.config.DefaultProfileUtil;
+import nl.openweb.iot.monitor.strategy.AveragingStrategy;
 
 @ComponentScan
 @EntityScan("nl.openweb.iot.dashboard.domain")
@@ -75,5 +77,10 @@ public class DashboardApp {
             InetAddress.getLocalHost().getHostAddress(),
             env.getProperty("server.port"),
             env.getActiveProfiles());
+    }
+
+    @Bean
+    public AveragingStrategy averagingStrategy() {
+        return new AveragingStrategy();
     }
 }

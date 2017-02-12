@@ -9,6 +9,6 @@ import nl.openweb.iot.wio.scheduling.TaskEventHandler;
 public class AlertEventHandlerFactory implements EventHandlerFactory {
     @Override
     public TaskEventHandler build(Task task) {
-        return (e, n, c) -> System.out.print(e);
+        return (e, n, c) -> System.out.println(e);
     }
 }
