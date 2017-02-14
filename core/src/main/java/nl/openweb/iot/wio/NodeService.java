@@ -19,6 +19,7 @@ import nl.openweb.iot.wio.db.GroveBean;
 import nl.openweb.iot.wio.db.NodeBean;
 import nl.openweb.iot.wio.domain.GroveFactory;
 import nl.openweb.iot.wio.domain.Node;
+import nl.openweb.iot.wio.domain.NodeDecorator;
 import nl.openweb.iot.wio.domain.NodeImpl;
 import nl.openweb.iot.wio.repository.NodeRepository;
 import nl.openweb.iot.wio.rest.NodeResource;
@@ -42,7 +43,8 @@ public class NodeService {
     private SeeedSsoResource ssoResource;
     private WebSocketService webSocketService;
     private GroveFactory groveFactory;
-    private Map<String, Node> registry = new ConcurrentHashMap<>();
+    private Map<String, Node> nameRegistry = new ConcurrentHashMap<>();
+    private Map<String, Node> snRegistry = new ConcurrentHashMap<>();
 
 
     @PostConstruct
@@ -65,28 +67,61 @@ public class NodeService {
     }
 
     public Node findNodeBySnId(String nodeSn) throws WioException {
-        NodeBean nodeBean = this.nodeRepository.findOneNodeSn(nodeSn);
-        return createNodeFromNodeBean(nodeBean);
+        Node result = null;
+        if (!snRegistry.containsKey(nodeSn)) {
+            synchronized (this) {
+                if (!snRegistry.containsKey(nodeSn)) {
+                    NodeBean nodeBean = this.nodeRepository.findOneNodeSn(nodeSn);
+                    result = nodeBean != null ? createNodeFromNodeBean(nodeBean) : null;
+                }
+            }
+        }
+        if (result == null && snRegistry.containsKey(nodeSn)) {
+            result = snRegistry.get(nodeSn);
+        }
+        return result != null ? new NodeDecorator(this, result.getNodeSn()) : null;
     }
 
     public Node findNodeByName(String nodeName) throws WioException {
-        NodeBean nodeBean = this.nodeRepository.findOneByName(nodeName);
-        return createNodeFromNodeBean(nodeBean);
+        Node result = null;
+        if (!nameRegistry.containsKey(nodeName)) {
+            synchronized (this) {
+                if (!nameRegistry.containsKey(nodeName)) {
+                    NodeBean nodeBean = this.nodeRepository.findOneByName(nodeName);
+                    result = nodeBean != null ? createNodeFromNodeBean(nodeBean) : null;
+                }
+            }
+        }
+        if (result == null && nameRegistry.containsKey(nodeName)) {
+            result = nameRegistry.get(nodeName);
+        }
+        return result != null ? new NodeDecorator(this, result.getNodeSn()) : null;
     }
 
     public void reinitializeNode(String nodeSn) throws WioException {
-        NodeBean node = this.nodeRepository.findOneNodeSn(nodeSn);
-        initializeNodeBean(node);
-        this.nodeRepository.<NodeBean>save(node);
+        Node node = findNodeBySnId(nodeSn);
+        NodeBean nodeBean = this.nodeRepository.findOneNodeSn(nodeSn);
+        initializeNodeBean(nodeBean);
+        NodeBean saved = (NodeBean) this.nodeRepository.<NodeBean>save(nodeBean);
+        Node newNode = createNodeFromNodeBean(saved);
+        if (node instanceof NodeImpl) {
+            newNode.setEventHandler(((NodeImpl) node).getEventHandler());
+        }
     }
 
     private Node createNodeFromNodeBean(NodeBean nodeBean) throws WioException {
         Node result = null;
-        initializeAndUpdateNodeBean(nodeBean);
         if (nodeBean != null) {
-            result = new NodeImpl(nodeBean, groveFactory, nodeResource, webSocketService);
+            initializeAndUpdateNodeBean(nodeBean);
+            result = new NodeImpl(nodeBean, groveFactory, nodeResource, webSocketService, this);
+            register(result);
         }
         return result;
+    }
+
+    private void register(Node node) {
+        nameRegistry.put(node.getName(), node);
+        nameRegistry.put(node.getNodeSn(), node);
     }
 
 

@@ -36,7 +36,11 @@ class TaskWrapper implements Runnable {
     private volatile boolean terminate = false;
 
     TaskWrapper(Node node, SchedulingService schedulingService, TaskContext context, ScheduledTask task, WioSettings settings) {
-        this.taskId = UUID.randomUUID().toString();
+        this(UUID.randomUUID().toString(), node, schedulingService, context, task, settings);
+    }
+
+    TaskWrapper(String taskId, Node node, SchedulingService schedulingService, TaskContext context, ScheduledTask task, WioSettings settings) {
+        this.taskId = taskId;
         this.node = node;
         this.schedulingService = schedulingService;
         this.task = task;

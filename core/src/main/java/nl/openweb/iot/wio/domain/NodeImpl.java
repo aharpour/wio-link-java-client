@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.function.BiConsumer;
 
 import lombok.Getter;
+import nl.openweb.iot.wio.NodeService;
 import nl.openweb.iot.wio.WebSocketService;
 import nl.openweb.iot.wio.WioException;
 import nl.openweb.iot.wio.db.GroveBean;
@@ -22,9 +23,10 @@ public class NodeImpl implements Node {
     private final List<Grove> groves;
     private final NodeResource nodeResource;
     private final WebSocketService webSocketService;
+    private final NodeService nodeService;
     private BiConsumer<Map<String, String>, Node> eventHandler;
 
-    public NodeImpl(NodeBean nodeBean, GroveFactory factory, NodeResource nodeResource, WebSocketService webSocketService) throws WioException {
+    public NodeImpl(NodeBean nodeBean, GroveFactory factory, NodeResource nodeResource, WebSocketService webSocketService, NodeService nodeService) throws WioException {
         this.nodeResource = nodeResource;
         name = nodeBean.getName();
         nodeKey = nodeBean.getNodeKey();
@@ -37,6 +39,7 @@ public class NodeImpl implements Node {
         }
         groves = Collections.unmodifiableList(list);
         this.webSocketService = webSocketService;
+        this.nodeService = nodeService;
     }
 
     @Override
@@ -105,7 +108,7 @@ public class NodeImpl implements Node {
 
     public void setEventHandler(BiConsumer<Map<String, String>, Node> eventHandler) {
         this.eventHandler = eventHandler;
-        this.webSocketService.connect(this);
+        this.webSocketService.connect(new NodeDecorator(nodeService, this.getNodeSn()) );
     }
 
     /**

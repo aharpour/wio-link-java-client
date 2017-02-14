@@ -80,11 +80,25 @@ public class SchedulingService {
 
         public String build() {
             TaskWrapper taskWrapper = new TaskWrapper(node, SchedulingService.this, context, task, settings);
+            String taskId = taskWrapper.getTaskId();
+            return initialTaskWrapper(taskWrapper, taskId);
+        }
+
+
+
+        public String build(String taskId) {
+            if (registry.containsKey(taskId)) {
+                throw new IllegalArgumentException("A task with \"" + taskId + "\" task id already exists.");
+            }
+            TaskWrapper taskWrapper = new TaskWrapper(taskId, node, SchedulingService.this, context, task, settings);
+            return initialTaskWrapper(taskWrapper, taskId);
+        }
+
+        private String initialTaskWrapper(TaskWrapper taskWrapper, String taskId) {
             taskWrapper.setEventHandler(eventHandler);
             taskWrapper.setForceSleep(forceSleep);
             taskWrapper.setKeepAwake(keepAwake);
             taskWrapper.init();
-            String taskId = taskWrapper.getTaskId();
             registry.put(taskId, taskWrapper);
             taskWrapper.run();
             return taskId;

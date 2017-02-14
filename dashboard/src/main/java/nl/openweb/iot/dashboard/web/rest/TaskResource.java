@@ -11,22 +11,15 @@ import com.codahale.metrics.annotation.Timed;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationContext;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import io.github.jhipster.web.util.ResponseUtil;
 import nl.openweb.iot.dashboard.domain.Task;
-import nl.openweb.iot.dashboard.domain.TaskHandler;
 import nl.openweb.iot.dashboard.repository.TaskRepository;
-import nl.openweb.iot.dashboard.service.EventHandlerFactory;
-import nl.openweb.iot.dashboard.service.TaskHandlerFactory;
+import nl.openweb.iot.dashboard.service.TaskService;
 import nl.openweb.iot.dashboard.web.rest.util.HeaderUtil;
 import nl.openweb.iot.wio.WioException;
-import nl.openweb.iot.wio.scheduling.ScheduledTask;
-import nl.openweb.iot.wio.scheduling.SchedulingService;
-import nl.openweb.iot.wio.scheduling.SchedulingUtils;
-import nl.openweb.iot.wio.scheduling.TaskEventHandler;
 
 /**
  * REST controller for managing Task.
@@ -40,13 +33,11 @@ public class TaskResource {
     private static final String ENTITY_NAME = "task";
 
     private final TaskRepository taskRepository;
-    private final SchedulingService schedulingService;
-    private final ApplicationContext context;
+    private final TaskService taskService;
 
-    public TaskResource(TaskRepository taskRepository, SchedulingService schedulingService, ApplicationContext context) {
+    public TaskResource(TaskRepository taskRepository, TaskService taskService) {
         this.taskRepository = taskRepository;
-        this.schedulingService = schedulingService;
-        this.context = context;
+        this.taskService = taskService;
     }
 
     /**
@@ -68,15 +59,7 @@ public class TaskResource {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "nodeisrequired", "Node is required")).body(null);
         }
         try {
-            ScheduledTask taskHandler = getTaskHandler(task);
-            SchedulingService.TaskBuilder builder =
-                schedulingService.build(taskHandler, task.getNode().getNodeSn())
-                    .setKeepAwake(task.isKeepAwake())
-                    .setForceSleep(task.isForceSleep());
-            if (task.getEventHandler() != null) {
-                builder.setEventHandler(getEventHandler(task));
-            }
-            task.setId(builder.build());
+            task.setId(taskService.startTask(task));
             Task result = taskRepository.save(task);
             return ResponseEntity.created(new URI("/api/tasks/" + result.getId()))
                 .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId()))
@@ -89,38 +72,6 @@ public class TaskResource {
 
     }
 
-    private ScheduledTask getTaskHandler(Task task) throws ClassNotFoundException {
-        ScheduledTask result = (n, c) -> SchedulingUtils.hoursLater(5);
-        TaskHandler taskHandler = task.getTaskHandler();
-        if (taskHandler != null && StringUtils.isNotBlank(taskHandler.getClassName())) {
-            String factoryName = taskHandler.getClassName();
-            Class<?> factoryClass = Class.forName(factoryName);
-            if (TaskHandlerFactory.class.isAssignableFrom(factoryClass)) {
-                TaskHandlerFactory factory = (TaskHandlerFactory) context.getBean(factoryClass);
-                result = factory.build(task);
-            } else {
-                log.error("the give class " + factoryClass.getName() + " is not a instance of " + TaskHandlerFactory.class.getName());
-            }
-        }
-        return result;
-    }
-
-    private TaskEventHandler getEventHandler(Task task) throws ClassNotFoundException {
-        TaskEventHandler result = (e, n, c) -> {
-        };
-        TaskHandler eventHandler = task.getTaskHandler();
-        if (eventHandler != null && StringUtils.isNotBlank(eventHandler.getClassName())) {
-            String factoryName = eventHandler.getClassName();
-            Class<?> factoryClass = Class.forName(factoryName);
-            if (EventHandlerFactory.class.isAssignableFrom(factoryClass)) {
-                EventHandlerFactory factory = (EventHandlerFactory) context.getBean(factoryClass);
-                result = factory.build(task);
-            } else {
-                log.error("the give class " + factoryClass.getName() + " doesn't extends " + EventHandlerFactory.class.getName());
-            }
-        }
-        return result;
-    }
 
     /**
      * GET  /tasks : get all the tasks.
@@ -158,7 +109,7 @@ public class TaskResource {
     @Timed
     public ResponseEntity<Void> deleteTask(@PathVariable String id) {
         log.debug("REST request to delete Task : {}", id);
-        schedulingService.terminateTask(id);
+        taskService.terminateTask(id);
         taskRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id)).build();
     }
