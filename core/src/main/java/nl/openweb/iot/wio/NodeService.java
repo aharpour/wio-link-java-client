@@ -19,7 +19,6 @@ import nl.openweb.iot.wio.db.GroveBean;
 import nl.openweb.iot.wio.db.NodeBean;
 import nl.openweb.iot.wio.domain.GroveFactory;
 import nl.openweb.iot.wio.domain.Node;
-import nl.openweb.iot.wio.domain.NodeDecorator;
 import nl.openweb.iot.wio.domain.NodeImpl;
 import nl.openweb.iot.wio.repository.NodeRepository;
 import nl.openweb.iot.wio.rest.NodeResource;
@@ -67,6 +66,11 @@ public class NodeService {
     }
 
     public Node findNodeBySnId(String nodeSn) throws WioException {
+        Node node = findOriginalNodeBySnId(nodeSn);
+        return node != null ? new NodeDecorator(this, node.getNodeSn()) : null;
+    }
+
+    Node findOriginalNodeBySnId(String nodeSn) throws WioException {
         Node result = null;
         if (!snRegistry.containsKey(nodeSn)) {
             synchronized (this) {
@@ -79,7 +83,7 @@ public class NodeService {
         if (result == null && snRegistry.containsKey(nodeSn)) {
             result = snRegistry.get(nodeSn);
         }
-        return result != null ? new NodeDecorator(this, result.getNodeSn()) : null;
+        return result;
     }
 
     public Node findNodeByName(String nodeName) throws WioException {

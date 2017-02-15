@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.function.BiConsumer;
 
 import lombok.Getter;
+import nl.openweb.iot.wio.NodeDecorator;
 import nl.openweb.iot.wio.NodeService;
 import nl.openweb.iot.wio.WebSocketService;
 import nl.openweb.iot.wio.WioException;

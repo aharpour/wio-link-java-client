@@ -1,12 +1,12 @@
-package nl.openweb.iot.wio.domain;
+package nl.openweb.iot.wio;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 
-import nl.openweb.iot.wio.NodeService;
-import nl.openweb.iot.wio.WioException;
+import nl.openweb.iot.wio.domain.Grove;
+import nl.openweb.iot.wio.domain.Node;
 
 public class NodeDecorator implements Node {
 
@@ -20,7 +20,7 @@ public class NodeDecorator implements Node {
 
     private Node getNode() {
         try {
-            return nodeService.findNodeBySnId(nodeSn);
+            return nodeService.findOriginalNodeBySnId(nodeSn);
         } catch (WioException e) {
             throw new RuntimeException("An unexpected WioException was thrown.", e);
         }
