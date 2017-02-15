@@ -121,7 +121,7 @@ public class NodeService {
 
     private void register(Node node) {
         nameRegistry.put(node.getName(), node);
-        nameRegistry.put(node.getNodeSn(), node);
+        snRegistry.put(node.getNodeSn(), node);
     }
 
 
