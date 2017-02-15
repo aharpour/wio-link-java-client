@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
+import nl.openweb.iot.dashboard.domain.EventHandler;
 import nl.openweb.iot.dashboard.domain.Task;
 import nl.openweb.iot.dashboard.domain.TaskHandler;
 import nl.openweb.iot.wio.WioException;
@@ -62,7 +63,7 @@ public class TaskService {
     private TaskEventHandler getEventHandler(Task task) throws ClassNotFoundException {
         TaskEventHandler result = (e, n, c) -> {
         };
-        TaskHandler eventHandler = task.getTaskHandler();
+        EventHandler eventHandler = task.getEventHandler();
         if (eventHandler != null && StringUtils.isNotBlank(eventHandler.getClassName())) {
             String factoryName = eventHandler.getClassName();
             Class<?> factoryClass = Class.forName(factoryName);
