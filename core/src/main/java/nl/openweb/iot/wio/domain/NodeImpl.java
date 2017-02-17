@@ -112,10 +112,6 @@ public class NodeImpl implements Node {
         this.webSocketService.connect(new NodeDecorator(nodeService, this.getNodeSn()));
     }
 
-    public void setEventHandlerWithoutConnecting(BiConsumer<Map<String, String>, Node> eventHandler) {
-        this.eventHandler = eventHandler;
-    }
-
     /**
      * This method is very inefficient. Try to avoid using it.
      *

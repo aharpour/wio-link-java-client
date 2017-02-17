@@ -2,6 +2,7 @@ package nl.openweb.iot.wio;
 
 import java.util.Calendar;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,9 +23,11 @@ import nl.openweb.iot.wio.domain.Node;
 @Service
 public class WebSocketService {
 
+    private static final Object PLACE_HOLDER_OBJECT = new Object();
     private WioSettings wioSettings;
     private ObjectMapper objectMapper;
     private TaskScheduler taskScheduler;
+    private Map<String, Object> registry = new ConcurrentHashMap<>();
 
     public WebSocketService(WioSettings wioSettings, ObjectMapper objectMapper, TaskScheduler taskScheduler) {
         this.wioSettings = wioSettings;
@@ -33,8 +36,16 @@ public class WebSocketService {
     }
 
     public void connect(Node node) {
-        StandardWebSocketClient websocket = new StandardWebSocketClient();
-        websocket.doHandshake(new WioWebSocketHandler(node), wioSettings.getBaseUrl().replaceFirst("http(s)?://", "wss://") + "/v1/node/event");
+        if (!registry.containsKey(node.getNodeSn())) {
+            synchronized (this) {
+                if (!registry.containsKey(node.getNodeSn())) {
+                    StandardWebSocketClient websocket = new StandardWebSocketClient();
+                    websocket.doHandshake(new WioWebSocketHandler(node), wioSettings.getBaseUrl().replaceFirst("http(s)?://", "wss://") + "/v1/node/event");
+                    registry.put(node.getNodeSn(), PLACE_HOLDER_OBJECT);
+                }
+            }
+        }
+
     }
 
     private void reconnect(Node node) {
@@ -52,7 +63,7 @@ public class WebSocketService {
 
         public final Node node;
 
-        public WioWebSocketHandler(Node node) {
+        WioWebSocketHandler(Node node) {
             this.node = node;
         }
 
@@ -77,7 +88,7 @@ public class WebSocketService {
 
 
     @Data
-    public static class MessageBean {
+    private static class MessageBean {
         @JsonProperty("msg")
         private Map<String, String> message;
         private String error;

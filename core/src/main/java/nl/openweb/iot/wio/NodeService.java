@@ -109,7 +109,7 @@ public class NodeService {
         NodeBean saved = (NodeBean) this.nodeRepository.<NodeBean>save(nodeBean);
         Node newNode = createNodeFromNodeBean(saved);
         if (node instanceof NodeImpl && newNode instanceof NodeImpl) {
-            ((NodeImpl) newNode).setEventHandlerWithoutConnecting(((NodeImpl) node).getEventHandler());
+            ((NodeImpl) newNode).setEventHandler(((NodeImpl) node).getEventHandler());
         }
     }
 
