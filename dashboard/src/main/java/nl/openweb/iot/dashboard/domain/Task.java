@@ -41,12 +41,12 @@ public class Task implements Serializable {
     @JoinColumn(unique = true)
     private JpaNodeBean node;
 
-    @OneToOne
-    @JoinColumn(unique = true)
+    @ManyToOne
+    @JoinColumn
     private TaskHandler taskHandler;
 
-    @OneToOne
-    @JoinColumn(unique = true)
+    @ManyToOne
+    @JoinColumn
     private EventHandler eventHandler;
 
     public String getId() {

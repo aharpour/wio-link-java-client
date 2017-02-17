@@ -52,7 +52,7 @@
     <module>core</module>
     <module>data</module>
     <module>monitor</module>
-    <module>dashboard</module>
     <module>demo</module>
+    <module>dashboard</module>
   </modules>
 </project>
