@@ -103,13 +103,13 @@ public class NodeService {
     }
 
     public void reinitializeNode(String nodeSn) throws WioException {
-        Node node = findNodeBySnId(nodeSn);
+        Node node = findOriginalNodeBySnId(nodeSn);
         NodeBean nodeBean = this.nodeRepository.findOneNodeSn(nodeSn);
         initializeNodeBean(nodeBean);
         NodeBean saved = (NodeBean) this.nodeRepository.<NodeBean>save(nodeBean);
         Node newNode = createNodeFromNodeBean(saved);
-        if (node instanceof NodeImpl) {
-            newNode.setEventHandler(((NodeImpl) node).getEventHandler());
+        if (node instanceof NodeImpl && newNode instanceof NodeImpl) {
+            ((NodeImpl) newNode).setEventHandlerWithoutConnecting(((NodeImpl) node).getEventHandler());
         }
     }
 

@@ -109,7 +109,11 @@ public class NodeImpl implements Node {
 
     public void setEventHandler(BiConsumer<Map<String, String>, Node> eventHandler) {
         this.eventHandler = eventHandler;
-        this.webSocketService.connect(new NodeDecorator(nodeService, this.getNodeSn()) );
+        this.webSocketService.connect(new NodeDecorator(nodeService, this.getNodeSn()));
+    }
+
+    public void setEventHandlerWithoutConnecting(BiConsumer<Map<String, String>, Node> eventHandler) {
+        this.eventHandler = eventHandler;
     }
 
     /**
