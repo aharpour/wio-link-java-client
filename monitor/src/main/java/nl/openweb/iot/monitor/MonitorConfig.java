@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
 
 import nl.openweb.iot.monitor.repository.ReadingRepository;
-import nl.openweb.iot.monitor.strategy.TrivialStrategy;
+import nl.openweb.iot.monitor.strategy.AveragingStrategy;
 import nl.openweb.iot.wio.scheduling.SchedulingService;
 
 @ComponentScan("nl.openweb.iot.monitor")
@@ -27,7 +27,7 @@ public class MonitorConfig {
     @Bean
     @ConditionalOnMissingBean
     public ReadingStrategy readingStrategy() {
-        return new TrivialStrategy();
+        return new AveragingStrategy();
     }
 
     @Bean
