@@ -21,7 +21,7 @@ public class MonitorConfig {
     @ConditionalOnProperty(prefix = "wio.monitor", name = "automatic", matchIfMissing = true)
     @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
     public Monitor monitor(MonitorSettings settings, ReadingRepository repository, ReadingStrategy strategy) {
-        return new Monitor(settings.getPeriodInMin(), repository, strategy);
+        return new Monitor(settings.getPeriodInMin() * 60, repository, strategy);
     }
 
     @Bean

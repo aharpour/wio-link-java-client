@@ -16,9 +16,9 @@ import nl.openweb.iot.wio.scheduling.TaskContext;
 
 public class Monitor implements ScheduledTask {
 
-    private final int period;
-    private final ReadingRepository repository;
-    private final ReadingStrategy strategy;
+    protected final int period;
+    protected final ReadingRepository repository;
+    protected final ReadingStrategy strategy;
     @Setter
     private BiConsumer<Reading, TaskContext> alertMonitor;
 
@@ -30,7 +30,7 @@ public class Monitor implements ScheduledTask {
 
     @Override
     public TaskExecutionResult execute(Node node, TaskContext context) throws WioException {
-        TaskExecutionResult nextRun = SchedulingUtils.minutesLater(period);
+        TaskExecutionResult nextRun = SchedulingUtils.secondsLater(period);
         Reading reading = new Reading(node.getName());
         for (Grove grove : node.getGroves()) {
             addData(grove, reading);
@@ -42,7 +42,7 @@ public class Monitor implements ScheduledTask {
         return nextRun;
     }
 
-    public void addData(Grove grove, Reading reading) throws WioException {
+    protected void addData(Grove grove, Reading reading) throws WioException {
         if (GroveTempHum.class.isAssignableFrom(grove.getClass())) {
             addData((GroveTempHum) grove, reading);
         } else if (GroveLuminance.class.isAssignableFrom(grove.getClass())) {
@@ -68,48 +68,48 @@ public class Monitor implements ScheduledTask {
         }
     }
 
-    public void addData(GroveTempHum grove, Reading reading) throws WioException {
+    private void addData(GroveTempHum grove, Reading reading) throws WioException {
         reading.setTemperature(strategy.readDouble(grove::readTemperature));
         reading.setHumidity(strategy.readDouble(grove::readHumidity));
     }
 
-    public void addData(GroveLoudness grove, Reading reading) throws WioException {
+    private void addData(GroveLoudness grove, Reading reading) throws WioException {
         reading.setLoudness(strategy.readInteger(grove::readLoudness));
     }
 
-    public void addData(GroveLuminance grove, Reading reading) throws WioException {
+    private void addData(GroveLuminance grove, Reading reading) throws WioException {
         reading.setLuminance(strategy.readDouble(grove::readLuminance));
     }
 
-    public void addData(GroveDust grove, Reading reading) throws WioException {
+    private void addData(GroveDust grove, Reading reading) throws WioException {
         reading.setDust(strategy.readDouble(grove::readDust));
     }
 
-    public void addData(GroveAirQuality grove, Reading reading) throws WioException {
+    private void addData(GroveAirQuality grove, Reading reading) throws WioException {
         reading.setAirQuality(strategy.readInteger(grove::readQuality));
     }
 
-    public void addData(GroveRelay grove, Reading reading) throws WioException {
+    private void addData(GroveRelay grove, Reading reading) throws WioException {
         reading.setRelay(grove.readOnOff());
     }
 
-    public void addData(GroveMoisture grove, Reading reading) throws WioException {
+    private void addData(GroveMoisture grove, Reading reading) throws WioException {
         reading.setMoisture(strategy.readInteger(grove::readMoisture));
     }
 
-    public void addData(GroveCo2 grove, Reading reading) throws WioException {
+    private void addData(GroveCo2 grove, Reading reading) throws WioException {
         reading.setCo2(strategy.readDouble(grove::readConcentration));
     }
 
-    public void addData(GroveMagneticSwitch grove, Reading reading) throws WioException {
+    private void addData(GroveMagneticSwitch grove, Reading reading) throws WioException {
         reading.setMagneticSwitch(1 == grove.readApproach());
     }
 
-    public void addData(GroveUltraRanger grove, Reading reading) throws WioException {
+    private void addData(GroveUltraRanger grove, Reading reading) throws WioException {
         reading.setUltraRanger(grove.readRangeInCm());
     }
 
-    public void addData(GroveServo grove, Reading reading) throws WioException {
+    private void addData(GroveServo grove, Reading reading) throws WioException {
         reading.setServoAngle(grove.readAngle());
     }
 

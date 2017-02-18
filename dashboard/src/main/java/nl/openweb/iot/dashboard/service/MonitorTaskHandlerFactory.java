@@ -23,6 +23,6 @@ public class MonitorTaskHandlerFactory implements TaskHandlerFactory {
 
     @Override
     public ScheduledTask build(Task task) {
-        return new Monitor((int) Math.round(task.getPeriod()), repository, strategy);
+        return new Monitor((int) Math.round(task.getPeriod() * 60), repository, strategy);
     }
 }
