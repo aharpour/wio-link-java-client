@@ -17,7 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import nl.openweb.iot.dashboard.DashboardApp;
+import nl.openweb.iot.dashboard.DashboardAppConfig;
 import nl.openweb.iot.dashboard.domain.EventHandler;
 import nl.openweb.iot.dashboard.repository.EventHandlerRepository;
 
@@ -33,7 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @see EventHandlerResource
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = DashboardApp.class)
+@SpringBootTest(classes = DashboardAppConfig.class)
 public class EventHandlerResourceIntTest {
 
     private static final String DEFAULT_NAME = "AAAAAAAAAA";

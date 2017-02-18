@@ -13,7 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import nl.openweb.iot.dashboard.DashboardApp;
+import nl.openweb.iot.dashboard.DashboardAppConfig;
 import nl.openweb.iot.dashboard.domain.User;
 import nl.openweb.iot.dashboard.repository.UserRepository;
 import nl.openweb.iot.dashboard.service.MailService;
@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @see UserResource
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = DashboardApp.class)
+@SpringBootTest(classes = DashboardAppConfig.class)
 public class UserResourceIntTest {
 
     @Autowired

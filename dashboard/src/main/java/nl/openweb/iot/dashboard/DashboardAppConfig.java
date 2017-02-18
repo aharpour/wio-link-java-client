@@ -21,17 +21,17 @@ import org.springframework.core.env.Environment;
 import io.github.jhipster.config.JHipsterConstants;
 import nl.openweb.iot.dashboard.config.DefaultProfileUtil;
 
-@ComponentScan
+@ComponentScan("nl.openweb.iot.dashboard")
 @EntityScan("nl.openweb.iot.dashboard.domain")
 @EnableAutoConfiguration(exclude = {MetricFilterAutoConfiguration.class, MetricRepositoryAutoConfiguration.class})
 @EnableConfigurationProperties(LiquibaseProperties.class)
-public class DashboardApp {
+public class DashboardAppConfig {
 
-    private static final Logger log = LoggerFactory.getLogger(DashboardApp.class);
+    private static final Logger log = LoggerFactory.getLogger(DashboardAppConfig.class);
 
     private final Environment env;
 
-    public DashboardApp(Environment env) {
+    public DashboardAppConfig(Environment env) {
         this.env = env;
     }
 
@@ -61,8 +61,8 @@ public class DashboardApp {
      * @param args the command line arguments
      * @throws UnknownHostException if the local host name could not be resolved into an address
      */
-    public static void main(String[] args) throws UnknownHostException {
-        SpringApplication app = new SpringApplication(DashboardApp.class);
+    public static void run(String[] args) throws UnknownHostException {
+        SpringApplication app = new SpringApplication(DashboardAppConfig.class);
         DefaultProfileUtil.addDefaultProfile(app);
         Environment env = app.run(args).getEnvironment();
         log.info("\n----------------------------------------------------------\n\t" +

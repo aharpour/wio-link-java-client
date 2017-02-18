@@ -5,10 +5,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.ResultActions;
 
-import nl.openweb.iot.dashboard.DashboardApp;
+import nl.openweb.iot.dashboard.DashboardAppConfig;
 
 @WebAppConfiguration
-@ContextConfiguration(classes = DashboardApp.class, loader = SpringApplicationContextLoader.class)
+@ContextConfiguration(classes = DashboardAppConfig.class, loader = SpringApplicationContextLoader.class)
 public abstract class StepDefs {
 
     protected ResultActions actions;

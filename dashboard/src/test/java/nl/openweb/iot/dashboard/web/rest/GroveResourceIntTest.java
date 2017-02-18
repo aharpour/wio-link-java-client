@@ -17,7 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import nl.openweb.iot.dashboard.DashboardApp;
+import nl.openweb.iot.dashboard.DashboardAppConfig;
 import nl.openweb.iot.dashboard.repository.GroveRepository;
 import nl.openweb.iot.data.JpaGroveBean;
 
@@ -33,7 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @see GroveResource
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = DashboardApp.class)
+@SpringBootTest(classes = DashboardAppConfig.class)
 public class GroveResourceIntTest {
 
     private static final String DEFAULT_NAME = "AAAAAAAAAA";

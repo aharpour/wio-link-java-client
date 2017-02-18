@@ -15,5 +15,6 @@
   <modules>
     <module>core-demo</module>
     <module>monitor-demo</module>
+    <module>dashboard-demo</module>
   </modules>
 </project>

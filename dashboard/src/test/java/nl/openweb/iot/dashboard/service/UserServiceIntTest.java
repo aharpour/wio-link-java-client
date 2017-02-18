@@ -11,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import nl.openweb.iot.dashboard.DashboardApp;
+import nl.openweb.iot.dashboard.DashboardAppConfig;
 import nl.openweb.iot.dashboard.domain.User;
 import nl.openweb.iot.dashboard.repository.UserRepository;
 import nl.openweb.iot.dashboard.service.util.RandomUtil;
@@ -25,7 +25,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @see UserService
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = DashboardApp.class)
+@SpringBootTest(classes = DashboardAppConfig.class)
 @Transactional
 public class UserServiceIntTest {
 
