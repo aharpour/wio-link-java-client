@@ -54,6 +54,7 @@ public class JpaNodeBean {
         nodeBean.setNodeKey(nodeKey);
         nodeBean.setDataXServer(dataXServer);
         nodeBean.setBoard(board);
+        nodeBean.setInitialized(initialized);
         List<GroveBean> list = new ArrayList<>();
         if (groves != null) {
             for (JpaGroveBean grove : groves) {
