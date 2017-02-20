@@ -524,7 +524,7 @@
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>0.4.10</version>
                 <configuration>
-                    <imageName>dashboard</imageName>
+                    <imageName>openweb/wio-dashboard</imageName>
                     <dockerDirectory>src/main/docker</dockerDirectory>
                     <resources>
                         <resource>
@@ -533,6 +533,13 @@
                             <include>${project.build.finalName}.jar</include>
                         </resource>
                     </resources>
+                    <imageTags>
+                        <!--<imageTag>${project.version}</imageTag>-->
+                        <imageTag>latest</imageTag>
+                    </imageTags>
+                    <forceTags>true</forceTags>
+                    <serverId>docker-registry</serverId>
+                    <pullOnBuild>true</pullOnBuild>
                 </configuration>
             </plugin>
             <plugin>
