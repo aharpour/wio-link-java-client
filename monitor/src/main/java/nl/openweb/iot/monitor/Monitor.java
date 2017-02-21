@@ -63,6 +63,8 @@ public class Monitor implements ScheduledTask {
             addData((GroveServo) grove, reading);
         } else if (GroveLoudness.class.isAssignableFrom(grove.getClass())) {
             addData((GroveLoudness) grove, reading);
+        } else if (GroveSound.class.isAssignableFrom(grove.getClass())) {
+            addData((GroveSound) grove, reading);
         } else if (GroveCo2.class.isAssignableFrom(grove.getClass())) {
             addData((GroveCo2) grove, reading);
         }
@@ -75,6 +77,10 @@ public class Monitor implements ScheduledTask {
 
     private void addData(GroveLoudness grove, Reading reading) throws WioException {
         reading.setLoudness(strategy.readInteger(grove::readLoudness));
+    }
+
+    private void addData(GroveSound grove, Reading reading) throws WioException {
+        reading.setLoudness(strategy.readInteger(grove::readSoundLevel));
     }
 
     private void addData(GroveLuminance grove, Reading reading) throws WioException {
