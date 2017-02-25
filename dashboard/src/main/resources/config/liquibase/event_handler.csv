@@ -1,3 +1,4 @@
 name;class_name
 Alert;nl.openweb.iot.dashboard.service.AlertEventHandlerFactory
 Logger;nl.openweb.iot.dashboard.service.LoggerEventHandlerFactory
+Store;nl.openweb.iot.dashboard.service.StoreEventHandlerFactory

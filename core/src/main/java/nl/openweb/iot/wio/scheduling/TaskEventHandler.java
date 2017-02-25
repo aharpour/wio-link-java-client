@@ -8,5 +8,5 @@ import nl.openweb.iot.wio.domain.Node;
 @FunctionalInterface
 public interface TaskEventHandler {
 
-    void handle(Map<String, String> map, Node node, TaskContext context) throws WioException;
+    void handle(Map<String, String> event, Node node, TaskContext context) throws WioException;
 }
