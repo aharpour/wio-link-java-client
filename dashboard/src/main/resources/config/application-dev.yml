@@ -63,6 +63,12 @@ liquibase:
 server:
     port: 8080
 
+zuul:
+  routes:
+    foos:
+      path: /visualize/**
+      url: http://mydocker.local:5601
+
 # ===================================================================
 # JHipster specific properties
 #

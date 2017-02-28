@@ -15,6 +15,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
 
@@ -23,6 +24,7 @@ import nl.openweb.iot.dashboard.config.DefaultProfileUtil;
 
 @ComponentScan
 @EntityScan("nl.openweb.iot.dashboard.domain")
+@EnableZuulProxy
 @EnableAutoConfiguration(exclude = {MetricFilterAutoConfiguration.class, MetricRepositoryAutoConfiguration.class})
 @EnableConfigurationProperties(LiquibaseProperties.class)
 public class DashboardApp {

@@ -62,6 +62,11 @@ server:
         enabled: true
         mime-types: text/html,text/xml,text/plain,text/css, application/javascript, application/json
         min-response-size: 1024
+zuul:
+  routes:
+    foos:
+      path: /visualize/**
+      url: http://kibana:5601
 
 # ===================================================================
 # JHipster specific properties
