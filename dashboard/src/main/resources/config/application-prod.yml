@@ -64,7 +64,7 @@ server:
         min-response-size: 1024
 zuul:
   routes:
-    foos:
+    kibana:
       path: /visualize/**
       url: http://kibana:5601
 
