@@ -13,10 +13,16 @@ services:
       wio.username: "username"
       wio.password: "password"
       spring.profiles.active: "prod,swagger"
+      zuul.routes.kibana.url: "http://kibana_gateway:8080"
       spring.datasource.url: "jdbc:mysql://mysql:3306/dashboard?useUnicode=true&characterEncoding=utf8&useSSL=false"
       spring.datasource.username: "jhipster"
       spring.datasource.password: "3uUcZsaTpe(pz"
+      JAVA_OPTS: "-Xms100m -Xmx100m"
       JHIPSTER_SLEEP: "30" # gives time for the database to boot before the application
+    depends_on:
+      - mysql
+      - elasticsearch
+      - kibana_gateway
     restart: always
   mysql:
     image: mysql:5.7
@@ -43,10 +49,19 @@ services:
 #      - "9200:9200"
 #      - "9300:9300"
     restart: always
+  kibana_gateway:
+    image: openweb/wio-kibana-gateway
+    depends_on:
+      - kibana
+    environment:
+      zuul.routes.kibana.url: "http://kibana:5601"
+      spring.datasource.url: "jdbc:mysql://mysql:3306/dashboard?useUnicode=true&characterEncoding=utf8&useSSL=false"
+      spring.datasource.username: "jhipster"
+    restart: always
   kibana:
     image: openweb/wio-kibana:4.6.4
-#    ports:
-#      - "5601:5601"
+    depends_on:
+      - elasticsearch
     restart: always
 volumes:
   elasticsearch_data:

@@ -66,7 +66,9 @@ zuul:
   routes:
     kibana:
       path: /visualize/**
-      url: http://kibana:5601
+      url: http://kibana_gateway:8080
+  add-proxy-headers: true
+  sensitive-headers:
 
 # ===================================================================
 # JHipster specific properties

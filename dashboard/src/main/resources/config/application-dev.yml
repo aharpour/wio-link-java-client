@@ -65,9 +65,12 @@ server:
 
 zuul:
   routes:
-    foos:
+    kibana:
       path: /visualize/**
       url: http://mydocker.local:5601
+  add-proxy-headers: true
+  sensitive-headers:
+
 
 # ===================================================================
 # JHipster specific properties
