@@ -8,9 +8,16 @@
         <dd>
             <span>{{taskHandler.name}}</span>
         </dd>
-        <dt><span jhiTranslate="dashboardApp.taskHandler.className">Class Name</span></dt>
+        <dt><span jhiTranslate="dashboardApp.taskHandler.langauge">Langauge</span></dt>
         <dd>
-            <span>{{taskHandler.className}}</span>
+            <span jhiTranslate="{{'dashboardApp.Langauge.' + taskHandler.langauge}}">{{taskHandler.langauge}}</span>
+        </dd>
+        <dt><span jhiTranslate="dashboardApp.taskHandler.code">Code</span></dt>
+        <dd>
+            <div *ngIf="taskHandler.code">
+                <a (click)="openFile(taskHandler.codeContentType, taskHandler.code)" jhiTranslate="entity.action.open">open</a>
+                {{taskHandler.codeContentType}}, {{byteSize(taskHandler.code)}}
+            </div>
         </dd>
     </dl>
 

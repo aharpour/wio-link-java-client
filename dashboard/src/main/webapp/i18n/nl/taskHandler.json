@@ -17,7 +17,8 @@
                 "title": "Task Handler"
             },
             "name": "Name",
-            "className": "Class Name"
+            "langauge": "Langauge",
+            "code": "Code"
         }
     }
 }

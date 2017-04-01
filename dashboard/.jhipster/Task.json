@@ -10,20 +10,16 @@
             "otherEntityRelationshipName": "task"
         },
         {
-            "relationshipType": "one-to-one",
+            "relationshipType": "many-to-one",
             "relationshipName": "taskHandler",
             "otherEntityName": "taskHandler",
-            "otherEntityField": "id",
-            "ownerSide": true,
-            "otherEntityRelationshipName": "task"
+            "otherEntityField": "id"
         },
         {
-            "relationshipType": "one-to-one",
+            "relationshipType": "many-to-one",
             "relationshipName": "eventHandler",
             "otherEntityName": "eventHandler",
-            "otherEntityField": "id",
-            "ownerSide": true,
-            "otherEntityRelationshipName": "task"
+            "otherEntityField": "id"
         }
     ],
     "fields": [

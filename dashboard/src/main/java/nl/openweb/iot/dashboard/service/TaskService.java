@@ -47,8 +47,8 @@ public class TaskService {
     private ScheduledTask getTaskHandler(Task task) throws ClassNotFoundException {
         ScheduledTask result = (n, c) -> SchedulingUtils.hoursLater(5);
         TaskHandler taskHandler = task.getTaskHandler();
-        if (taskHandler != null && StringUtils.isNotBlank(taskHandler.getClassName())) {
-            String factoryName = taskHandler.getClassName();
+        if (taskHandler != null && StringUtils.isNotBlank(taskHandler.getCode())) {
+            String factoryName = taskHandler.getCode();
             Class<?> factoryClass = Class.forName(factoryName);
             if (TaskHandlerFactory.class.isAssignableFrom(factoryClass)) {
                 TaskHandlerFactory factory = (TaskHandlerFactory) context.getBean(factoryClass);
@@ -64,8 +64,8 @@ public class TaskService {
         TaskEventHandler result = (e, n, c) -> {
         };
         EventHandler eventHandler = task.getEventHandler();
-        if (eventHandler != null && StringUtils.isNotBlank(eventHandler.getClassName())) {
-            String factoryName = eventHandler.getClassName();
+        if (eventHandler != null && StringUtils.isNotBlank(eventHandler.getCode())) {
+            String factoryName = eventHandler.getCode();
             Class<?> factoryClass = Class.forName(factoryName);
             if (EventHandlerFactory.class.isAssignableFrom(factoryClass)) {
                 EventHandlerFactory factory = (EventHandlerFactory) context.getBean(factoryClass);

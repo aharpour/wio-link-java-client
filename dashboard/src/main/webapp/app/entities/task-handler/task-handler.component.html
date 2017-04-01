@@ -19,7 +19,8 @@
             <tr>
             <th><span jhiTranslate="global.field.id">ID</span></th>
             <th><span jhiTranslate="dashboardApp.taskHandler.name">Name</span></th>
-            <th><span jhiTranslate="dashboardApp.taskHandler.className">Class Name</span></th>
+            <th><span jhiTranslate="dashboardApp.taskHandler.langauge">Langauge</span></th>
+            <th><span jhiTranslate="dashboardApp.taskHandler.code">Code</span></th>
             <th></th>
             </tr>
             </thead>
@@ -27,7 +28,11 @@
             <tr *ngFor="let taskHandler of taskHandlers ;trackBy: trackId">
                 <td><a [routerLink]="['../task-handler', taskHandler.id ]">{{taskHandler.id}}</a></td>
                 <td>{{taskHandler.name}}</td>
-                <td>{{taskHandler.className}}</td>
+                <td jhiTranslate="{{'dashboardApp.Langauge.' + taskHandler.langauge}}">{{taskHandler.langauge}}</td>
+                <td>
+                    <a *ngIf="taskHandler.code" (click)="openFile(taskHandler.codeContentType, taskHandler.code)" jhiTranslate="entity.action.open">open</a>
+                    <span *ngIf="taskHandler.code">{{taskHandler.codeContentType}}, {{byteSize(taskHandler.code)}}</span>
+                </td>
                 <td class="text-xs-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"

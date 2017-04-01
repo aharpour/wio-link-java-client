@@ -23,24 +23,30 @@ entity Task {
 
 entity TaskHandler {
 	name String required,
-	className String required
+    langauge Langauge required,
+	code Blob required
 }
 
 entity EventHandler {
 	name String required,
-	className String required
+    langauge Langauge required,
+	code Blob required
 }
 
 // ### Enumerations ###
-
+enum Langauge {
+  GROOVYSCRIPT,
+  JAVASCRIPT,
+  JAVA
+}
 // ### Relationships ###
 
 relationship OneToOne {
-  Task{node(nodeSn)} to Node,
-  Task{taskHandler} to TaskHandler,
-  Task{eventHandler} to EventHandler
+  Task{node(nodeSn)} to Node
 }
 
 relationship ManyToOne {
-	Grove{node(nodeSn)} to Node{groves}
+	Grove{node(nodeSn)} to Node{groves},
+	Task{taskHandler} to TaskHandler,
+    Task{eventHandler} to EventHandler
 }

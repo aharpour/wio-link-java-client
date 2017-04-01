@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { JhiLanguageService } from 'ng-jhipster';
+import { JhiLanguageService, DataUtils } from 'ng-jhipster';
 import { TaskHandler } from './task-handler.model';
 import { TaskHandlerService } from './task-handler.service';
 
@@ -15,10 +15,11 @@ export class TaskHandlerDetailComponent implements OnInit, OnDestroy {
 
     constructor(
         private jhiLanguageService: JhiLanguageService,
+        private dataUtils: DataUtils,
         private taskHandlerService: TaskHandlerService,
         private route: ActivatedRoute
     ) {
-        this.jhiLanguageService.setLocations(['taskHandler']);
+        this.jhiLanguageService.setLocations(['taskHandler', 'langauge']);
     }
 
     ngOnInit() {
@@ -31,6 +32,13 @@ export class TaskHandlerDetailComponent implements OnInit, OnDestroy {
         this.taskHandlerService.find(id).subscribe(taskHandler => {
             this.taskHandler = taskHandler;
         });
+    }
+    byteSize(field) {
+        return this.dataUtils.byteSize(field);
+    }
+
+    openFile(contentType, field) {
+        return this.dataUtils.openFile(contentType, field);
     }
     previousState() {
         window.history.back();

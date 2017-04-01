@@ -10,8 +10,17 @@
             ]
         },
         {
-            "fieldName": "className",
-            "fieldType": "String",
+            "fieldName": "langauge",
+            "fieldType": "Langauge",
+            "fieldValues": "GROOVYSCRIPT,JAVASCRIPT,JAVA",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "code",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "any",
             "fieldValidateRules": [
                 "required"
             ]

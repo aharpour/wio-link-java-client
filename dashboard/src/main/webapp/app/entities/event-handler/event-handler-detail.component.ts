@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { JhiLanguageService } from 'ng-jhipster';
+import { JhiLanguageService, DataUtils } from 'ng-jhipster';
 import { EventHandler } from './event-handler.model';
 import { EventHandlerService } from './event-handler.service';
 
@@ -15,10 +15,11 @@ export class EventHandlerDetailComponent implements OnInit, OnDestroy {
 
     constructor(
         private jhiLanguageService: JhiLanguageService,
+        private dataUtils: DataUtils,
         private eventHandlerService: EventHandlerService,
         private route: ActivatedRoute
     ) {
-        this.jhiLanguageService.setLocations(['eventHandler']);
+        this.jhiLanguageService.setLocations(['eventHandler', 'langauge']);
     }
 
     ngOnInit() {
@@ -31,6 +32,13 @@ export class EventHandlerDetailComponent implements OnInit, OnDestroy {
         this.eventHandlerService.find(id).subscribe(eventHandler => {
             this.eventHandler = eventHandler;
         });
+    }
+    byteSize(field) {
+        return this.dataUtils.byteSize(field);
+    }
+
+    openFile(contentType, field) {
+        return this.dataUtils.openFile(contentType, field);
     }
     previousState() {
         window.history.back();

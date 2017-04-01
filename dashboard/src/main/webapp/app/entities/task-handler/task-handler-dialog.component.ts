@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Response } from '@angular/http';
 
 import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { EventManager, AlertService, JhiLanguageService } from 'ng-jhipster';
+import { EventManager, AlertService, JhiLanguageService, DataUtils } from 'ng-jhipster';
 
 import { TaskHandler } from './task-handler.model';
 import { TaskHandlerPopupService } from './task-handler-popup.service';
@@ -20,16 +20,37 @@ export class TaskHandlerDialogComponent implements OnInit {
     constructor(
         public activeModal: NgbActiveModal,
         private jhiLanguageService: JhiLanguageService,
+        private dataUtils: DataUtils,
         private alertService: AlertService,
         private taskHandlerService: TaskHandlerService,
         private eventManager: EventManager
     ) {
-        this.jhiLanguageService.setLocations(['taskHandler']);
+        this.jhiLanguageService.setLocations(['taskHandler', 'langauge']);
     }
 
     ngOnInit() {
         this.isSaving = false;
         this.authorities = ['ROLE_USER', 'ROLE_ADMIN'];
+    }
+    byteSize(field) {
+        return this.dataUtils.byteSize(field);
+    }
+
+    openFile(contentType, field) {
+        return this.dataUtils.openFile(contentType, field);
+    }
+
+    setFileData($event, taskHandler, field, isImage) {
+        if ($event.target.files && $event.target.files[0]) {
+            let $file = $event.target.files[0];
+            if (isImage && !/^image\//.test($file.type)) {
+                return;
+            }
+            this.dataUtils.toBase64($file, (base64Data) => {
+                taskHandler[field] = base64Data;
+                taskHandler[`${field}ContentType`] = $file.type;
+            });
+        }
     }
     clear () {
         this.activeModal.dismiss('cancel');

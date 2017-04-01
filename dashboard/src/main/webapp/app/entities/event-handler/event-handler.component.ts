@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Response } from '@angular/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
-import { EventManager, ParseLinks, PaginationUtil, JhiLanguageService, AlertService } from 'ng-jhipster';
+import { EventManager, ParseLinks, PaginationUtil, JhiLanguageService, AlertService, DataUtils } from 'ng-jhipster';
 
 import { EventHandler } from './event-handler.model';
 import { EventHandlerService } from './event-handler.service';
@@ -22,10 +22,11 @@ eventHandlers: EventHandler[];
         private jhiLanguageService: JhiLanguageService,
         private eventHandlerService: EventHandlerService,
         private alertService: AlertService,
+        private dataUtils: DataUtils,
         private eventManager: EventManager,
         private principal: Principal
     ) {
-        this.jhiLanguageService.setLocations(['eventHandler']);
+        this.jhiLanguageService.setLocations(['eventHandler', 'langauge']);
     }
 
     loadAll() {
@@ -54,6 +55,13 @@ eventHandlers: EventHandler[];
 
 
 
+    byteSize(field) {
+        return this.dataUtils.byteSize(field);
+    }
+
+    openFile(contentType, field) {
+        return this.dataUtils.openFile(contentType, field);
+    }
     registerChangeInEventHandlers() {
         this.eventSubscriber = this.eventManager.subscribe('eventHandlerListModification', (response) => this.loadAll());
     }

@@ -22,7 +22,7 @@ export class TaskHandlerDeleteDialogComponent {
         public activeModal: NgbActiveModal,
         private eventManager: EventManager
     ) {
-        this.jhiLanguageService.setLocations(['taskHandler']);
+        this.jhiLanguageService.setLocations(['taskHandler', 'langauge']);
     }
 
     clear () {

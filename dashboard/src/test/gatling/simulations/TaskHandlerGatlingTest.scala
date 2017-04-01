@@ -80,7 +80,7 @@ class TaskHandlerGatlingTest extends Simulation {
             .exec(http("Create new taskHandler")
             .post("/api/task-handlers")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "name":"SAMPLE_TEXT", "className":"SAMPLE_TEXT"}""")).asJSON
+            .body(StringBody("""{"id":null, "name":"SAMPLE_TEXT", "langauge":null, "code":null}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_taskHandler_url"))).exitHereIfFailed
             .pause(10)

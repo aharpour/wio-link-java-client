@@ -8,6 +8,8 @@ import java.util.Objects;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+import nl.openweb.iot.dashboard.domain.enumeration.Langauge;
+
 /**
  * A EventHandler.
  */
@@ -27,8 +29,14 @@ public class EventHandler implements Serializable {
     private String name;
 
     @NotNull
-    @Column(name = "class_name", nullable = false)
-    private String className;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "langauge", nullable = false)
+    private Langauge langauge;
+
+    @NotNull
+    @Lob
+    @Column(name = "code", nullable = false)
+    private String code;
 
     public Long getId() {
         return id;
@@ -51,17 +59,30 @@ public class EventHandler implements Serializable {
         this.name = name;
     }
 
-    public String getClassName() {
-        return className;
+    public Langauge getLangauge() {
+        return langauge;
     }
 
-    public EventHandler className(String className) {
-        this.className = className;
+    public EventHandler langauge(Langauge langauge) {
+        this.langauge = langauge;
         return this;
     }
 
-    public void setClassName(String className) {
-        this.className = className;
+    public void setLangauge(Langauge langauge) {
+        this.langauge = langauge;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public EventHandler code(String code) {
+        this.code = code;
+        return this;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     @Override
@@ -89,7 +110,8 @@ public class EventHandler implements Serializable {
         return "EventHandler{" +
             "id=" + id +
             ", name='" + name + "'" +
-            ", className='" + className + "'" +
+            ", langauge='" + langauge + "'" +
+            ", code='" + code + "'" +
             '}';
     }
 }

@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import nl.openweb.iot.dashboard.DashboardApp;
 import nl.openweb.iot.dashboard.domain.EventHandler;
+import nl.openweb.iot.dashboard.domain.enumeration.Langauge;
 import nl.openweb.iot.dashboard.repository.EventHandlerRepository;
 
 
@@ -39,8 +40,11 @@ public class EventHandlerResourceIntTest {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
-    private static final String DEFAULT_CLASS_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_CLASS_NAME = "BBBBBBBBBB";
+    private static final Langauge DEFAULT_LANGAUGE = Langauge.GROOVYSCRIPT;
+    private static final Langauge UPDATED_LANGAUGE = Langauge.JAVASCRIPT;
+
+    private static final String DEFAULT_CODE = "AAAAAAAAAA";
+    private static final String UPDATED_CODE = "BBBBBBBBBB";
 
     @Autowired
     private EventHandlerRepository eventHandlerRepository;
@@ -61,7 +65,7 @@ public class EventHandlerResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-            EventHandlerResource eventHandlerResource = new EventHandlerResource(eventHandlerRepository);
+        EventHandlerResource eventHandlerResource = new EventHandlerResource(eventHandlerRepository);
         this.restEventHandlerMockMvc = MockMvcBuilders.standaloneSetup(eventHandlerResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setMessageConverters(jacksonMessageConverter).build();
@@ -69,14 +73,16 @@ public class EventHandlerResourceIntTest {
 
     /**
      * Create an entity for this test.
-     *
+     * <p>
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
     public static EventHandler createEntity(EntityManager em) {
         EventHandler eventHandler = new EventHandler()
-                .name(DEFAULT_NAME)
-                .className(DEFAULT_CLASS_NAME);
+            .name(DEFAULT_NAME)
+            .langauge(DEFAULT_LANGAUGE)
+            .code(DEFAULT_CODE);
+
         return eventHandler;
     }
 
@@ -102,7 +108,8 @@ public class EventHandlerResourceIntTest {
         assertThat(eventHandlerList).hasSize(databaseSizeBeforeCreate + 1);
         EventHandler testEventHandler = eventHandlerList.get(eventHandlerList.size() - 1);
         assertThat(testEventHandler.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testEventHandler.getClassName()).isEqualTo(DEFAULT_CLASS_NAME);
+        assertThat(testEventHandler.getLangauge()).isEqualTo(DEFAULT_LANGAUGE);
+        assertThat(testEventHandler.getCode()).isEqualTo(DEFAULT_CODE);
     }
 
     @Test
@@ -145,10 +152,28 @@ public class EventHandlerResourceIntTest {
 
     @Test
     @Transactional
-    public void checkClassNameIsRequired() throws Exception {
+    public void checkLangaugeIsRequired() throws Exception {
         int databaseSizeBeforeTest = eventHandlerRepository.findAll().size();
         // set the field null
-        eventHandler.setClassName(null);
+        eventHandler.setLangauge(null);
+
+        // Create the EventHandler, which fails.
+
+        restEventHandlerMockMvc.perform(post("/api/event-handlers")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(eventHandler)))
+            .andExpect(status().isBadRequest());
+
+        List<EventHandler> eventHandlerList = eventHandlerRepository.findAll();
+        assertThat(eventHandlerList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkCodeIsRequired() throws Exception {
+        int databaseSizeBeforeTest = eventHandlerRepository.findAll().size();
+        // set the field null
+        eventHandler.setCode(null);
 
         // Create the EventHandler, which fails.
 
@@ -173,7 +198,8 @@ public class EventHandlerResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(eventHandler.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].className").value(hasItem(DEFAULT_CLASS_NAME.toString())));
+            .andExpect(jsonPath("$.[*].langauge").value(hasItem(DEFAULT_LANGAUGE.toString())))
+            .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE)));
     }
 
     @Test
@@ -188,7 +214,8 @@ public class EventHandlerResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(eventHandler.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
-            .andExpect(jsonPath("$.className").value(DEFAULT_CLASS_NAME.toString()));
+            .andExpect(jsonPath("$.langauge").value(DEFAULT_LANGAUGE.toString()))
+            .andExpect(jsonPath("$.code").value(DEFAULT_CODE));
     }
 
     @Test
@@ -209,8 +236,9 @@ public class EventHandlerResourceIntTest {
         // Update the eventHandler
         EventHandler updatedEventHandler = eventHandlerRepository.findOne(eventHandler.getId());
         updatedEventHandler
-                .name(UPDATED_NAME)
-                .className(UPDATED_CLASS_NAME);
+            .name(UPDATED_NAME)
+            .langauge(UPDATED_LANGAUGE)
+            .code(UPDATED_CODE);
 
         restEventHandlerMockMvc.perform(put("/api/event-handlers")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -222,7 +250,8 @@ public class EventHandlerResourceIntTest {
         assertThat(eventHandlerList).hasSize(databaseSizeBeforeUpdate);
         EventHandler testEventHandler = eventHandlerList.get(eventHandlerList.size() - 1);
         assertThat(testEventHandler.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testEventHandler.getClassName()).isEqualTo(UPDATED_CLASS_NAME);
+        assertThat(testEventHandler.getLangauge()).isEqualTo(UPDATED_LANGAUGE);
+        assertThat(testEventHandler.getCode()).isEqualTo(UPDATED_CODE);
     }
 
     @Test

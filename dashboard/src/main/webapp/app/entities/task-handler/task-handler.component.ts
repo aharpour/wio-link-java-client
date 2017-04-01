@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Response } from '@angular/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
-import { EventManager, ParseLinks, PaginationUtil, JhiLanguageService, AlertService } from 'ng-jhipster';
+import { EventManager, ParseLinks, PaginationUtil, JhiLanguageService, AlertService, DataUtils } from 'ng-jhipster';
 
 import { TaskHandler } from './task-handler.model';
 import { TaskHandlerService } from './task-handler.service';
@@ -22,10 +22,11 @@ taskHandlers: TaskHandler[];
         private jhiLanguageService: JhiLanguageService,
         private taskHandlerService: TaskHandlerService,
         private alertService: AlertService,
+        private dataUtils: DataUtils,
         private eventManager: EventManager,
         private principal: Principal
     ) {
-        this.jhiLanguageService.setLocations(['taskHandler']);
+        this.jhiLanguageService.setLocations(['taskHandler', 'langauge']);
     }
 
     loadAll() {
@@ -54,6 +55,13 @@ taskHandlers: TaskHandler[];
 
 
 
+    byteSize(field) {
+        return this.dataUtils.byteSize(field);
+    }
+
+    openFile(contentType, field) {
+        return this.dataUtils.openFile(contentType, field);
+    }
     registerChangeInTaskHandlers() {
         this.eventSubscriber = this.eventManager.subscribe('taskHandlerListModification', (response) => this.loadAll());
     }

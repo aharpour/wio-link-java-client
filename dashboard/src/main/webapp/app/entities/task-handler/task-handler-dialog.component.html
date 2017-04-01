@@ -27,14 +27,28 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="form-control-label" jhiTranslate="dashboardApp.taskHandler.className" for="field_className">Class Name</label>
-            <input type="text" class="form-control" name="className" id="field_className"
-                [(ngModel)]="taskHandler.className"
-            required />
-            <div [hidden]="!(editForm.controls.className?.dirty && editForm.controls.className?.invalid)">
+            <label class="form-control-label" jhiTranslate="dashboardApp.taskHandler.langauge" for="field_langauge">Langauge</label>
+            <select class="form-control" name="langauge" [(ngModel)]="taskHandler.langauge" id="field_langauge"  required>
+                <option value="GROOVYSCRIPT" jhiTranslate="dashboardApp.Langauge.GROOVYSCRIPT">GROOVYSCRIPT</option>
+                <option value="JAVASCRIPT" jhiTranslate="dashboardApp.Langauge.JAVASCRIPT">JAVASCRIPT</option>
+                <option value="JAVA" jhiTranslate="dashboardApp.Langauge.JAVA">JAVA</option>
+            </select>
+            <div [hidden]="!(editForm.controls.langauge?.dirty && editForm.controls.langauge?.invalid)">
                 <small class="form-text text-danger"
-                   [hidden]="!editForm.controls.className?.errors?.required" jhiTranslate="entity.validation.required">
+                   [hidden]="!editForm.controls.langauge?.errors?.required" jhiTranslate="entity.validation.required">
                    This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="dashboardApp.taskHandler.code" for="field_code">Code</label>
+            <input type="text" class="form-control" name="name" id="field_code"
+                   [(ngModel)]="taskHandler.code"
+                   required />
+            <div [hidden]="!(editForm.controls.code?.dirty && editForm.controls.code?.invalid)">
+                <small class="form-text text-danger"
+                       [hidden]="!editForm.controls.code?.errors?.required" jhiTranslate="entity.validation.required">
+                    This field is required.
                 </small>
             </div>
         </div>

@@ -8,9 +8,16 @@
         <dd>
             <span>{{eventHandler.name}}</span>
         </dd>
-        <dt><span jhiTranslate="dashboardApp.eventHandler.className">Class Name</span></dt>
+        <dt><span jhiTranslate="dashboardApp.eventHandler.langauge">Langauge</span></dt>
         <dd>
-            <span>{{eventHandler.className}}</span>
+            <span jhiTranslate="{{'dashboardApp.Langauge.' + eventHandler.langauge}}">{{eventHandler.langauge}}</span>
+        </dd>
+        <dt><span jhiTranslate="dashboardApp.eventHandler.code">Code</span></dt>
+        <dd>
+            <div *ngIf="eventHandler.code">
+                <a (click)="openFile(eventHandler.codeContentType, eventHandler.code)" jhiTranslate="entity.action.open">open</a>
+                {{eventHandler.codeContentType}}, {{byteSize(eventHandler.code)}}
+            </div>
         </dd>
     </dl>
 
