@@ -1,9 +1,8 @@
 package nl.openweb.iot.dashboard.service;
 
-import nl.openweb.iot.dashboard.domain.Task;
 import nl.openweb.iot.wio.scheduling.ScheduledTask;
 
-public interface TaskHandlerFactory {
+@FunctionalInterface
+interface TaskHandlerFactory extends HandlerFactory<ScheduledTask> {
 
-    ScheduledTask build(Task task);
 }

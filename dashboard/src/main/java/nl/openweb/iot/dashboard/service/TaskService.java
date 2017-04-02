@@ -7,6 +7,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import nl.openweb.iot.dashboard.domain.EventHandler;
+import nl.openweb.iot.dashboard.domain.HandlerBean;
 import nl.openweb.iot.dashboard.domain.Task;
 import nl.openweb.iot.dashboard.domain.TaskHandler;
 import nl.openweb.iot.wio.WioException;
@@ -48,14 +49,7 @@ public class TaskService {
         ScheduledTask result = (n, c) -> SchedulingUtils.hoursLater(5);
         TaskHandler taskHandler = task.getTaskHandler();
         if (taskHandler != null && StringUtils.isNotBlank(taskHandler.getCode())) {
-            String factoryName = taskHandler.getCode();
-            Class<?> factoryClass = Class.forName(factoryName);
-            if (TaskHandlerFactory.class.isAssignableFrom(factoryClass)) {
-                TaskHandlerFactory factory = (TaskHandlerFactory) context.getBean(factoryClass);
-                result = factory.build(task);
-            } else {
-                LOG.error("the give class " + factoryClass.getName() + " is not a instance of " + TaskHandlerFactory.class.getName());
-            }
+            result = createInstanceFromFactoryName(task, taskHandler, result, TaskHandlerFactory.class);
         }
         return result;
     }
@@ -65,15 +59,21 @@ public class TaskService {
         };
         EventHandler eventHandler = task.getEventHandler();
         if (eventHandler != null && StringUtils.isNotBlank(eventHandler.getCode())) {
-            String factoryName = eventHandler.getCode();
-            Class<?> factoryClass = Class.forName(factoryName);
-            if (EventHandlerFactory.class.isAssignableFrom(factoryClass)) {
-                EventHandlerFactory factory = (EventHandlerFactory) context.getBean(factoryClass);
-                result = factory.build(task);
-            } else {
-                LOG.error("the give class " + factoryClass.getName() + " doesn't extends " + EventHandlerFactory.class.getName());
-            }
+            result = createInstanceFromFactoryName(task, eventHandler, result, EventHandlerFactory.class);
         }
         return result;
+    }
+
+    @SuppressWarnings("unchecked")
+    private <T> T createInstanceFromFactoryName(Task task, HandlerBean handlerBean, T defaultValue, Class<?> clazz) throws ClassNotFoundException {
+        String factoryName = handlerBean.getCode();
+        Class<?> factoryClass = Class.forName(factoryName);
+        if (clazz.isAssignableFrom(factoryClass)) {
+            HandlerFactory factory = (HandlerFactory) context.getBean(factoryClass);
+            defaultValue = (T) factory.build(task);
+        } else {
+            LOG.error("the give class " + factoryClass.getName() + " is not a instance of " + clazz.getName());
+        }
+        return defaultValue;
     }
 }

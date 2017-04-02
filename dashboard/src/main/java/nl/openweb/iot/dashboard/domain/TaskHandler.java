@@ -16,7 +16,7 @@ import nl.openweb.iot.dashboard.domain.enumeration.Langauge;
 @Entity
 @Table(name = "task_handler")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class TaskHandler implements Serializable {
+public class TaskHandler implements Serializable, HandlerBean {
 
     private static final long serialVersionUID = 1L;
 
