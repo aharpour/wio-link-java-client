@@ -25,7 +25,7 @@ export class EventHandlerDialogComponent implements OnInit {
         private eventHandlerService: EventHandlerService,
         private eventManager: EventManager
     ) {
-        this.jhiLanguageService.setLocations(['eventHandler', 'langauge']);
+        this.jhiLanguageService.setLocations(['eventHandler', 'language']);
     }
 
     ngOnInit() {

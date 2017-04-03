@@ -19,7 +19,7 @@ export class EventHandlerDetailComponent implements OnInit, OnDestroy {
         private eventHandlerService: EventHandlerService,
         private route: ActivatedRoute
     ) {
-        this.jhiLanguageService.setLocations(['eventHandler', 'langauge']);
+        this.jhiLanguageService.setLocations(['eventHandler', 'language']);
     }
 
     ngOnInit() {

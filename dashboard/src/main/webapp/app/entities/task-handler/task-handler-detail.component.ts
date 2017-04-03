@@ -19,7 +19,7 @@ export class TaskHandlerDetailComponent implements OnInit, OnDestroy {
         private taskHandlerService: TaskHandlerService,
         private route: ActivatedRoute
     ) {
-        this.jhiLanguageService.setLocations(['taskHandler', 'langauge']);
+        this.jhiLanguageService.setLocations(['taskHandler', 'language']);
     }
 
     ngOnInit() {

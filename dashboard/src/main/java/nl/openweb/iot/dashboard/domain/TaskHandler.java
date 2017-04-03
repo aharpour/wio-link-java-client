@@ -8,7 +8,7 @@ import java.util.Objects;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import nl.openweb.iot.dashboard.domain.enumeration.Langauge;
+import nl.openweb.iot.dashboard.domain.enumeration.Language;
 
 /**
  * A TaskHandler.
@@ -30,8 +30,8 @@ public class TaskHandler implements Serializable, HandlerBean {
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "langauge", nullable = false)
-    private Langauge langauge;
+    @Column(name = "language", nullable = false)
+    private Language language;
 
     @NotNull
     @Lob
@@ -59,17 +59,17 @@ public class TaskHandler implements Serializable, HandlerBean {
         this.name = name;
     }
 
-    public Langauge getLangauge() {
-        return langauge;
+    public Language getLanguage() {
+        return language;
     }
 
-    public TaskHandler langauge(Langauge langauge) {
-        this.langauge = langauge;
+    public TaskHandler language(Language language) {
+        this.language = language;
         return this;
     }
 
-    public void setLangauge(Langauge langauge) {
-        this.langauge = langauge;
+    public void setLanguage(Language language) {
+        this.language = language;
     }
 
     public String getCode() {
@@ -110,7 +110,7 @@ public class TaskHandler implements Serializable, HandlerBean {
         return "TaskHandler{" +
             "id=" + id +
             ", name='" + name + "'" +
-            ", langauge='" + langauge + "'" +
+            ", language='" + language + "'" +
             ", code='" + code + "'" +
             '}';
     }

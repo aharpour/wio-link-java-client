@@ -23,18 +23,18 @@ entity Task {
 
 entity TaskHandler {
 	name String required,
-    langauge Langauge required,
+    language Language required,
 	code Blob required
 }
 
 entity EventHandler {
 	name String required,
-    langauge Langauge required,
+    language Language required,
 	code Blob required
 }
 
 // ### Enumerations ###
-enum Langauge {
+enum Language {
   GROOVYSCRIPT,
   JAVASCRIPT,
   JAVA

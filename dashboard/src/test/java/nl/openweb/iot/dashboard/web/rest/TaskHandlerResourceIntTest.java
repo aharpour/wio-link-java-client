@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import nl.openweb.iot.dashboard.DashboardApp;
 import nl.openweb.iot.dashboard.domain.TaskHandler;
-import nl.openweb.iot.dashboard.domain.enumeration.Langauge;
+import nl.openweb.iot.dashboard.domain.enumeration.Language;
 import nl.openweb.iot.dashboard.repository.TaskHandlerRepository;
 
 
@@ -39,8 +39,8 @@ public class TaskHandlerResourceIntTest {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
-    private static final Langauge DEFAULT_LANGAUGE = Langauge.GROOVYSCRIPT;
-    private static final Langauge UPDATED_LANGAUGE = Langauge.JAVASCRIPT;
+    private static final Language DEFAULT_LANGAUGE = Language.GROOVYSCRIPT;
+    private static final Language UPDATED_LANGAUGE = Language.JAVASCRIPT;
 
     private static final String DEFAULT_CODE = "AAAAAAAAAA";
     private static final String UPDATED_CODE = "BBBBBBBBBB";
@@ -80,7 +80,7 @@ public class TaskHandlerResourceIntTest {
     public static TaskHandler createEntity(EntityManager em) {
         TaskHandler taskHandler = new TaskHandler()
                 .name(DEFAULT_NAME)
-                .langauge(DEFAULT_LANGAUGE)
+                .language(DEFAULT_LANGAUGE)
                 .code(DEFAULT_CODE);
         return taskHandler;
     }
@@ -107,7 +107,7 @@ public class TaskHandlerResourceIntTest {
         assertThat(taskHandlerList).hasSize(databaseSizeBeforeCreate + 1);
         TaskHandler testTaskHandler = taskHandlerList.get(taskHandlerList.size() - 1);
         assertThat(testTaskHandler.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testTaskHandler.getLangauge()).isEqualTo(DEFAULT_LANGAUGE);
+        assertThat(testTaskHandler.getLanguage()).isEqualTo(DEFAULT_LANGAUGE);
         assertThat(testTaskHandler.getCode()).isEqualTo(DEFAULT_CODE);
     }
 
@@ -151,10 +151,10 @@ public class TaskHandlerResourceIntTest {
 
     @Test
     @Transactional
-    public void checkLangaugeIsRequired() throws Exception {
+    public void checkLanguageIsRequired() throws Exception {
         int databaseSizeBeforeTest = taskHandlerRepository.findAll().size();
         // set the field null
-        taskHandler.setLangauge(null);
+        taskHandler.setLanguage(null);
 
         // Create the TaskHandler, which fails.
 
@@ -197,7 +197,7 @@ public class TaskHandlerResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(taskHandler.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].langauge").value(hasItem(DEFAULT_LANGAUGE.toString())))
+            .andExpect(jsonPath("$.[*].language").value(hasItem(DEFAULT_LANGAUGE.toString())))
             .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE)));
     }
 
@@ -213,7 +213,7 @@ public class TaskHandlerResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(taskHandler.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
-            .andExpect(jsonPath("$.langauge").value(DEFAULT_LANGAUGE.toString()))
+            .andExpect(jsonPath("$.language").value(DEFAULT_LANGAUGE.toString()))
             .andExpect(jsonPath("$.code").value(DEFAULT_CODE));
     }
 
@@ -236,7 +236,7 @@ public class TaskHandlerResourceIntTest {
         TaskHandler updatedTaskHandler = taskHandlerRepository.findOne(taskHandler.getId());
         updatedTaskHandler
                 .name(UPDATED_NAME)
-                .langauge(UPDATED_LANGAUGE)
+                .language(UPDATED_LANGAUGE)
                 .code(UPDATED_CODE);
 
         restTaskHandlerMockMvc.perform(put("/api/task-handlers")
@@ -249,7 +249,7 @@ public class TaskHandlerResourceIntTest {
         assertThat(taskHandlerList).hasSize(databaseSizeBeforeUpdate);
         TaskHandler testTaskHandler = taskHandlerList.get(taskHandlerList.size() - 1);
         assertThat(testTaskHandler.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testTaskHandler.getLangauge()).isEqualTo(UPDATED_LANGAUGE);
+        assertThat(testTaskHandler.getLanguage()).isEqualTo(UPDATED_LANGAUGE);
         assertThat(testTaskHandler.getCode()).isEqualTo(UPDATED_CODE);
     }
 

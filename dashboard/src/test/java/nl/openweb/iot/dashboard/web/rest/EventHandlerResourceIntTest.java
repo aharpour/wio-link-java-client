@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import nl.openweb.iot.dashboard.DashboardApp;
 import nl.openweb.iot.dashboard.domain.EventHandler;
-import nl.openweb.iot.dashboard.domain.enumeration.Langauge;
+import nl.openweb.iot.dashboard.domain.enumeration.Language;
 import nl.openweb.iot.dashboard.repository.EventHandlerRepository;
 
 
@@ -40,8 +40,8 @@ public class EventHandlerResourceIntTest {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
-    private static final Langauge DEFAULT_LANGAUGE = Langauge.GROOVYSCRIPT;
-    private static final Langauge UPDATED_LANGAUGE = Langauge.JAVASCRIPT;
+    private static final Language DEFAULT_LANGAUGE = Language.GROOVYSCRIPT;
+    private static final Language UPDATED_LANGAUGE = Language.JAVASCRIPT;
 
     private static final String DEFAULT_CODE = "AAAAAAAAAA";
     private static final String UPDATED_CODE = "BBBBBBBBBB";
@@ -80,7 +80,7 @@ public class EventHandlerResourceIntTest {
     public static EventHandler createEntity(EntityManager em) {
         EventHandler eventHandler = new EventHandler()
             .name(DEFAULT_NAME)
-            .langauge(DEFAULT_LANGAUGE)
+            .language(DEFAULT_LANGAUGE)
             .code(DEFAULT_CODE);
 
         return eventHandler;
@@ -108,7 +108,7 @@ public class EventHandlerResourceIntTest {
         assertThat(eventHandlerList).hasSize(databaseSizeBeforeCreate + 1);
         EventHandler testEventHandler = eventHandlerList.get(eventHandlerList.size() - 1);
         assertThat(testEventHandler.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testEventHandler.getLangauge()).isEqualTo(DEFAULT_LANGAUGE);
+        assertThat(testEventHandler.getLanguage()).isEqualTo(DEFAULT_LANGAUGE);
         assertThat(testEventHandler.getCode()).isEqualTo(DEFAULT_CODE);
     }
 
@@ -152,10 +152,10 @@ public class EventHandlerResourceIntTest {
 
     @Test
     @Transactional
-    public void checkLangaugeIsRequired() throws Exception {
+    public void checkLanguageIsRequired() throws Exception {
         int databaseSizeBeforeTest = eventHandlerRepository.findAll().size();
         // set the field null
-        eventHandler.setLangauge(null);
+        eventHandler.setLanguage(null);
 
         // Create the EventHandler, which fails.
 
@@ -198,7 +198,7 @@ public class EventHandlerResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(eventHandler.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].langauge").value(hasItem(DEFAULT_LANGAUGE.toString())))
+            .andExpect(jsonPath("$.[*].language").value(hasItem(DEFAULT_LANGAUGE.toString())))
             .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE)));
     }
 
@@ -214,7 +214,7 @@ public class EventHandlerResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(eventHandler.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
-            .andExpect(jsonPath("$.langauge").value(DEFAULT_LANGAUGE.toString()))
+            .andExpect(jsonPath("$.language").value(DEFAULT_LANGAUGE.toString()))
             .andExpect(jsonPath("$.code").value(DEFAULT_CODE));
     }
 
@@ -237,7 +237,7 @@ public class EventHandlerResourceIntTest {
         EventHandler updatedEventHandler = eventHandlerRepository.findOne(eventHandler.getId());
         updatedEventHandler
             .name(UPDATED_NAME)
-            .langauge(UPDATED_LANGAUGE)
+            .language(UPDATED_LANGAUGE)
             .code(UPDATED_CODE);
 
         restEventHandlerMockMvc.perform(put("/api/event-handlers")
@@ -250,7 +250,7 @@ public class EventHandlerResourceIntTest {
         assertThat(eventHandlerList).hasSize(databaseSizeBeforeUpdate);
         EventHandler testEventHandler = eventHandlerList.get(eventHandlerList.size() - 1);
         assertThat(testEventHandler.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testEventHandler.getLangauge()).isEqualTo(UPDATED_LANGAUGE);
+        assertThat(testEventHandler.getLanguage()).isEqualTo(UPDATED_LANGAUGE);
         assertThat(testEventHandler.getCode()).isEqualTo(UPDATED_CODE);
     }
 

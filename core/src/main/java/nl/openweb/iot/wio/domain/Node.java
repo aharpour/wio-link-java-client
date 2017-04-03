@@ -15,7 +15,7 @@ public interface Node {
 
     <T extends Grove> List<T> getGrovesByType(Class<T> clazz);
 
-    void event(Map<String, String> map);
+    void event(Map<String, String> event);
 
     void setEventHandler(BiConsumer<Map<String, String>, Node> eventHandler);
 

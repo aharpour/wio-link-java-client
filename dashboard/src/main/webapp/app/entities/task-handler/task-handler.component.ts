@@ -26,7 +26,7 @@ taskHandlers: TaskHandler[];
         private eventManager: EventManager,
         private principal: Principal
     ) {
-        this.jhiLanguageService.setLocations(['taskHandler', 'langauge']);
+        this.jhiLanguageService.setLocations(['taskHandler', 'language']);
     }
 
     loadAll() {

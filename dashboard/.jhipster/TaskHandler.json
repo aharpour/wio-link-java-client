@@ -10,8 +10,8 @@
             ]
         },
         {
-            "fieldName": "langauge",
-            "fieldType": "Langauge",
+            "fieldName": "language",
+            "fieldType": "Language",
             "fieldValues": "GROOVYSCRIPT,JAVASCRIPT,JAVA",
             "fieldValidateRules": [
                 "required"

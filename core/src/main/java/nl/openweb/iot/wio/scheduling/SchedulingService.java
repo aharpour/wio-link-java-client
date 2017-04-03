@@ -53,7 +53,7 @@ public class SchedulingService {
         private boolean keepAwake = false;
         private boolean forceSleep = false;
         private EventHandlerWrapper eventHandler = null;
-        private TaskContext context = new TaskContext(applicationContext);
+        private TaskContext context = new TaskContextImpl(applicationContext);
 
         private final Node node;
         private final ScheduledTask task;

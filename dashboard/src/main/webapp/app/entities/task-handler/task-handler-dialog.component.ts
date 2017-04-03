@@ -25,7 +25,7 @@ export class TaskHandlerDialogComponent implements OnInit {
         private taskHandlerService: TaskHandlerService,
         private eventManager: EventManager
     ) {
-        this.jhiLanguageService.setLocations(['taskHandler', 'langauge']);
+        this.jhiLanguageService.setLocations(['taskHandler', 'language']);
     }
 
     ngOnInit() {
@@ -40,18 +40,10 @@ export class TaskHandlerDialogComponent implements OnInit {
         return this.dataUtils.openFile(contentType, field);
     }
 
-    setFileData($event, taskHandler, field, isImage) {
-        if ($event.target.files && $event.target.files[0]) {
-            let $file = $event.target.files[0];
-            if (isImage && !/^image\//.test($file.type)) {
-                return;
-            }
-            this.dataUtils.toBase64($file, (base64Data) => {
-                taskHandler[field] = base64Data;
-                taskHandler[`${field}ContentType`] = $file.type;
-            });
-        }
+    languageChanged() {
+        alert(this.taskHandler.language);
     }
+
     clear () {
         this.activeModal.dismiss('cancel');
     }

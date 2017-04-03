@@ -1,8 +1,8 @@
 package nl.openweb.iot.dashboard.domain.enumeration;
 
 /**
- * The Langauge enumeration.
+ * The Language enumeration.
  */
-public enum Langauge {
+public enum Language {
     GROOVYSCRIPT,JAVASCRIPT,JAVA
 }

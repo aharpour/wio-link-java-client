@@ -1,42 +1,25 @@
 package nl.openweb.iot.wio.scheduling;
 
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
 
+import nl.openweb.iot.wio.WioException;
 
-public class TaskContext {
+public interface TaskContext {
+    <T> T getBean(Class<T> requiredType) throws BeansException;
 
-    private Map<String, Object> attributes = new ConcurrentHashMap<>();
-    private final ApplicationContext applicationContext;
+    <T> T getBean(String name, Class<T> requiredType) throws BeansException;
 
-    TaskContext(ApplicationContext applicationContext) {
-        this.applicationContext = applicationContext;
-    }
+    <T> Map<String, T> getBeansOfType(Class<T> type) throws BeansException;
 
-    public <T> T getBean(Class<T> requiredType) throws BeansException {
-        return applicationContext.getBean(requiredType);
-    }
+    Object setAttribute(String key, Object value);
 
-    public <T> T getBean(String name, Class<T> requiredType) throws BeansException {
-        return applicationContext.getBean(name, requiredType);
-    }
+    Object getAttribute(String key);
 
-    public <T> Map<String, T> getBeansOfType(Class<T> type) throws BeansException {
-        return applicationContext.getBeansOfType(type);
-    }
+    Object getAttributeOrDefault(String key, Object defaultValue);
 
-    public Object setAttribute(String key, Object value) {
-        return attributes.put(key, value);
-    }
+    void sendEvent(String nodeName, Map<String, String> event) throws WioException;
 
-    public Object getAttribute(String key) {
-        return attributes.get(key);
-    }
-
-    public Object getAttributeOrDefault(String key, Object defaultValue) {
-        return attributes.getOrDefault(key, defaultValue);
-    }
+    void sendEventBySnId(String SnId, Map<String, String> event) throws WioException;
 }

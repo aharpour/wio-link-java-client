@@ -26,7 +26,7 @@ eventHandlers: EventHandler[];
         private eventManager: EventManager,
         private principal: Principal
     ) {
-        this.jhiLanguageService.setLocations(['eventHandler', 'langauge']);
+        this.jhiLanguageService.setLocations(['eventHandler', 'language']);
     }
 
     loadAll() {

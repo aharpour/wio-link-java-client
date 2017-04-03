@@ -19,7 +19,7 @@
             <tr>
             <th><span jhiTranslate="global.field.id">ID</span></th>
             <th><span jhiTranslate="dashboardApp.eventHandler.name">Name</span></th>
-            <th><span jhiTranslate="dashboardApp.eventHandler.langauge">Langauge</span></th>
+            <th><span jhiTranslate="dashboardApp.eventHandler.language">Language</span></th>
             <th><span jhiTranslate="dashboardApp.eventHandler.code">Code</span></th>
             <th></th>
             </tr>
@@ -28,7 +28,7 @@
             <tr *ngFor="let eventHandler of eventHandlers ;trackBy: trackId">
                 <td><a [routerLink]="['../event-handler', eventHandler.id ]">{{eventHandler.id}}</a></td>
                 <td>{{eventHandler.name}}</td>
-                <td jhiTranslate="{{'dashboardApp.Langauge.' + eventHandler.langauge}}">{{eventHandler.langauge}}</td>
+                <td jhiTranslate="{{'dashboardApp.Language.' + eventHandler.language}}">{{eventHandler.language}}</td>
                 <td>
                     <a *ngIf="eventHandler.code" (click)="openFile(eventHandler.codeContentType, eventHandler.code)" jhiTranslate="entity.action.open">open</a>
                     <span *ngIf="eventHandler.code">{{eventHandler.codeContentType}}, {{byteSize(eventHandler.code)}}</span>

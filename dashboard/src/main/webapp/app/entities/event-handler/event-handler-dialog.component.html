@@ -27,15 +27,15 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="form-control-label" jhiTranslate="dashboardApp.eventHandler.langauge" for="field_langauge">Langauge</label>
-            <select class="form-control" name="langauge" [(ngModel)]="eventHandler.langauge" id="field_langauge"  required>
-                <option value="GROOVYSCRIPT" jhiTranslate="dashboardApp.Langauge.GROOVYSCRIPT">GROOVYSCRIPT</option>
-                <option value="JAVASCRIPT" jhiTranslate="dashboardApp.Langauge.JAVASCRIPT">JAVASCRIPT</option>
-                <option value="JAVA" jhiTranslate="dashboardApp.Langauge.JAVA">JAVA</option>
+            <label class="form-control-label" jhiTranslate="dashboardApp.eventHandler.language" for="field_language">Language</label>
+            <select class="form-control" name="language" [(ngModel)]="eventHandler.language" id="field_language"  required>
+                <option value="GROOVYSCRIPT" jhiTranslate="dashboardApp.Language.GROOVYSCRIPT">GROOVYSCRIPT</option>
+                <option value="JAVASCRIPT" jhiTranslate="dashboardApp.Language.JAVASCRIPT">JAVASCRIPT</option>
+                <option value="JAVA" jhiTranslate="dashboardApp.Language.JAVA">JAVA</option>
             </select>
-            <div [hidden]="!(editForm.controls.langauge?.dirty && editForm.controls.langauge?.invalid)">
+            <div [hidden]="!(editForm.controls.language?.dirty && editForm.controls.language?.invalid)">
                 <small class="form-text text-danger"
-                   [hidden]="!editForm.controls.langauge?.errors?.required" jhiTranslate="entity.validation.required">
+                   [hidden]="!editForm.controls.language?.errors?.required" jhiTranslate="entity.validation.required">
                    This field is required.
                 </small>
             </div>
