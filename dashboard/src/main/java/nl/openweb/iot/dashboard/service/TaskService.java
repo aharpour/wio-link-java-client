@@ -11,6 +11,7 @@ import nl.openweb.iot.dashboard.domain.HandlerBean;
 import nl.openweb.iot.dashboard.domain.Task;
 import nl.openweb.iot.dashboard.domain.TaskHandler;
 import nl.openweb.iot.dashboard.service.script.GroovyScriptService;
+import nl.openweb.iot.dashboard.service.script.JsScriptService;
 import nl.openweb.iot.wio.WioException;
 import nl.openweb.iot.wio.scheduling.ScheduledTask;
 import nl.openweb.iot.wio.scheduling.SchedulingService;
@@ -25,11 +26,13 @@ public class TaskService {
     private final ApplicationContext context;
     private final SchedulingService schedulingService;
     private final GroovyScriptService groovyScriptService;
+    private final JsScriptService jsScriptService;
 
-    public TaskService(ApplicationContext context, SchedulingService schedulingService, GroovyScriptService groovyScriptService) {
+    public TaskService(ApplicationContext context, SchedulingService schedulingService, GroovyScriptService groovyScriptService, JsScriptService jsScriptService) {
         this.context = context;
         this.schedulingService = schedulingService;
         this.groovyScriptService = groovyScriptService;
+        this.jsScriptService = jsScriptService;
     }
 
     public void terminateTask(String taskId) {
@@ -58,7 +61,7 @@ public class TaskService {
                     result = createInstanceFromFactoryName(task, taskHandler, result, TaskHandlerFactory.class);
                     break;
                 case JAVASCRIPT:
-                    //TODO
+                    result = jsScriptService.createScheduledTask(task);
                     break;
                 case GROOVYSCRIPT:
                     result = groovyScriptService.createScheduledTask(task);
@@ -80,7 +83,7 @@ public class TaskService {
                     result = createInstanceFromFactoryName(task, eventHandler, result, EventHandlerFactory.class);
                     break;
                 case JAVASCRIPT:
-                    //TODO
+                    result = jsScriptService.createEventHandler(task);
                     break;
                 case GROOVYSCRIPT:
                     result = groovyScriptService.createEventHandler(task);

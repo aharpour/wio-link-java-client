@@ -5,10 +5,16 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import nl.openweb.iot.wio.NodeDecorator;
 import nl.openweb.iot.wio.WioException;
 
 public class SandboxFilter {
+
+    private static final Logger LOG = LoggerFactory.getLogger(SandboxFilter.class);
+
     private static final Set<String> ALLOWED_PACKAGES;
     private static final Set<Class<?>> ALLOWED_CLASSES;
 
@@ -19,6 +25,7 @@ public class SandboxFilter {
         packages.add("java.text");
         packages.add("java.time");
         packages.add("groovy.scripts");
+        packages.add("org.slf4j");
         packages.add("nl.openweb.iot.wio.domain");
         packages.add("nl.openweb.iot.wio.domain.grove");
         packages.add("nl.openweb.iot.wio.scheduling");
@@ -38,6 +45,25 @@ public class SandboxFilter {
     private SandboxFilter() {
     }
 
+    public static boolean filter(String className) {
+        boolean result = !ALLOWED_PACKAGES.contains(className) && !ALLOWED_PACKAGES.contains(getPackage(className));
+        try {
+            Class<?> aClass = Class.forName(className);
+            result = result && filter(aClass);
+        } catch (ClassNotFoundException e) {
+            // ignore
+        }
+        return true;
+    }
+
+    private static String getPackage(String className) {
+        String result = className;
+        int lastIndexOf = className.lastIndexOf('.');
+        if (lastIndexOf > 0) {
+            result = className.substring(0, lastIndexOf);
+        }
+        return result;
+    }
 
     public static boolean filter(Class<?> aClass) {
         boolean result = true;

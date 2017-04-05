@@ -48,7 +48,20 @@ export class TaskHandlerDialogComponent implements OnInit {
                 break;
             }
             case 'JAVASCRIPT': {
-                this.taskHandler.code = "";
+                this.taskHandler.code = `var constructor = function (period, log) {
+    return {
+        imports: new JavaImporter(java.util, Packages.nl.openweb.iot.wio.domain.grove, Packages.nl.openweb.iot.wio.scheduling),
+        log: log,
+        period: period,
+        execute: function (node, context) {
+            with(this.imports) {
+                //var temp = node.getGroveByType(GroveTempHum.class).get().readTemperature();
+                //print(temp);
+                return SchedulingUtils.secondsLater(this.period)
+            }
+        }
+    }
+}`;
                 break;
             }
             case 'GROOVYSCRIPT': {

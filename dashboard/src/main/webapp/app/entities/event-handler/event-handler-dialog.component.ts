@@ -60,7 +60,18 @@ export class EventHandlerDialogComponent implements OnInit {
                 break;
             }
             case 'JAVASCRIPT': {
-                this.eventHandler.code = "";
+                this.eventHandler.code = `constructor = function (log) {
+    return {
+        imports: new JavaImporter(java.util, Packages.nl.openweb.iot.wio.domain.grove, Packages.nl.openweb.iot.wio.scheduling),
+        log: log,
+        handle: function (event, node, context) {
+            with(this.imports) {
+
+                // print(event);
+                log.info(event);
+            }
+        }
+    }`;
                 break;
             }
             case 'GROOVYSCRIPT': {
