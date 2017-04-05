@@ -1,4 +1,4 @@
-const enum Language {
+export const enum Language {
     'GROOVYSCRIPT',
     'JAVASCRIPT',
     'JAVA'
@@ -8,6 +8,6 @@ export class TaskHandler {
         public id?: number,
         public name?: string,
         public language?: Language,
-        public code?: any,
+        public code?: string,
     ) { }
 }

@@ -5,7 +5,7 @@ import { Response } from '@angular/http';
 import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { EventManager, AlertService, JhiLanguageService, DataUtils } from 'ng-jhipster';
 
-import { EventHandler } from './event-handler.model';
+import { EventHandler, Language } from './event-handler.model';
 import { EventHandlerPopupService } from './event-handler-popup.service';
 import { EventHandlerService } from './event-handler.service';
 @Component({
@@ -50,6 +50,45 @@ export class EventHandlerDialogComponent implements OnInit {
                 eventHandler[field] = base64Data;
                 eventHandler[`${field}ContentType`] = $file.type;
             });
+        }
+    }
+
+    languageChanged() {
+        switch(this.eventHandler.language.toString()) {
+            case 'JAVA': {
+                this.eventHandler.code = "";
+                break;
+            }
+            case 'JAVASCRIPT': {
+                this.eventHandler.code = "";
+                break;
+            }
+            case 'GROOVYSCRIPT': {
+                this.eventHandler.code = `package groovy.scripts
+
+
+
+import java.lang.*
+import java.util.*
+import java.text.*
+import java.time.*
+import nl.openweb.iot.wio.domain.*
+import nl.openweb.iot.wio.domain.grove.*
+import nl.openweb.iot.wio.scheduling.*
+import nl.openweb.iot.dashboard.service.script.AbstractGroovyEventHandler
+import nl.openweb.iot.wio.WioException
+
+
+class EventHandler extends AbstractGroovyEventHandler {
+
+    @Override
+    void handle(Map<String, String> event, Node node, TaskContext context) throws WioException {
+        // System.out.println(event)
+    }
+}`;
+                break;
+            }
+
         }
     }
     clear () {

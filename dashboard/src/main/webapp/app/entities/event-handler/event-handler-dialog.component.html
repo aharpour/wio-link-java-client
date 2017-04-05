@@ -28,7 +28,7 @@
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="dashboardApp.eventHandler.language" for="field_language">Language</label>
-            <select class="form-control" name="language" [(ngModel)]="eventHandler.language" id="field_language"  required>
+            <select class="form-control" name="language" [(ngModel)]="eventHandler.language" (change)="languageChanged()" id="field_language"  required>
                 <option value="GROOVYSCRIPT" jhiTranslate="dashboardApp.Language.GROOVYSCRIPT">GROOVYSCRIPT</option>
                 <option value="JAVASCRIPT" jhiTranslate="dashboardApp.Language.JAVASCRIPT">JAVASCRIPT</option>
                 <option value="JAVA" jhiTranslate="dashboardApp.Language.JAVA">JAVA</option>
@@ -42,7 +42,7 @@
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="dashboardApp.eventHandler.code" for="field_code">Code</label>
-            <textarea class="form-control" name="name" id="field_code" [(ngModel)]="eventHandler.code" rows="30" cols="110"></textarea>
+            <textarea class="form-control" name="code" id="field_code" [(ngModel)]="eventHandler.code" rows="30" cols="110"></textarea>
             <div [hidden]="!(editForm.controls.code?.dirty && editForm.controls.code?.invalid)">
                 <small class="form-text text-danger"
                        [hidden]="!editForm.controls.code?.errors?.required" jhiTranslate="entity.validation.required">

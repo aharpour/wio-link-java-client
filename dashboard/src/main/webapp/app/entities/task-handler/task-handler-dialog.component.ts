@@ -5,7 +5,7 @@ import { Response } from '@angular/http';
 import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { EventManager, AlertService, JhiLanguageService, DataUtils } from 'ng-jhipster';
 
-import { TaskHandler } from './task-handler.model';
+import { TaskHandler, Language } from './task-handler.model';
 import { TaskHandlerPopupService } from './task-handler-popup.service';
 import { TaskHandlerService } from './task-handler.service';
 @Component({
@@ -41,7 +41,42 @@ export class TaskHandlerDialogComponent implements OnInit {
     }
 
     languageChanged() {
-        alert(this.taskHandler.language);
+
+        switch(this.taskHandler.language.toString()) {
+            case 'JAVA': {
+                this.taskHandler.code = "";
+                break;
+            }
+            case 'JAVASCRIPT': {
+                this.taskHandler.code = "";
+                break;
+            }
+            case 'GROOVYSCRIPT': {
+                this.taskHandler.code = `package groovy.scripts
+
+import java.lang.*
+import java.util.*
+import java.text.*
+import java.time.*
+import nl.openweb.iot.dashboard.service.script.AbstractGroovyTaskHandler
+import nl.openweb.iot.wio.WioException
+import nl.openweb.iot.wio.domain.*
+import nl.openweb.iot.wio.domain.grove.*
+import nl.openweb.iot.wio.scheduling.*
+
+class TaskHandler extends AbstractGroovyTaskHandler {
+    @Override
+    ScheduledTask.TaskExecutionResult execute(Node node, TaskContext context) throws WioException {
+        ScheduledTask.TaskExecutionResult result = SchedulingUtils.secondsLater((int) Math.round(period * 60))
+        // double luminance = node.getGroveByType(GroveLuminance.class).get().readLuminance()
+        // System.out.println(luminance)
+        return result
+    }
+}`;
+                break;
+            }
+
+        }
     }
 
     clear () {

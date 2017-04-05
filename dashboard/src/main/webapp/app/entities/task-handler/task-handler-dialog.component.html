@@ -42,7 +42,7 @@
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="dashboardApp.taskHandler.code" for="field_code">Code</label>
-            <textarea class="form-control" name="name" id="field_code" [(ngModel)]="taskHandler.code" rows="30" cols="110"></textarea>
+            <textarea class="form-control" name="code" id="field_code" [(ngModel)]="taskHandler.code" rows="30" cols="110"></textarea>
             <div [hidden]="!(editForm.controls.code?.dirty && editForm.controls.code?.invalid)">
                 <small class="form-text text-danger"
                        [hidden]="!editForm.controls.code?.errors?.required" jhiTranslate="entity.validation.required">
