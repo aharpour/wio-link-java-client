@@ -74,14 +74,14 @@ export class TaskDialogComponent implements OnInit {
         this.activeModal.dismiss('cancel');
     }
 
-    save () {
+    save() {
         this.isSaving = true;
         if (this.task.id !== undefined) {
             this.taskService.update(this.task)
-                .subscribe((res: Task) => this.onSaveSuccess(res), (res: Response) => this.onSaveError(res.json()));
+                .subscribe((res: Task) => this.onSaveSuccess(res), (res: Response) => this.onSaveError(res));
         } else {
             this.taskService.create(this.task)
-                .subscribe((res: Task) => this.onSaveSuccess(res), (res: Response) => this.onSaveError(res.json()));
+                .subscribe((res: Task) => this.onSaveSuccess(res), (res: Response) => this.onSaveError(res));
         }
     }
 

@@ -12,28 +12,27 @@ export class TaskService {
 
     create(task: Task): Observable<Task> {
         let copy: Task = Object.assign({}, task);
-        return this.http.post(this.resourceUrl, copy).map((res: Response) => {
-            return res.json();
-        });
+        return this.http.post(this.resourceUrl, copy)
+            .map((res: Response) => res.json())
+            .catch(err => Observable.throw(err));
     }
 
     update(task: Task): Observable<Task> {
         let copy: Task = Object.assign({}, task);
-        return this.http.put(this.resourceUrl, copy).map((res: Response) => {
-            return res.json();
-        });
+        return this.http.put(this.resourceUrl, copy)
+            .map((res: Response) => res.json())
+            .catch(err => Observable.throw(err));
     }
 
     find(id: number): Observable<Task> {
-        return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
-            return res.json();
-        });
+        return this.http.get(`${this.resourceUrl}/${id}`)
+            .map((res: Response) => res.json())
+            .catch(err => Observable.throw(err));
     }
 
     query(req?: any): Observable<Response> {
         let options = this.createRequestOption(req);
-        return this.http.get(this.resourceUrl, options)
-        ;
+        return this.http.get(this.resourceUrl, options);
     }
 
     delete(id: number): Observable<Response> {
