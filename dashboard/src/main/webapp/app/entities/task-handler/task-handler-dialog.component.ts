@@ -48,12 +48,11 @@ export class TaskHandlerDialogComponent implements OnInit {
 
     languageChanged() {
 
-        switch(this.taskHandler.language.toString()) {
-            case 'JAVA': {
-                this.taskHandler.code = "";
+        switch (this.taskHandler.language.toString()) {
+            case 'JAVA':
+                this.taskHandler.code = '';
                 break;
-            }
-            case 'JAVASCRIPT': {
+            case 'JAVASCRIPT':
                 this.taskHandler.code = `var constructor = function (period, log) {
     return {
         imports: new JavaImporter(java.util, Packages.nl.openweb.iot.wio.domain.grove, Packages.nl.openweb.iot.wio.scheduling),
@@ -69,8 +68,7 @@ export class TaskHandlerDialogComponent implements OnInit {
     }
 }`;
                 break;
-            }
-            case 'GROOVYSCRIPT': {
+            case 'GROOVYSCRIPT':
                 this.taskHandler.code = `package groovy.scripts
 
 import java.lang.*
@@ -93,8 +91,6 @@ class TaskHandler extends AbstractGroovyTaskHandler {
     }
 }`;
                 break;
-            }
-
         }
     }
 
