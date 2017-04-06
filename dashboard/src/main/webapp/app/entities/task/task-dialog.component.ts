@@ -78,10 +78,10 @@ export class TaskDialogComponent implements OnInit {
         this.isSaving = true;
         if (this.task.id !== undefined) {
             this.taskService.update(this.task)
-                .subscribe((res: Task) => this.onSaveSuccess(res), (res: Response) => this.onSaveError(res));
+                .subscribe((res: Task) => this.onSaveSuccess(res), (err: Error) => this.onSaveError(err));
         } else {
             this.taskService.create(this.task)
-                .subscribe((res: Task) => this.onSaveSuccess(res), (res: Response) => this.onSaveError(res));
+                .subscribe((res: Task) => this.onSaveSuccess(res), (err: Error) => this.onSaveError(err));
         }
     }
 
