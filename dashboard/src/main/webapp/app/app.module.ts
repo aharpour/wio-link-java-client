@@ -1,9 +1,13 @@
 import './vendor.ts';
+import 'codemirror';
+import 'codemirror/mode/javascript/javascript.js';
+import 'codemirror/mode/groovy/groovy.js';
 
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { Ng2Webstorage } from 'ng2-webstorage';
+
 
 import { DashboardSharedModule, UserRouteAccessService } from './shared';
 import { DashboardAdminModule } from './admin/admin.module';

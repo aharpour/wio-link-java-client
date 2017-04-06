@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Response } from '@angular/http';
 
@@ -8,12 +8,14 @@ import { EventManager, AlertService, JhiLanguageService, DataUtils } from 'ng-jh
 import { TaskHandler, Language } from './task-handler.model';
 import { TaskHandlerPopupService } from './task-handler-popup.service';
 import { TaskHandlerService } from './task-handler.service';
+import { CodemirrorComponent } from 'ng2-codemirror';
 @Component({
     selector: 'jhi-task-handler-dialog',
     templateUrl: './task-handler-dialog.component.html'
 })
 export class TaskHandlerDialogComponent implements OnInit {
-
+    @ViewChild('editor') editor: CodemirrorComponent;
+    editorConfig;
     taskHandler: TaskHandler;
     authorities: any[];
     isSaving: boolean;
@@ -29,6 +31,10 @@ export class TaskHandlerDialogComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.editorConfig = {
+            lineNumbers: true,
+            mode: 'javascript'
+        };
         this.isSaving = false;
         this.authorities = ['ROLE_USER', 'ROLE_ADMIN'];
     }

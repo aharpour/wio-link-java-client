@@ -2,6 +2,7 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { DashboardSharedModule } from '../../shared';
+import { CodemirrorModule } from 'ng2-codemirror';
 
 import {
     TaskHandlerService,
@@ -23,6 +24,7 @@ let ENTITY_STATES = [
 
 @NgModule({
     imports: [
+        CodemirrorModule,
         DashboardSharedModule,
         RouterModule.forRoot(ENTITY_STATES, { useHash: true })
     ],
