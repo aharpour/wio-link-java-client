@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import io.github.jhipster.web.util.ResponseUtil;
 import nl.openweb.iot.dashboard.domain.TaskHandler;
 import nl.openweb.iot.dashboard.repository.TaskHandlerRepository;
+import nl.openweb.iot.dashboard.service.dto.TaskHandlerDTO;
 import nl.openweb.iot.dashboard.web.rest.util.HeaderUtil;
 
 /**
@@ -44,15 +45,15 @@ public class TaskHandlerResource {
      */
     @PostMapping("/task-handlers")
     @Timed
-    public ResponseEntity<TaskHandler> createTaskHandler(@Valid @RequestBody TaskHandler taskHandler) throws URISyntaxException {
+    public ResponseEntity<TaskHandlerDTO> createTaskHandler(@Valid @RequestBody TaskHandlerDTO taskHandler) throws URISyntaxException {
         log.debug("REST request to save TaskHandler : {}", taskHandler);
         if (taskHandler.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new taskHandler cannot already have an ID")).body(null);
         }
-        TaskHandler result = taskHandlerRepository.save(taskHandler);
+        TaskHandler result = taskHandlerRepository.save(taskHandler.toTaskHandler());
         return ResponseEntity.created(new URI("/api/task-handlers/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+            .body(new TaskHandlerDTO(result));
     }
 
     /**
@@ -66,15 +67,15 @@ public class TaskHandlerResource {
      */
     @PutMapping("/task-handlers")
     @Timed
-    public ResponseEntity<TaskHandler> updateTaskHandler(@Valid @RequestBody TaskHandler taskHandler) throws URISyntaxException {
+    public ResponseEntity<TaskHandlerDTO> updateTaskHandler(@Valid @RequestBody TaskHandlerDTO taskHandler) throws URISyntaxException {
         log.debug("REST request to update TaskHandler : {}", taskHandler);
         if (taskHandler.getId() == null) {
             return createTaskHandler(taskHandler);
         }
-        TaskHandler result = taskHandlerRepository.save(taskHandler);
+        TaskHandler result = taskHandlerRepository.save(taskHandler.toTaskHandler());
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, taskHandler.getId().toString()))
-            .body(result);
+            .body(new TaskHandlerDTO(result));
     }
 
     /**
@@ -86,8 +87,7 @@ public class TaskHandlerResource {
     @Timed
     public List<TaskHandler> getAllTaskHandlers() {
         log.debug("REST request to get all TaskHandlers");
-        List<TaskHandler> taskHandlers = taskHandlerRepository.findAll();
-        return taskHandlers;
+        return taskHandlerRepository.findAll();
     }
 
     /**
@@ -98,10 +98,10 @@ public class TaskHandlerResource {
      */
     @GetMapping("/task-handlers/{id}")
     @Timed
-    public ResponseEntity<TaskHandler> getTaskHandler(@PathVariable Long id) {
+    public ResponseEntity<TaskHandlerDTO> getTaskHandler(@PathVariable Long id) {
         log.debug("REST request to get TaskHandler : {}", id);
         TaskHandler taskHandler = taskHandlerRepository.findOne(id);
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(taskHandler));
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(taskHandler).map(TaskHandlerDTO::new));
     }
 
     /**

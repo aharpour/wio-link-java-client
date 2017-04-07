@@ -54,7 +54,7 @@ public class TaskService {
     private ScheduledTask getTaskHandler(Task task) throws ClassNotFoundException, WioException {
         ScheduledTask result = (n, c) -> SchedulingUtils.hoursLater(5);
         TaskHandler taskHandler = task.getTaskHandler();
-        if (taskHandler != null && StringUtils.isNotBlank(taskHandler.getCode())) {
+        if (taskHandler != null && StringUtils.isNotBlank(taskHandler.getCodeAsString())) {
 
             switch (taskHandler.getLanguage()) {
                 case JAVA:
@@ -77,7 +77,7 @@ public class TaskService {
         TaskEventHandler result = (e, n, c) -> {
         };
         EventHandler eventHandler = task.getEventHandler();
-        if (eventHandler != null && StringUtils.isNotBlank(eventHandler.getCode())) {
+        if (eventHandler != null && StringUtils.isNotBlank(eventHandler.getCodeAsString())) {
             switch (eventHandler.getLanguage()) {
                 case JAVA:
                     result = createInstanceFromFactoryName(task, eventHandler, result, EventHandlerFactory.class);
@@ -96,7 +96,7 @@ public class TaskService {
     @SuppressWarnings("unchecked")
     private <T> T createInstanceFromFactoryName(Task task, HandlerBean handlerBean, T defaultValue, Class<?> clazz) throws ClassNotFoundException {
         T result = defaultValue;
-        String factoryName = handlerBean.getCode();
+        String factoryName = handlerBean.getCodeAsString();
         Class<?> factoryClass = Class.forName(factoryName);
         if (clazz.isAssignableFrom(factoryClass)) {
             HandlerFactory factory = (HandlerFactory) context.getBean(factoryClass);

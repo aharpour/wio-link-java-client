@@ -12,6 +12,6 @@ public class JsSandboxFilter implements ClassFilter {
 
     @Override
     public boolean exposeToScripts(String className) {
-        return SandboxFilter.filter(className);
+        return !SandboxFilter.filter(className);
     }
 }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import io.github.jhipster.web.util.ResponseUtil;
 import nl.openweb.iot.dashboard.domain.EventHandler;
 import nl.openweb.iot.dashboard.repository.EventHandlerRepository;
+import nl.openweb.iot.dashboard.service.dto.EventHandlerDTO;
 import nl.openweb.iot.dashboard.web.rest.util.HeaderUtil;
 
 /**
@@ -44,15 +45,15 @@ public class EventHandlerResource {
      */
     @PostMapping("/event-handlers")
     @Timed
-    public ResponseEntity<EventHandler> createEventHandler(@Valid @RequestBody EventHandler eventHandler) throws URISyntaxException {
+    public ResponseEntity<EventHandlerDTO> createEventHandler(@Valid @RequestBody EventHandlerDTO eventHandler) throws URISyntaxException {
         log.debug("REST request to save EventHandler : {}", eventHandler);
         if (eventHandler.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new eventHandler cannot already have an ID")).body(null);
         }
-        EventHandler result = eventHandlerRepository.save(eventHandler);
+        EventHandler result = eventHandlerRepository.save(eventHandler.toEventHandler());
         return ResponseEntity.created(new URI("/api/event-handlers/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+            .body(new EventHandlerDTO(result));
     }
 
     /**
@@ -66,15 +67,15 @@ public class EventHandlerResource {
      */
     @PutMapping("/event-handlers")
     @Timed
-    public ResponseEntity<EventHandler> updateEventHandler(@Valid @RequestBody EventHandler eventHandler) throws URISyntaxException {
+    public ResponseEntity<EventHandlerDTO> updateEventHandler(@Valid @RequestBody EventHandlerDTO eventHandler) throws URISyntaxException {
         log.debug("REST request to update EventHandler : {}", eventHandler);
         if (eventHandler.getId() == null) {
             return createEventHandler(eventHandler);
         }
-        EventHandler result = eventHandlerRepository.save(eventHandler);
+        EventHandler result = eventHandlerRepository.save(eventHandler.toEventHandler());
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, eventHandler.getId().toString()))
-            .body(result);
+            .body(new EventHandlerDTO(result));
     }
 
     /**
@@ -86,8 +87,7 @@ public class EventHandlerResource {
     @Timed
     public List<EventHandler> getAllEventHandlers() {
         log.debug("REST request to get all EventHandlers");
-        List<EventHandler> eventHandlers = eventHandlerRepository.findAll();
-        return eventHandlers;
+        return eventHandlerRepository.findAll();
     }
 
     /**
@@ -98,10 +98,10 @@ public class EventHandlerResource {
      */
     @GetMapping("/event-handlers/{id}")
     @Timed
-    public ResponseEntity<EventHandler> getEventHandler(@PathVariable Long id) {
+    public ResponseEntity<EventHandlerDTO> getEventHandler(@PathVariable Long id) {
         log.debug("REST request to get EventHandler : {}", id);
         EventHandler eventHandler = eventHandlerRepository.findOne(id);
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(eventHandler));
+        return ResponseUtil.wrapOrNotFound(Optional.of(eventHandler).map(EventHandlerDTO::new));
     }
 
     /**

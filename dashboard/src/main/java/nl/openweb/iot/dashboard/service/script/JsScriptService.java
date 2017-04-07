@@ -26,7 +26,7 @@ public class JsScriptService {
         try {
             validate(taskBean.getTaskHandler());
             NashornScriptEngine scriptEngine = (NashornScriptEngine) factory.getScriptEngine(new JsSandboxFilter());
-            scriptEngine.eval(taskBean.getTaskHandler().getCode());
+            scriptEngine.eval(taskBean.getTaskHandler().getCodeAsString());
             JSObject jsObject = (JSObject) scriptEngine.invokeFunction("constructor", (int) Math.round(taskBean.getPeriod() * 60), JsTaskHandler.LOG);
 
             return new JsTaskHandler(jsObject);
@@ -42,7 +42,7 @@ public class JsScriptService {
         try {
             validate(taskBean.getEventHandler());
             NashornScriptEngine scriptEngine = (NashornScriptEngine) factory.getScriptEngine(new JsSandboxFilter());
-            scriptEngine.eval(taskBean.getEventHandler().getCode());
+            scriptEngine.eval(taskBean.getEventHandler().getCodeAsString());
             JSObject jsObject = (JSObject) scriptEngine.invokeFunction("constructor", JsTaskHandler.LOG);
             return new JsEventHandler(jsObject);
 
@@ -56,7 +56,7 @@ public class JsScriptService {
         if (language != Language.JAVASCRIPT) {
             throw new IllegalArgumentException("The script must be Javascript");
         }
-        if (StringUtils.isBlank(handlerBean.getCode())) {
+        if (StringUtils.isBlank(handlerBean.getCodeAsString())) {
             throw new IllegalArgumentException("The script should not be blank");
         }
     }

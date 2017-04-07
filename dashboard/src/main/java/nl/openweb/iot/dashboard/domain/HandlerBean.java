@@ -4,7 +4,7 @@ import nl.openweb.iot.dashboard.domain.enumeration.Language;
 
 public interface HandlerBean {
 
-    String getCode();
+    String getCodeAsString();
 
     String getName();
 

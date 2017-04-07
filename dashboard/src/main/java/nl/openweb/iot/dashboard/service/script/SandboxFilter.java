@@ -45,7 +45,7 @@ public class SandboxFilter {
     private SandboxFilter() {
     }
 
-    public static boolean filter(String className) {
+    public static boolean   filter(String className) {
         boolean result = !ALLOWED_PACKAGES.contains(className) && !ALLOWED_PACKAGES.contains(getPackage(className));
         try {
             Class<?> aClass = Class.forName(className);
@@ -53,7 +53,7 @@ public class SandboxFilter {
         } catch (ClassNotFoundException e) {
             // ignore
         }
-        return true;
+        return result;
     }
 
     private static String getPackage(String className) {

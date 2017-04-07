@@ -9,6 +9,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import nl.openweb.iot.dashboard.domain.enumeration.Language;
+import nl.openweb.iot.dashboard.service.util.ByteArrayUtils;
 
 /**
  * A EventHandler.
@@ -36,7 +37,7 @@ public class EventHandler implements Serializable, HandlerBean {
     @NotNull
     @Lob
     @Column(name = "code", nullable = false)
-    private String code;
+    private byte[] code;
 
     public Long getId() {
         return id;
@@ -72,16 +73,21 @@ public class EventHandler implements Serializable, HandlerBean {
         this.language = language;
     }
 
-    public String getCode() {
+    public byte[] getCode() {
         return code;
     }
 
-    public EventHandler code(String code) {
+    public EventHandler code(byte[] code) {
         this.code = code;
         return this;
     }
 
-    public void setCode(String code) {
+    @Override
+    public String getCodeAsString() {
+        return ByteArrayUtils.toString(this.code);
+    }
+
+    public void setCode(byte[] code) {
         this.code = code;
     }
 

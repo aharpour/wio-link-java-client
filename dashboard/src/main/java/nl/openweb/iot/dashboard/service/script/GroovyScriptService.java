@@ -61,7 +61,7 @@ public class GroovyScriptService {
             throw new IllegalArgumentException("The the script must be a groovy script");
         }
         String scriptName = getScriptName(taskHandler);
-        GroovyCodeSource gcs = new GroovyCodeSource(taskHandler.getCode(), scriptName, "/groovy/scripts");
+        GroovyCodeSource gcs = new GroovyCodeSource(taskHandler.getCodeAsString(), scriptName, "/groovy/scripts");
         GroovyClassLoader loader = new GroovyClassLoader(GroovyScriptService.class.getClassLoader(), config);
         return (Class<?>) loader.parseClass(gcs, false);
     }
