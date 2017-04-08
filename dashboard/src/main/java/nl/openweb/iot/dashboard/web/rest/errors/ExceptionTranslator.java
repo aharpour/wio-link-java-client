@@ -2,6 +2,8 @@ package nl.openweb.iot.dashboard.web.rest.errors;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.dao.ConcurrencyFailureException;
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  */
 @ControllerAdvice
 public class ExceptionTranslator {
+
+    private static final Logger LOG = LoggerFactory.getLogger(ExceptionTranslator.class);
 
     @ExceptionHandler(ConcurrencyFailureException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
@@ -80,8 +84,9 @@ public class ExceptionTranslator {
             builder = ResponseEntity.status(responseStatus.value());
             errorVM = new ErrorVM("error." + responseStatus.value().value(), responseStatus.reason());
         } else {
+            LOG.error(ex.getMessage(), ex);
             builder = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR);
-            errorVM = new ErrorVM(ErrorConstants.ERR_INTERNAL_SERVER_ERROR, "Internal server error");
+            errorVM = new ErrorVM(ErrorConstants.ERR_INTERNAL_SERVER_ERROR, "Internal server error: " + ex.getMessage());
         }
         return builder.body(errorVM);
     }
