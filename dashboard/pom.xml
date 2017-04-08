@@ -629,6 +629,26 @@
                     </rules>
                 </configuration>
             </plugin>
+            <!-- jhipster-needle-maven-add-plugin -->
+            <plugin>
+                <artifactId>maven-install-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>install-classes</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>install-file</goal>
+                        </goals>
+                        <configuration>
+                            <artifactId>${project.artifactId}</artifactId>
+                            <groupId>${project.groupId}</groupId>
+                            <version>${project.version}</version>
+                            <classifier>classes</classifier>
+                            <file>${project.build.directory}/${project.artifactId}-${project.version}-classes.jar</file>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
@@ -784,7 +804,6 @@
                     -->
                 </configuration>
             </plugin>
-            <!-- jhipster-needle-maven-add-plugin -->
         </plugins>
     </build>
     <profiles>
@@ -855,6 +874,8 @@
                         <artifactId>maven-war-plugin</artifactId>
                         <configuration>
                             <warSourceDirectory>src/main/webapp/</warSourceDirectory>
+                            <attachClasses>true</attachClasses>
+                            <classesClassifier>classes</classesClassifier>
                         </configuration>
                     </plugin>
                 </plugins>
