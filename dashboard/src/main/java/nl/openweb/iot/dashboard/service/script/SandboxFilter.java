@@ -1,6 +1,7 @@
 package nl.openweb.iot.dashboard.service.script;
 
 import java.io.PrintStream;
+import java.lang.reflect.Proxy;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -26,11 +27,14 @@ public class SandboxFilter {
         packages.add("java.time");
         packages.add("groovy.scripts");
         packages.add("org.slf4j");
+        packages.add("org.codehaus.groovy.runtime");
+        packages.add("groovy.runtime.metaclass.groovy.scripts");
+        packages.add("ch.qos.logback.classic");
         packages.add("nl.openweb.iot.wio.domain");
         packages.add("nl.openweb.iot.wio.domain.grove");
+        packages.add("nl.openweb.iot.monitor.domain");
         packages.add("nl.openweb.iot.wio.scheduling");
-        packages.add("ch.qos.logback.classic");
-        packages.add("org.codehaus.groovy.runtime");
+        packages.add("nl.openweb.iot.dashboard.service.script");
 
         HashSet<Class<?>> classes = new HashSet<>();
         classes.add(WioException.class);
@@ -67,7 +71,7 @@ public class SandboxFilter {
 
     public static boolean filter(Class<?> aClass) {
         boolean result = true;
-        if (ALLOWED_PACKAGES.contains(aClass.getPackage().getName()) || ALLOWED_CLASSES.contains(aClass)) {
+        if (Proxy.isProxyClass(aClass) || ALLOWED_PACKAGES.contains(aClass.getPackage().getName()) || ALLOWED_CLASSES.contains(aClass)) {
             result = false;
         }
         return result;
