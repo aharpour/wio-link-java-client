@@ -7,7 +7,9 @@ import java.util.Set;
 
 import org.springframework.beans.BeansException;
 
+import nl.openweb.iot.dashboard.service.NotificationService;
 import nl.openweb.iot.monitor.ReadingStrategy;
+import nl.openweb.iot.monitor.repository.EventRepository;
 import nl.openweb.iot.monitor.repository.ReadingRepository;
 import nl.openweb.iot.wio.NodeService;
 import nl.openweb.iot.wio.WioException;
@@ -22,6 +24,8 @@ public class ScriptContextWrapper implements TaskContext {
         allowed.add(NodeService.class);
         allowed.add(ReadingRepository.class);
         allowed.add(ReadingStrategy.class);
+        allowed.add(EventRepository.class);
+        allowed.add(NotificationService.class);
         ALLOWED_SERVICES = Collections.unmodifiableSet(allowed);
     }
 
