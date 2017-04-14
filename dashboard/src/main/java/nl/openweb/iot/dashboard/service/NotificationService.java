@@ -9,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import nl.openweb.iot.dashboard.domain.Authority;
 import nl.openweb.iot.dashboard.domain.User;
 import nl.openweb.iot.dashboard.repository.UserRepository;
 
@@ -31,9 +32,10 @@ public class NotificationService {
     }
 
 
-
     public void notifyUsersOfRole(String role, String subject, String body, Type type) {
-        notifyUsers(u -> u.getAuthorities().contains(role), subject, body, type);
+        Predicate<User> userFilter = u -> u.getAuthorities().stream()
+            .map(Authority::getName).anyMatch(a -> a.equals(role));
+        notifyUsers(userFilter, subject, body, type);
     }
 
     public void notifyUsers(Predicate<User> filterUsers, String subject, String body, Type type) {
@@ -60,6 +62,6 @@ public class NotificationService {
 
 
     public enum Type {
-        EMAIL, PUSH_NOTIFICATION;
+        EMAIL, PUSH_NOTIFICATION
     }
 }
