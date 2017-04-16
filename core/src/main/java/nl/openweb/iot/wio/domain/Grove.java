@@ -9,6 +9,8 @@ import nl.openweb.iot.wio.WioException;
 import nl.openweb.iot.wio.db.GroveBean;
 import nl.openweb.iot.wio.rest.NodeResource;
 
+import java.util.Map;
+
 public abstract class Grove {
 
     @Getter
@@ -51,6 +53,10 @@ public abstract class Grove {
 
     protected boolean writeProperty(String propertyName, String value1, String value2, String value3, String value4) throws WioException {
         return writeResponseToBoolean(nodeResource.writeProperty(parent.getNodeKey(), name, propertyName, value1, value2, value3, value4));
+    }
+
+    protected Map<String, String> readPropertyAsMap(String propertyName) throws WioException {
+        return this.nodeResource.readProperty(parent.getNodeKey(), name, propertyName);
     }
 
     protected String readProperty(String propertyName) throws WioException {
