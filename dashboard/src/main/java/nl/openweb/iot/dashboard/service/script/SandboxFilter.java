@@ -8,6 +8,7 @@ import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 
+import nl.openweb.iot.dashboard.service.NotificationService;
 import nl.openweb.iot.wio.NodeDecorator;
 import nl.openweb.iot.wio.WioException;
 
@@ -43,6 +44,7 @@ public class SandboxFilter {
         classes.add(AbstractGroovyEventHandler.class);
         classes.add(PrintStream.class);
         classes.add(NodeDecorator.class);
+        classes.add(NotificationService.class);
         ALLOWED_PACKAGES = Collections.unmodifiableSet(packages);
         ALLOWED_BASE_PACKAGES = Collections.unmodifiableSet(basePackages);
         ALLOWED_CLASSES = Collections.unmodifiableSet(classes);
@@ -65,10 +67,14 @@ public class SandboxFilter {
     public static boolean filter(Class<?> aClass) {
         boolean result = true;
         if (Proxy.isProxyClass(aClass) || (aClass.getPackage() != null && allowedByPackage(aClass.getPackage().getName()))
-            || ALLOWED_CLASSES.contains(aClass)) {
+            || isAllowedClass(aClass)) {
             result = false;
         }
         return result;
+    }
+
+    private static boolean isAllowedClass(Class<?> aClass) {
+        return ALLOWED_CLASSES.stream().anyMatch(a -> a.isAssignableFrom(aClass));
     }
 
     private static String getPackage(String className) {
