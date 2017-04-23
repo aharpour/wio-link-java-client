@@ -556,6 +556,7 @@
                         </resource>
                     </resources>
                     <imageTags>
+                        <!--<imageTag>0.1.0-RC2</imageTag>-->
                         <!--<imageTag>${project.version}</imageTag>-->
                         <imageTag>latest</imageTag>
                     </imageTags>
@@ -719,6 +720,14 @@
                 </configuration>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <attachClasses>true</attachClasses>
+                    <classesClassifier>classes</classesClassifier>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>${jacoco-maven-plugin.version}</version>
@@ -874,8 +883,6 @@
                         <artifactId>maven-war-plugin</artifactId>
                         <configuration>
                             <warSourceDirectory>src/main/webapp/</warSourceDirectory>
-                            <attachClasses>true</attachClasses>
-                            <classesClassifier>classes</classesClassifier>
                         </configuration>
                     </plugin>
                 </plugins>
