@@ -21,5 +21,6 @@ public class WioSettings {
     private int retryAfterErrorInSec = 5 * 60;
     private int retryAfterTimeoutInSec = 3;
     private boolean trySeedSso = true;
+    private boolean initializeOnStartup = true;
 
 }

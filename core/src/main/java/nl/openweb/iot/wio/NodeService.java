@@ -48,7 +48,7 @@ public class NodeService {
 
     @PostConstruct
     public void initialize() throws WioException {
-        if (nodeRepository.count() == 0) {
+        if (wioSettings.isInitializeOnStartup() && nodeRepository.count() == 0) {
             String userToken = getUserToken();
             NodesResource.ListResponse list = nodesResource.list(userToken);
             for (NodesResource.ListResponse.Node node : list.getNodes()) {
